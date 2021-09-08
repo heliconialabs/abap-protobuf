@@ -8,9 +8,9 @@ CLASS zcl_protobuf DEFINITION PUBLIC CREATE PRIVATE.
 *        VALUE(ri_protobuf) TYPE REF TO zif_protobuf.
     METHODS constructor
       IMPORTING
-        iv_hex TYPE xstring.
+        iv_hex2 TYPE xstring.
   PRIVATE SECTION.
-*  sdf   DATA mo_stream TYPE REF TO zcl_protobuf_stream.
+    DATA mo_stream TYPE REF TO zcl_protobuf_stream.
 ENDCLASS.
 
 CLASS zcl_protobuf IMPLEMENTATION.
@@ -20,7 +20,6 @@ CLASS zcl_protobuf IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD constructor.
-    WRITE iv_hex.
-* sdfsd    mo_stream = NEW #( iv_hex ).
+    mo_stream = NEW #( iv_hex2 ).
   ENDMETHOD.
 ENDCLASS.
