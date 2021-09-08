@@ -59,7 +59,7 @@
     "line_break_multiple_parameters": true,
     "names_no_dash": true,
     "parser_missing_space": true,
-    "prefer_inline": true,
+    "prefer_inline": false,
     "prefer_returning_to_exporting": true,
     "prefix_is_current_class": true,
     "reduce_string_templates": true,
