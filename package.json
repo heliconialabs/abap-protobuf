@@ -1,0 +1,28 @@
+{
+  "name": "abap-prtotobuf",
+  "private": true,
+  "version": "1.0.0",
+  "description": "prtotobuf",
+  "dependencies": {},
+  "devDependencies": {
+    "@abaplint/cli": "^2.78.3",
+    "@abaplint/runtime": "^1.6.25",
+    "@abaplint/transpiler-cli": "^1.6.25"
+  },
+  "scripts": {
+    "lint": "abaplint",
+    "unit": "rm -rf output && abap_transpile && echo RUNNING && node output/index.mjs",
+    "test": "npm run lint && npm run downport && npm run unit",
+    "downport": "rm -rf downport && cp src -r downport && abaplint --fix abaplint_downport.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/larshp/abap-protobuf.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/larshp/abap-protobuf/issues"
+  },
+  "homepage": "https://github.com/larshp/abap-protobuf#readme"
+}
