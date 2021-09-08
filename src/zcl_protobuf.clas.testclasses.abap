@@ -4,7 +4,7 @@ CLASS ltcl_test DEFINITION FOR TESTING
   FINAL.
 
   PRIVATE SECTION.
-* sdf    DATA mi_cut TYPE REF TO zif_protobuf.
+    DATA mi_cut TYPE REF TO zif_protobuf.
     METHODS setup.
     METHODS test1 FOR TESTING RAISING cx_static_check.
 
@@ -13,14 +13,11 @@ ENDCLASS.
 CLASS ltcl_test IMPLEMENTATION.
 
   METHOD setup.
-    RETURN.
-* sdf    mi_cut = zcl_protobuf=>create( ).
+    mi_cut = zcl_protobuf=>create( ).
   ENDMETHOD.
 
   METHOD test1.
-
     RETURN. " todo
-
   ENDMETHOD.
 
 ENDCLASS.
