@@ -72,7 +72,7 @@
     "unused_variables": true,
     "xml_consistency": true,
     "begin_single_include": true,
-    "check_comments": true,
+    "check_comments": false,
     "downport": true,
     "forbidden_identifier": true,
     "forbidden_void_type": true,
