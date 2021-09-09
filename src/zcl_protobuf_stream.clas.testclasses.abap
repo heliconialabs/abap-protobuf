@@ -20,7 +20,7 @@ CLASS ltcl_test IMPLEMENTATION.
 
   METHOD find_and_type.
     DATA(lv_encoded) = mo_cut->encode_field_and_type(
-      iv_field_number = 0
+      iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint )->get( ).
 
     cl_abap_unit_assert=>assert_equals(
