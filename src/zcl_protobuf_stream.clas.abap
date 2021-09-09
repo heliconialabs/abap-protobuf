@@ -32,7 +32,8 @@ CLASS zcl_protobuf_stream DEFINITION PUBLIC.
       RETURNING
         VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream.
     METHODS decode_varint
-      RETURNING VALUE(rv_int) TYPE i.
+      RETURNING
+        VALUE(rv_int) TYPE i.
 
     METHODS encode_field_and_type
       IMPORTING
@@ -119,6 +120,22 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD decode_varint.
-    CLEAR rv_int. " todo
+
+    DATA lv_topbit TYPE i.
+
+    DO.
+      lv_topbit = mv_hex(1) MOD 128.
+      WRITE / lv_topbit.
+
+      rv_int = rv_int + ( mv_hex(1) DIV 128 ).
+
+      IF lv_topbit = 0.
+        EXIT.
+      ENDIF.
+
+      rv_int = rv_int * 128.
+      eat( 1 ).
+    ENDDO.
+
   ENDMETHOD.
 ENDCLASS.
