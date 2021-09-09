@@ -15,10 +15,10 @@ CLASS zcl_protobuf_stream DEFINITION PUBLIC.
            END OF ty_field_and_type.
     METHODS constructor
       IMPORTING iv_hex TYPE xstring OPTIONAL.
+
     METHODS get
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS append
-      IMPORTING iv_hex TYPE xstring.
+
     METHODS encode_varint
       IMPORTING
         iv_int TYPE i
@@ -31,13 +31,36 @@ CLASS zcl_protobuf_stream DEFINITION PUBLIC.
         is_field_and_type TYPE ty_field_and_type
       RETURNING
         VALUE(ro_ref)   TYPE REF TO zcl_protobuf_stream.
+    METHODS decode_field_and_type
+      RETURNING
+        VALUE(rs_field_and_type) TYPE ty_field_and_type.
   PRIVATE SECTION.
     DATA mv_hex TYPE xstring.
+
+    METHODS append
+      IMPORTING iv_hex TYPE xstring.
+    METHODS eat
+      IMPORTING iv_length TYPE i
+      RETURNING VALUE(rv_hex) TYPE xstring.
 ENDCLASS.
 
 CLASS zcl_protobuf_stream IMPLEMENTATION.
   METHOD constructor.
     mv_hex = iv_hex.
+  ENDMETHOD.
+
+  METHOD eat.
+    ASSERT xstrlen( mv_hex ) >= iv_length.
+    rv_hex = mv_hex(iv_length).
+    mv_hex = mv_hex+iv_length.
+  ENDMETHOD.
+
+  METHOD decode_field_and_type.
+    DATA lv_hex TYPE x LENGTH 1.
+    lv_hex = eat( 1 ).
+
+    rs_field_and_type-field_number = lv_hex DIV 8.
+    rs_field_and_type-wire_type = lv_hex MOD 8.
   ENDMETHOD.
 
   METHOD get.
