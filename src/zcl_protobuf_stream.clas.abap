@@ -94,19 +94,19 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
   METHOD decode_varint.
 
     DATA lv_topbit TYPE i.
+    DATA lv_lower TYPE i.
+    DATA lv_shift TYPE i value 1.
 
     DO.
-      lv_topbit = mv_hex(1) MOD 128.
-      WRITE / lv_topbit.
-
-      rv_int = rv_int + ( mv_hex(1) DIV 128 ).
-
+      lv_topbit = mv_hex(1) DIV 128.
+      lv_lower = mv_hex(1) MOD 128.
+      lv_lower = lv_lower * lv_shift.
+      rv_int = rv_int + lv_lower.
+      lv_shift = lv_shift * 128.
+      eat( 1 ).
       IF lv_topbit = 0.
         EXIT.
       ENDIF.
-
-      rv_int = rv_int * 128.
-      eat( 1 ).
     ENDDO.
 
   ENDMETHOD.
