@@ -9,6 +9,10 @@ CLASS zcl_protobuf_stream DEFINITION PUBLIC.
                  end_group        TYPE ty_wire_type VALUE 4,
                  bit32            TYPE ty_wire_type VALUE 5,
                END OF gc_wire_type.
+    TYPES: BEGIN OF ty_field_and_type,
+             field_number TYPE i,
+             wire_type TYPE ty_wire_type,
+           END OF ty_field_and_type.
     METHODS constructor
       IMPORTING iv_hex TYPE xstring OPTIONAL.
     METHODS get
@@ -24,8 +28,7 @@ CLASS zcl_protobuf_stream DEFINITION PUBLIC.
       RETURNING VALUE(rv_int) TYPE i.
     METHODS encode_field_and_type
       IMPORTING
-        iv_field_number TYPE i
-        iv_wire_type    TYPE ty_wire_type
+        is_field_and_type TYPE ty_field_and_type
       RETURNING
         VALUE(ro_ref)   TYPE REF TO zcl_protobuf_stream.
   PRIVATE SECTION.
@@ -43,7 +46,7 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
 
   METHOD encode_field_and_type.
     DATA lv_hex TYPE x LENGTH 1.
-    lv_hex = iv_field_number * 8 + iv_wire_type.
+    lv_hex = is_field_and_type-field_number * 8 + is_field_and_type-wire_type.
     append( lv_hex ).
     ro_ref = me.
   ENDMETHOD.

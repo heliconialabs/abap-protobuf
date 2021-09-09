@@ -8,7 +8,7 @@ CLASS ltcl_test DEFINITION FOR TESTING
     METHODS setup.
     METHODS test_150 FOR TESTING RAISING cx_static_check.
     METHODS test_300 FOR TESTING RAISING cx_static_check.
-    METHODS field_and_type FOR TESTING RAISING cx_static_check.
+    METHODS encode_field_and_type FOR TESTING RAISING cx_static_check.
 
 ENDCLASS.
 
@@ -18,10 +18,11 @@ CLASS ltcl_test IMPLEMENTATION.
     mo_cut = NEW #( ).
   ENDMETHOD.
 
-  METHOD field_and_type.
-    DATA(lv_encoded) = mo_cut->encode_field_and_type(
-      iv_field_number = 1
-      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint )->get( ).
+  METHOD encode_field_and_type.
+    DATA(lv_encoded) = mo_cut->encode_field_and_type( VALUE #(
+      field_number = 1
+      wire_type    = zcl_protobuf_stream=>gc_wire_type-varint
+      ) )->get( ).
 
     cl_abap_unit_assert=>assert_equals(
       exp = '08'
