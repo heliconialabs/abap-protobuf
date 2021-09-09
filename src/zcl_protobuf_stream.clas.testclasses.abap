@@ -8,6 +8,7 @@ CLASS ltcl_test DEFINITION FOR TESTING
     METHODS setup.
     METHODS test_150 FOR TESTING RAISING cx_static_check.
     METHODS test_300 FOR TESTING RAISING cx_static_check.
+    METHODS decode_varint FOR TESTING RAISING cx_static_check.
     METHODS encode_field_and_type FOR TESTING RAISING cx_static_check.
     METHODS field_and_type FOR TESTING RAISING cx_static_check.
 ENDCLASS.
@@ -16,6 +17,18 @@ CLASS ltcl_test IMPLEMENTATION.
 
   METHOD setup.
     mo_cut = NEW #( ).
+  ENDMETHOD.
+
+  METHOD decode_varint.
+    CONSTANTS lc_value TYPE i VALUE 300.
+    mo_cut->encode_varint( lc_value ).
+    DATA(lv_actual) = mo_cut->decode_varint( ).
+    cl_abap_unit_assert=>assert_equals(
+      exp = lc_value
+      act = lv_actual ).
+    cl_abap_unit_assert=>assert_equals(
+      exp = 0
+      act = xstrlen( mo_cut->get( ) ) ).
   ENDMETHOD.
 
   METHOD field_and_type.

@@ -19,6 +19,13 @@ CLASS zcl_protobuf_stream DEFINITION PUBLIC.
     METHODS get
       RETURNING VALUE(rv_hex) TYPE xstring.
 
+    METHODS encode_delimited
+      IMPORTING
+        iv_hex TYPE xstring.
+    METHODS decode_delimited
+      RETURNING
+        VALUE(rv_hex) TYPE xstring.
+
     METHODS encode_varint
       IMPORTING
         iv_int TYPE i
@@ -26,6 +33,7 @@ CLASS zcl_protobuf_stream DEFINITION PUBLIC.
         VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream.
     METHODS decode_varint
       RETURNING VALUE(rv_int) TYPE i.
+
     METHODS encode_field_and_type
       IMPORTING
         is_field_and_type TYPE ty_field_and_type
@@ -47,6 +55,18 @@ ENDCLASS.
 CLASS zcl_protobuf_stream IMPLEMENTATION.
   METHOD constructor.
     mv_hex = iv_hex.
+  ENDMETHOD.
+
+  METHOD encode_delimited.
+    ASSERT xstrlen( iv_hex ) > 0.
+    encode_varint( xstrlen( iv_hex ) ).
+    append( iv_hex ).
+  ENDMETHOD.
+
+  METHOD decode_delimited.
+    DATA(lv_length) = decode_varint( ).
+    rv_hex = mv_hex(lv_length).
+    eat( lv_length ).
   ENDMETHOD.
 
   METHOD eat.
