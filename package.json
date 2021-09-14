@@ -4,11 +4,6 @@
   "version": "1.0.0",
   "description": "prtotobuf",
   "dependencies": {},
-  "devDependencies": {
-    "@abaplint/cli": "^2.78.6",
-    "@abaplint/runtime": "^1.6.25",
-    "@abaplint/transpiler-cli": "^1.6.25"
-  },
   "scripts": {
     "lint": "abaplint",
     "unit": "rm -rf output && abap_transpile && echo RUNNING && node output/index.mjs",
@@ -17,12 +12,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/larshp/abap-protobuf.git"
+    "url": "git+https://github.com/heliconialabs/abap-protobuf.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/larshp/abap-protobuf/issues"
+    "url": "https://github.com/heliconialabs/abap-protobuf/issues"
   },
-  "homepage": "https://github.com/larshp/abap-protobuf#readme"
+  "homepage": "https://github.com/heliconialabs/abap-protobuf#readme",
+  "devDependencies": {
+    "@abaplint/cli": "^2.78.13",
+    "@abaplint/runtime": "^1.6.28",
+    "@abaplint/transpiler-cli": "^1.6.28"
+  }
 }
