@@ -37,6 +37,7 @@ CLASS lcl_stream IMPLEMENTATION.
     DATA lt_open  TYPE match_result_tab.
     DATA lt_close TYPE match_result_tab.
     DATA lt_all   TYPE match_result_tab.
+    DATA lv_count TYPE i.
 
     ASSERT peek_token( ) = |\{|.
 
@@ -50,7 +51,17 @@ CLASS lcl_stream IMPLEMENTATION.
     SORT lt_all BY line offset.
 
     LOOP AT lt_all INTO DATA(ls_all).
-      WRITE / ls_all-offset.
+      DATA(lv_token) = mv_str+ls_all-offset(1).
+      IF lv_token = '{'.
+        lv_count = lv_count + 1.
+      ELSE.
+        lv_count = lv_count - 1.
+      ENDIF.
+      IF lv_count = 0.
+        ls_all-offset = ls_all-offset + 1.
+        WRITE / mv_str(ls_all-offset).
+        EXIT. " current loop.
+      ENDIF.
     ENDLOOP.
 
     ro_stream = NEW #( '' ).
