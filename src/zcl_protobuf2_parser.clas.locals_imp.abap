@@ -47,6 +47,11 @@ CLASS lcl_stream IMPLEMENTATION.
 
     APPEND LINES OF lt_open TO lt_all.
     APPEND LINES OF lt_close TO lt_all.
+    SORT lt_all BY line offset.
+
+    LOOP AT lt_all INTO DATA(ls_all).
+      WRITE / ls_all-offset.
+    ENDLOOP.
 
     ro_stream = NEW #( '' ).
   ENDMETHOD.
