@@ -34,7 +34,15 @@ CLASS lcl_stream IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD take_matching.
-    ASSERT peek_token( ) = '{'.
+    DATA lt_open TYPE match_result_tab.
+    DATA lt_close TYPE match_result_tab.
+    ASSERT peek_token( ) = |\{|.
+
+    FIND ALL OCCURRENCES OF |\{| IN mv_str RESULTS lt_open.
+    ASSERT sy-subrc = 0.
+    FIND ALL OCCURRENCES OF |\}| IN mv_str RESULTS lt_close.
+    ASSERT sy-subrc = 0.
+
     ro_stream = NEW #( '' ).
   ENDMETHOD.
 ENDCLASS.
