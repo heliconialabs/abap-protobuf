@@ -3,6 +3,7 @@ CLASS zcl_protobuf2_parser DEFINITION PUBLIC.
     CLASS-METHODS parse IMPORTING iv_proto TYPE string.
   PRIVATE SECTION.
     CLASS-METHODS traverse IMPORTING io_stream TYPE REF TO lcl_stream.
+    CLASS-METHODS message_body IMPORTING io_stream TYPE REF TO lcl_stream.
 ENDCLASS.
 
 CLASS zcl_protobuf2_parser IMPLEMENTATION.
@@ -17,6 +18,12 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
     traverse( NEW lcl_stream( lv_proto ) ).
   ENDMETHOD.
 
+  METHOD message_body.
+* https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#message_definition
+    ASSERT io_stream IS NOT INITIAL.
+    RETURN. " todo
+  ENDMETHOD.
+
   METHOD traverse.
 * https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#proto_file
     DATA(lv_token) = io_stream->take_token( ).
@@ -25,6 +32,7 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
       WHEN 'message'.
         WRITE / 'parse message, todo'.
         WRITE / io_stream->take_token( ).
+        message_body( io_stream->take_matching( ) ).
       WHEN OTHERS.
         WRITE: / 'todo, handle token:', lv_token.
     ENDCASE.
