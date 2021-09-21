@@ -9,7 +9,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_PROTOBUF2_PARSER IMPLEMENTATION.
+CLASS zcl_protobuf2_parser IMPLEMENTATION.
 
 
   METHOD message_body.
@@ -25,7 +25,8 @@ CLASS ZCL_PROTOBUF2_PARSER IMPLEMENTATION.
     DATA(lv_proto) = condense( iv_proto ).
     ASSERT lv_proto CP |syntax = "proto2";*|.
     REPLACE FIRST OCCURRENCE OF |syntax = "proto2";| IN lv_proto WITH ''.
-    REPLACE ALL OCCURRENCES OF |\n| IN lv_proto WITH ||.
+    REPLACE ALL OCCURRENCES OF |\n| IN lv_proto WITH | |.
+    CONDENSE lv_proto.
 
     traverse( NEW lcl_stream( lv_proto ) ).
   ENDMETHOD.
