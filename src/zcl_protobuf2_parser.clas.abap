@@ -26,7 +26,6 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
     ASSERT lv_proto CP |syntax = "proto2";*|.
     REPLACE FIRST OCCURRENCE OF |syntax = "proto2";| IN lv_proto WITH ''.
     REPLACE ALL OCCURRENCES OF |\n| IN lv_proto WITH | |.
-    CONDENSE lv_proto.
 
     traverse( NEW lcl_stream( lv_proto ) ).
   ENDMETHOD.

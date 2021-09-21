@@ -1,6 +1,7 @@
 CLASS lcl_stream IMPLEMENTATION.
   METHOD constructor.
     mv_str = iv_str.
+    CONDENSE mv_str.
   ENDMETHOD.
 
   METHOD is_empty.
