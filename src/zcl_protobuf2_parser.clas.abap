@@ -1,9 +1,14 @@
 CLASS zcl_protobuf2_parser DEFINITION PUBLIC.
   PUBLIC SECTION.
-    CLASS-METHODS parse IMPORTING iv_proto TYPE string.
+    CLASS-METHODS parse
+      IMPORTING iv_proto TYPE string
+      RETURNING VALUE(ro_file) TYPE REF TO zcl_protobuf2_file.
   PROTECTED SECTION.
   PRIVATE SECTION.
-    CLASS-METHODS traverse IMPORTING io_stream TYPE REF TO lcl_stream.
+    CLASS-METHODS traverse
+      IMPORTING
+        io_file TYPE REF TO zcl_protobuf2_file
+        io_stream TYPE REF TO lcl_stream.
     CLASS-METHODS message_body IMPORTING io_stream TYPE REF TO lcl_stream.
 ENDCLASS.
 
@@ -27,7 +32,11 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
     REPLACE FIRST OCCURRENCE OF |syntax = "proto2";| IN lv_proto WITH ''.
     REPLACE ALL OCCURRENCES OF |\n| IN lv_proto WITH | |.
 
-    traverse( NEW lcl_stream( lv_proto ) ).
+    ro_file = NEW #( ).
+
+    traverse(
+      io_file   = ro_file
+      io_stream = NEW lcl_stream( lv_proto ) ).
   ENDMETHOD.
 
 
@@ -38,6 +47,8 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
       DATA(lv_token) = io_stream->take_token( ).
       CASE lv_token.
         WHEN 'message'.
+          DATA(lo_message) = NEW zcl_protobuf2_message( io_stream->take_token( ) ).
+          APPEND lo_message TO io_file->mt_messages.
           WRITE: / 'Message:', io_stream->take_token( ).
           message_body( io_stream->take_matching( ) ).
         WHEN OTHERS.
