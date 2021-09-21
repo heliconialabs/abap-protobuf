@@ -1,12 +1,24 @@
 CLASS zcl_protobuf2_parser DEFINITION PUBLIC.
   PUBLIC SECTION.
     CLASS-METHODS parse IMPORTING iv_proto TYPE string.
+  PROTECTED SECTION.
   PRIVATE SECTION.
     CLASS-METHODS traverse IMPORTING io_stream TYPE REF TO lcl_stream.
     CLASS-METHODS message_body IMPORTING io_stream TYPE REF TO lcl_stream.
 ENDCLASS.
 
-CLASS zcl_protobuf2_parser IMPLEMENTATION.
+
+
+CLASS ZCL_PROTOBUF2_PARSER IMPLEMENTATION.
+
+
+  METHOD message_body.
+* https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#message_definition
+    ASSERT io_stream IS NOT INITIAL.
+    RETURN. " todo
+  ENDMETHOD.
+
+
   METHOD parse.
     ASSERT iv_proto IS NOT INITIAL.
 
@@ -18,11 +30,6 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
     traverse( NEW lcl_stream( lv_proto ) ).
   ENDMETHOD.
 
-  METHOD message_body.
-* https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#message_definition
-    ASSERT io_stream IS NOT INITIAL.
-    RETURN. " todo
-  ENDMETHOD.
 
   METHOD traverse.
 * https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#proto_file
