@@ -3,6 +3,10 @@ CLASS lcl_stream IMPLEMENTATION.
     mv_str = iv_str.
   ENDMETHOD.
 
+  METHOD is_empty.
+    rv_empty = boolc( strlen( mv_str) = 0 ).
+  ENDMETHOD.
+
   METHOD take_token.
     DATA lv_offset TYPE i.
     FIND FIRST OCCURRENCE OF | | IN mv_str MATCH OFFSET lv_offset.
@@ -49,11 +53,12 @@ CLASS lcl_stream IMPLEMENTATION.
       ENDIF.
       IF lv_count = 0.
         ls_all-offset = ls_all-offset + 1.
-        WRITE / mv_str(ls_all-offset).
         EXIT. " current loop.
       ENDIF.
     ENDLOOP.
 
-    ro_stream = NEW #( '' ).
+    ro_stream = NEW #( mv_str(ls_all-offset) ).
+    mv_str = mv_str+ls_all-offset.
+    CONDENSE mv_str.
   ENDMETHOD.
 ENDCLASS.

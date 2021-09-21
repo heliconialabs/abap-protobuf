@@ -34,15 +34,17 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
 
   METHOD traverse.
 * https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#proto_file
-    DATA(lv_token) = io_stream->take_token( ).
 
-    CASE lv_token.
-      WHEN 'message'.
-        WRITE / 'parse message, todo'.
-        WRITE / io_stream->take_token( ).
-        message_body( io_stream->take_matching( ) ).
-      WHEN OTHERS.
-        WRITE: / 'todo, handle token:', lv_token.
-    ENDCASE.
+    WHILE io_stream->is_empty( ) = abap_false.
+      DATA(lv_token) = io_stream->take_token( ).
+      CASE lv_token.
+        WHEN 'message'.
+          WRITE: / 'Message:', io_stream->take_token( ).
+          message_body( io_stream->take_matching( ) ).
+        WHEN OTHERS.
+          WRITE: / 'todo, handle token:', lv_token.
+          ASSERT 1 = 2.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 ENDCLASS.
