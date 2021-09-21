@@ -49,7 +49,7 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
         WHEN 'message'.
           DATA(lo_message) = NEW zcl_protobuf2_message( io_stream->take_token( ) ).
           APPEND lo_message TO io_file->mt_messages.
-          WRITE: / 'Message:', io_stream->take_token( ).
+          WRITE: / 'Message:', lo_message->mv_name.
           message_body( io_stream->take_matching( ) ).
         WHEN OTHERS.
           WRITE: / 'todo, handle token:', lv_token.
