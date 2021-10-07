@@ -1,0 +1,8 @@
+CLASS zcl_protobuf2_file DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    DATA mt_messages TYPE STANDARD TABLE OF REF TO zcl_protobuf2_message WITH EMPTY KEY.
+ENDCLASS.
+
+CLASS zcl_protobuf2_file IMPLEMENTATION.
+
+ENDCLASS.

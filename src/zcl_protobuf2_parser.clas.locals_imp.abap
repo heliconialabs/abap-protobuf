@@ -1,16 +1,11 @@
-CLASS lcl_stream DEFINITION.
-  PUBLIC SECTION.
-    METHODS constructor IMPORTING iv_str TYPE string.
-    METHODS take_token RETURNING VALUE(rv_token) TYPE string.
-    METHODS peek_token RETURNING VALUE(rv_token) TYPE string.
-    METHODS take_matching RETURNING VALUE(ro_stream) TYPE REF TO lcl_stream.
-  PRIVATE SECTION.
-    DATA mv_str TYPE string.
-ENDCLASS.
-
 CLASS lcl_stream IMPLEMENTATION.
   METHOD constructor.
     mv_str = iv_str.
+    CONDENSE mv_str.
+  ENDMETHOD.
+
+  METHOD is_empty.
+    rv_empty = boolc( strlen( mv_str) = 0 ).
   ENDMETHOD.
 
   METHOD take_token.
@@ -59,11 +54,12 @@ CLASS lcl_stream IMPLEMENTATION.
       ENDIF.
       IF lv_count = 0.
         ls_all-offset = ls_all-offset + 1.
-        WRITE / mv_str(ls_all-offset).
         EXIT. " current loop.
       ENDIF.
     ENDLOOP.
 
-    ro_stream = NEW #( '' ).
+    ro_stream = NEW #( mv_str(ls_all-offset) ).
+    mv_str = mv_str+ls_all-offset.
+    CONDENSE mv_str.
   ENDMETHOD.
 ENDCLASS.
