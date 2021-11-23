@@ -5,7 +5,7 @@ CLASS lcl_stream IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD is_empty.
-    rv_empty = boolc( strlen( mv_str) = 0 ).
+    rv_empty = boolc( strlen( mv_str ) = 0 ).
   ENDMETHOD.
 
   METHOD take_token.
@@ -58,7 +58,8 @@ CLASS lcl_stream IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
 
-    ro_stream = NEW #( mv_str(ls_all-offset) ).
+    DATA(lv_tmp) = mv_str(ls_all-offset).
+    ro_stream = NEW #( lv_tmp ).
     mv_str = mv_str+ls_all-offset.
     CONDENSE mv_str.
   ENDMETHOD.
