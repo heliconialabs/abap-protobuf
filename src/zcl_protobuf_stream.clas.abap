@@ -29,7 +29,9 @@ CLASS zcl_protobuf_stream DEFINITION
         VALUE(rv_hex) TYPE xstring .
     METHODS encode_delimited
       IMPORTING
-        !iv_hex TYPE xstring .
+        !iv_hex       TYPE xstring
+      RETURNING
+        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream.
     METHODS decode_delimited
       RETURNING
         VALUE(rv_hex) TYPE xstring .
@@ -123,6 +125,7 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
     ASSERT xstrlen( iv_hex ) > 0.
     encode_varint( xstrlen( iv_hex ) ).
     append( iv_hex ).
+    ro_ref = me.
   ENDMETHOD.
 
 
