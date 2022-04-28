@@ -179,6 +179,8 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
       append( lv_hex ).
     ENDDO.
 
+    ro_ref = me.
+
   ENDMETHOD.
 
 
