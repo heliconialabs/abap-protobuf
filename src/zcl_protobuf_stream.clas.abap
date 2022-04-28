@@ -24,42 +24,54 @@ CLASS zcl_protobuf_stream DEFINITION
     METHODS constructor
       IMPORTING
         !iv_hex TYPE xstring OPTIONAL .
-    METHODS get
+    METHODS decode_delimited
       RETURNING
         VALUE(rv_hex) TYPE xstring .
+    METHODS decode_field_and_type
+      RETURNING
+        VALUE(rs_field_and_type) TYPE ty_field_and_type .
+    METHODS decode_fixed64
+      RETURNING
+        VALUE(rv_int) TYPE int8.
+    METHODS decode_varint
+      RETURNING
+        VALUE(rv_int) TYPE i .
     METHODS encode_delimited
       IMPORTING
         !iv_hex       TYPE xstring
       RETURNING
-        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream.
-    METHODS decode_delimited
-      RETURNING
-        VALUE(rv_hex) TYPE xstring .
-    METHODS encode_varint
-      IMPORTING
-        !iv_int       TYPE i
-      RETURNING
         VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
-    METHODS decode_varint
-      RETURNING
-        VALUE(rv_int) TYPE i .
     METHODS encode_field_and_type
       IMPORTING
         !is_field_and_type TYPE ty_field_and_type
       RETURNING
         VALUE(ro_ref)      TYPE REF TO zcl_protobuf_stream .
-    METHODS decode_field_and_type
+    METHODS encode_fixed64
+      IMPORTING
+        !iv_int       TYPE int8
       RETURNING
-        VALUE(rs_field_and_type) TYPE ty_field_and_type .
+        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
+    METHODS encode_varint
+      IMPORTING
+        !iv_int       TYPE i
+      RETURNING
+        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
+    METHODS get
+      RETURNING
+        VALUE(rv_hex) TYPE xstring .
   PROTECTED SECTION.
   PRIVATE SECTION.
-    DATA mv_hex TYPE xstring.
+
+    DATA mv_hex TYPE xstring .
 
     METHODS append
-      IMPORTING iv_hex TYPE xsequence.
+      IMPORTING
+        !iv_hex TYPE xsequence .
     METHODS eat
-      IMPORTING iv_length     TYPE i
-      RETURNING VALUE(rv_hex) TYPE xstring.
+      IMPORTING
+        !iv_length    TYPE i
+      RETURNING
+        VALUE(rv_hex) TYPE xstring .
 ENDCLASS.
 
 
@@ -90,6 +102,25 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
 
     rs_field_and_type-field_number = lv_hex DIV 8.
     rs_field_and_type-wire_type = lv_hex MOD 8.
+  ENDMETHOD.
+
+
+  METHOD decode_fixed64.
+* always 8 bytes
+
+    DATA lv_shift TYPE int8 VALUE 1.
+    DATA lv_top TYPE int8.
+
+    DO 8 TIMES.
+      lv_top = mv_hex(1).
+      lv_top = lv_top * lv_shift.
+      rv_int = rv_int + lv_top.
+      IF sy-index < 7.
+        lv_shift = lv_shift * 256.
+      ENDIF.
+      eat( 1 ).
+    ENDDO.
+
   ENDMETHOD.
 
 
@@ -134,6 +165,22 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
     lv_hex = is_field_and_type-field_number * 8 + is_field_and_type-wire_type.
     append( lv_hex ).
     ro_ref = me.
+  ENDMETHOD.
+
+
+  METHOD encode_fixed64.
+* always 8 bytes, little-endian
+
+    DATA lv_hex TYPE x LENGTH 1.
+    DATA(lv_tmp) = iv_int.
+    DO 8 TIMES.
+      lv_hex = lv_tmp MOD 256.
+      lv_tmp = lv_tmp DIV 256.
+      append( lv_hex ).
+    ENDDO.
+
+    ro_ref = me.
+
   ENDMETHOD.
 
 
