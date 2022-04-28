@@ -7,12 +7,24 @@ CLASS ltcl_test DEFINITION FOR TESTING DURATION SHORT RISK LEVEL HARMLESS FINAL.
     METHODS decode_varint FOR TESTING RAISING cx_static_check.
     METHODS encode_field_and_type FOR TESTING RAISING cx_static_check.
     METHODS field_and_type FOR TESTING RAISING cx_static_check.
+    METHODS fixed64 FOR TESTING RAISING cx_static_check.
 ENDCLASS.
 
 CLASS ltcl_test IMPLEMENTATION.
 
   METHOD setup.
     mo_cut = NEW #( ).
+  ENDMETHOD.
+
+  METHOD fixed64.
+    CONSTANTS lc_val TYPE int8 VALUE 1651130626313000.
+    mo_cut->encode_fixed64( lc_val ).
+    cl_abap_unit_assert=>assert_equals(
+      exp = '288B75CEB1DD0500'
+      act = mo_cut->get( ) ).
+    cl_abap_unit_assert=>assert_equals(
+      exp = lc_val
+      act = mo_cut->decode_fixed64( ) ).
   ENDMETHOD.
 
   METHOD decode_varint.

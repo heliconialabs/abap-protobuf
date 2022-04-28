@@ -108,7 +108,19 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
   METHOD decode_fixed64.
 * always 8 bytes
 
-* todo
+    DATA lv_shift TYPE int8 VALUE 1.
+    DATA lv_top TYPE int8.
+
+    DO 8 TIMES.
+      lv_top = mv_hex(1).
+      lv_top = lv_top * lv_shift.
+      rv_int = rv_int + lv_top.
+      IF sy-index < 7.
+        lv_shift = lv_shift * 256.
+      ENDIF.
+      eat( 1 ).
+    ENDDO.
+
   ENDMETHOD.
 
 
@@ -157,9 +169,16 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
 
 
   METHOD encode_fixed64.
-* always 8 bytes
+* always 8 bytes, little-endian
 
-* todo
+    DATA lv_hex TYPE x LENGTH 1.
+    DATA(lv_tmp) = iv_int.
+    DO 8 TIMES.
+      lv_hex = lv_tmp MOD 256.
+      lv_tmp = lv_tmp DIV 256.
+      append( lv_hex ).
+    ENDDO.
+
   ENDMETHOD.
 
 
