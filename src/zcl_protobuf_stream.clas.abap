@@ -170,6 +170,7 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
     FIELD-SYMBOLS <lv_hex> TYPE x.
 
     ASSIGN iv_double TO <lv_hex> CASTING TYPE x.
+    ASSERT <lv_hex> IS ASSIGNED.
     append( <lv_hex> ).
 
     ro_ref = me.
