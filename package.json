@@ -22,7 +22,7 @@
   "homepage": "https://github.com/heliconialabs/abap-protobuf#readme",
   "devDependencies": {
     "@abaplint/cli": "^2.93.31",
-    "@abaplint/runtime": "^2.1.77",
-    "@abaplint/transpiler-cli": "^2.1.77"
+    "@abaplint/runtime": "^2.1.78",
+    "@abaplint/transpiler-cli": "^2.1.78"
   }
 }
