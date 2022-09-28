@@ -32,7 +32,7 @@ CLASS zcl_protobuf_stream DEFINITION
         VALUE(rs_field_and_type) TYPE ty_field_and_type .
     METHODS decode_fixed64
       RETURNING
-        VALUE(rv_int) TYPE int8.
+        VALUE(rv_int) TYPE int8 .
     METHODS decode_varint
       RETURNING
         VALUE(rv_int) TYPE i .
@@ -49,6 +49,11 @@ CLASS zcl_protobuf_stream DEFINITION
     METHODS encode_fixed64
       IMPORTING
         !iv_int       TYPE int8
+      RETURNING
+        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
+    METHODS encode_double
+      IMPORTING
+        !iv_double    TYPE f
       RETURNING
         VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
     METHODS encode_varint
@@ -157,6 +162,19 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
     encode_varint( xstrlen( iv_hex ) ).
     append( iv_hex ).
     ro_ref = me.
+  ENDMETHOD.
+
+
+  METHOD encode_double.
+* IEEE as 64-bit, little endian
+    FIELD-SYMBOLS <lv_hex> TYPE x.
+
+    ASSIGN iv_double TO <lv_hex> CASTING TYPE x.
+    ASSERT <lv_hex> IS ASSIGNED.
+    append( <lv_hex> ).
+
+    ro_ref = me.
+
   ENDMETHOD.
 
 

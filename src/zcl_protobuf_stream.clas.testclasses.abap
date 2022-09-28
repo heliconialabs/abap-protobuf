@@ -6,6 +6,7 @@ CLASS ltcl_test DEFINITION FOR TESTING DURATION SHORT RISK LEVEL HARMLESS FINAL.
     METHODS test_300 FOR TESTING RAISING cx_static_check.
     METHODS decode_varint FOR TESTING RAISING cx_static_check.
     METHODS encode_field_and_type FOR TESTING RAISING cx_static_check.
+    METHODS encode_double FOR TESTING RAISING cx_static_check.
     METHODS field_and_type FOR TESTING RAISING cx_static_check.
     METHODS fixed64 FOR TESTING RAISING cx_static_check.
 ENDCLASS.
@@ -51,6 +52,23 @@ CLASS ltcl_test IMPLEMENTATION.
     cl_abap_unit_assert=>assert_equals(
       exp = lc_field_number
       act = ls_decoded-field_number ).
+  ENDMETHOD.
+
+  METHOD encode_double.
+
+    DATA lv_f TYPE f.
+    lv_f = 2 / 3.
+
+    mo_cut->encode_field_and_type( VALUE #(
+      field_number = 1
+      wire_type    = zcl_protobuf_stream=>gc_wire_type-bit64 ) ).
+    mo_cut->encode_double( lv_f ).
+
+    DATA(lv_encoded) = mo_cut->get( ).
+    cl_abap_unit_assert=>assert_equals(
+      exp = '09555555555555E53F'
+      act = lv_encoded ).
+
   ENDMETHOD.
 
   METHOD encode_field_and_type.
