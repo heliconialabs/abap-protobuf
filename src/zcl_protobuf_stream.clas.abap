@@ -166,7 +166,7 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
 
 
   METHOD encode_double.
-* IEEE as 64-bit
+* IEEE as 64-bit, little endian
     FIELD-SYMBOLS <lv_hex> TYPE x.
 
     ASSIGN iv_double TO <lv_hex> CASTING TYPE x.
