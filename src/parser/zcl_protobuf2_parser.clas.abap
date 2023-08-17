@@ -29,6 +29,12 @@ CLASS zcl_protobuf2_parser DEFINITION PUBLIC.
         io_stream       TYPE REF TO lcl_stream
       RETURNING
         VALUE(ro_enum) TYPE REF TO zcl_protobuf2_enum.
+
+    CLASS-METHODS remove_comments
+      IMPORTING
+        iv_input         TYPE string
+      RETURNING
+        VALUE(rv_output) TYPE string.
 ENDCLASS.
 
 
@@ -94,6 +100,7 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
     DATA(lv_proto) = condense( iv_proto ).
     ASSERT lv_proto CP |syntax = "proto2";*|.
     REPLACE FIRST OCCURRENCE OF |syntax = "proto2";| IN lv_proto WITH ''.
+    lv_proto = remove_comments( lv_proto ).
     REPLACE ALL OCCURRENCES OF |\n| IN lv_proto WITH | |.
 
     ro_file = NEW #( ).
@@ -103,6 +110,26 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
       io_stream = NEW lcl_stream( lv_proto ) ).
   ENDMETHOD.
 
+  METHOD remove_comments.
+    DATA lv_start TYPE i.
+    DATA lv_end   TYPE i.
+
+    rv_output = iv_input.
+    WHILE 1 = 1.
+      FIND FIRST OCCURRENCE OF '/*' IN rv_output MATCH OFFSET lv_start.
+      IF sy-subrc <> 0.
+        EXIT.
+      ENDIF.
+      FIND FIRST OCCURRENCE OF '*/' IN rv_output MATCH OFFSET lv_end.
+      IF sy-subrc <> 0.
+        EXIT.
+      ENDIF.
+
+      lv_end = lv_end + 2.
+      rv_output = rv_output(lv_start) && rv_output+lv_end.
+    ENDWHILE.
+
+  ENDMETHOD.
 
   METHOD traverse.
 * https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#proto_file
@@ -110,6 +137,10 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
     WHILE io_stream->is_empty( ) = abap_false.
       DATA(lv_token) = io_stream->take_token( ).
       CASE lv_token.
+        WHEN 'package'.
+          io_stream->take_statement( ).
+        WHEN 'option'.
+          io_stream->take_statement( ).
         WHEN 'message'.
           APPEND message( io_stream ) TO io_file->mt_artefacts.
         WHEN 'enum'.

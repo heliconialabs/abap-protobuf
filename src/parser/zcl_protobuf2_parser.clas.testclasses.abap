@@ -1,12 +1,14 @@
 CLASS ltcl_test DEFINITION FOR TESTING DURATION SHORT RISK LEVEL HARMLESS FINAL.
   PRIVATE SECTION.
-    METHODS test1 FOR TESTING RAISING cx_static_check.
-    METHODS test2 FOR TESTING RAISING cx_static_check.
+    METHODS identity1 FOR TESTING RAISING cx_static_check.
+    METHODS identity2 FOR TESTING RAISING cx_static_check.
+
+    METHODS remove_comments1 FOR TESTING RAISING cx_static_check.
 ENDCLASS.
 
 CLASS ltcl_test IMPLEMENTATION.
 
-  METHOD test1.
+  METHOD identity1.
 
     DATA(lv_proto) =
       |syntax = "proto2";\n| &&
@@ -37,7 +39,7 @@ CLASS ltcl_test IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD test2.
+  METHOD identity2.
     DATA(lv_proto) =
       |syntax = "proto2";\n| &&
       |message Person \{\n| &&
@@ -64,6 +66,19 @@ CLASS ltcl_test IMPLEMENTATION.
     cl_abap_unit_assert=>assert_equals(
       exp = lv_proto
       act = lo_file->zif_protobuf2_artefact~serialize( ) ).
+
+  ENDMETHOD.
+
+  METHOD remove_comments1.
+
+    DATA(lv_proto) =
+      |syntax = "proto2";\n| &&
+      |/* hello world */| &&
+      |message AddressBook \{\n| &&
+      |  repeated Person people = 1;\n| &&
+      |\}|.
+
+    zcl_protobuf2_parser=>parse( lv_proto ).
 
   ENDMETHOD.
 
