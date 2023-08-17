@@ -97,10 +97,15 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
   METHOD parse.
     ASSERT iv_proto IS NOT INITIAL.
 
-    DATA(lv_proto) = condense( iv_proto ).
+    DATA(lv_proto) = remove_comments( iv_proto ).
+
+    WHILE lv_proto(1) = |\n|.
+      lv_proto = lv_proto+1.
+    ENDWHILE.
+
     ASSERT lv_proto CP |syntax = "proto2";*|.
     REPLACE FIRST OCCURRENCE OF |syntax = "proto2";| IN lv_proto WITH ''.
-    lv_proto = remove_comments( lv_proto ).
+
     REPLACE ALL OCCURRENCES OF |\n| IN lv_proto WITH | |.
 
     ro_file = NEW #( ).
@@ -114,7 +119,7 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
     DATA lv_start TYPE i.
     DATA lv_end   TYPE i.
 
-    rv_output = iv_input.
+    rv_output = condense( iv_input ).
     WHILE 1 = 1.
       FIND FIRST OCCURRENCE OF '/*' IN rv_output MATCH OFFSET lv_start.
       IF sy-subrc <> 0.
