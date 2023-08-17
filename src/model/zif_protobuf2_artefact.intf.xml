@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOINTERF>
-    <CLSNAME>ZIF_PROTOBUF2_SERIALIZABLE</CLSNAME>
+    <CLSNAME>ZIF_PROTOBUF2_ARTEFACT</CLSNAME>
     <LANGU>E</LANGU>
     <DESCRIPT>ZIF_PROTOBUF2_SERIALIZABLE</DESCRIPT>
     <EXPOSURE>2</EXPOSURE>

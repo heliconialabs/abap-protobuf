@@ -1,6 +1,6 @@
 CLASS zcl_protobuf2_enum DEFINITION PUBLIC.
   PUBLIC SECTION.
-    INTERFACES zif_protobuf2_serializable.
+    INTERFACES zif_protobuf2_artefact.
     METHODS constructor IMPORTING iv_name TYPE string.
     DATA mv_name TYPE string.
 * todo, more here,
@@ -13,7 +13,7 @@ CLASS zcl_protobuf2_enum IMPLEMENTATION.
     mv_name = iv_name.
   ENDMETHOD.
 
-  METHOD zif_protobuf2_serializable~serialize.
+  METHOD zif_protobuf2_artefact~serialize.
     rv_string = |enum { mv_name } \{\n|.
     DATA(lv_spaces) = repeat(
       val = |  |

@@ -1,6 +1,6 @@
 CLASS zcl_protobuf2_field DEFINITION PUBLIC.
   PUBLIC SECTION.
-    INTERFACES zif_protobuf2_serializable.
+    INTERFACES zif_protobuf2_artefact.
 
     DATA mv_label        TYPE string.
     DATA mv_type         TYPE string.
@@ -10,7 +10,7 @@ ENDCLASS.
 
 CLASS zcl_protobuf2_field IMPLEMENTATION.
 
-  METHOD zif_protobuf2_serializable~serialize.
+  METHOD zif_protobuf2_artefact~serialize.
     rv_string = |{ mv_label } { mv_type } { mv_field_name } = { mv_field_number };|.
   ENDMETHOD.
 

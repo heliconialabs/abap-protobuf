@@ -2,7 +2,7 @@ CLASS zcl_protobuf2_file DEFINITION PUBLIC.
   PUBLIC SECTION.
 * https://protobuf.dev/reference/protobuf/proto2-spec/#proto_file
 
-    INTERFACES zif_protobuf2_serializable.
+    INTERFACES zif_protobuf2_artefact.
 
     DATA mt_messages TYPE STANDARD TABLE OF REF TO zcl_protobuf2_message WITH EMPTY KEY.
     DATA mt_enums TYPE STANDARD TABLE OF REF TO zcl_protobuf2_enum WITH EMPTY KEY.
@@ -10,13 +10,13 @@ ENDCLASS.
 
 CLASS zcl_protobuf2_file IMPLEMENTATION.
 
-  METHOD zif_protobuf2_serializable~serialize.
+  METHOD zif_protobuf2_artefact~serialize.
     rv_string = |syntax = "proto2";|.
     LOOP AT mt_messages INTO DATA(lo_message).
-      rv_string = rv_string && |\n| && lo_message->zif_protobuf2_serializable~serialize( ).
+      rv_string = rv_string && |\n| && lo_message->zif_protobuf2_artefact~serialize( ).
     ENDLOOP.
     LOOP AT mt_enums INTO DATA(lo_enum).
-      rv_string = rv_string && |\n| && lo_enum->zif_protobuf2_serializable~serialize( ).
+      rv_string = rv_string && |\n| && lo_enum->zif_protobuf2_artefact~serialize( ).
     ENDLOOP.
   ENDMETHOD.
 
