@@ -5,6 +5,8 @@ CLASS zcl_protobuf2_message DEFINITION PUBLIC.
     METHODS constructor IMPORTING iv_name TYPE string.
     DATA mv_name TYPE string.
     DATA mt_fields TYPE STANDARD TABLE OF REF TO zcl_protobuf2_field WITH EMPTY KEY.
+    DATA mt_enums TYPE STANDARD TABLE OF REF TO zcl_protobuf2_enum WITH EMPTY KEY.
+    DATA mt_messages TYPE STANDARD TABLE OF REF TO zcl_protobuf2_message WITH EMPTY KEY.
 ENDCLASS.
 
 CLASS zcl_protobuf2_message IMPLEMENTATION.

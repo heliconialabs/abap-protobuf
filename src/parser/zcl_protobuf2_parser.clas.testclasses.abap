@@ -58,8 +58,10 @@ CLASS ltcl_test IMPLEMENTATION.
       |message AddressBook \{\n| &&
       |  repeated Person people = 1;\n| &&
       |\}|.
-* todo,   parse( lv_proto ).
-    ASSERT lv_proto IS NOT INITIAL.
+
+    DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
+    WRITE / lo_file->zif_protobuf2_serializable~serialize( ).
+
   ENDMETHOD.
 
 ENDCLASS.

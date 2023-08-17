@@ -14,20 +14,41 @@ CLASS zcl_protobuf2_parser DEFINITION PUBLIC.
 
     CLASS-METHODS message
       IMPORTING
-        io_stream TYPE REF TO lcl_stream
+        io_stream         TYPE REF TO lcl_stream
       RETURNING
         VALUE(ro_message) TYPE REF TO zcl_protobuf2_message.
 
     CLASS-METHODS field
       IMPORTING
-        io_stream TYPE REF TO lcl_stream
+        io_stream       TYPE REF TO lcl_stream
       RETURNING
         VALUE(ro_field) TYPE REF TO zcl_protobuf2_field.
+
+    CLASS-METHODS enum
+      IMPORTING
+        io_stream       TYPE REF TO lcl_stream
+      RETURNING
+        VALUE(ro_enum) TYPE REF TO zcl_protobuf2_enum.
 ENDCLASS.
 
 
 
 CLASS zcl_protobuf2_parser IMPLEMENTATION.
+
+  METHOD enum.
+* https://protobuf.dev/reference/protobuf/proto2-spec/#enum_definition
+    ASSERT io_stream IS NOT INITIAL.
+
+    ro_enum = NEW #( io_stream->take_token( ) ).
+
+    DATA(lo_stream) = io_stream->take_matching_squiggly( ).
+    WHILE lo_stream->is_empty( ) = abap_false.
+      DATA(lo_statement) = lo_stream->take_statement( ).
+      APPEND lo_statement->take_token( ) TO ro_enum->mt_fields.
+*      WRITE / lo_statement->get( ).
+    ENDWHILE.
+
+  ENDMETHOD.
 
   METHOD field.
 * https://protobuf.dev/reference/protobuf/proto2-spec/#fields
@@ -54,10 +75,12 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
       DATA(lv_token) = lo_stream->peek_token( ).
       CASE lv_token.
         WHEN 'message'.
-          ASSERT 1 = 'todo'.
+          lo_stream->take_token( ).
+          APPEND message( lo_stream ) TO ro_message->mt_messages.
         WHEN 'enum'.
-          ASSERT 1 = 'todo'.
-        WHEN OTHERS. " then its a field
+          lo_stream->take_token( ).
+          APPEND enum( lo_stream ) TO ro_message->mt_enums.
+        WHEN OTHERS.
           APPEND field( lo_stream->take_statement( ) ) TO ro_message->mt_fields.
       ENDCASE.
 
