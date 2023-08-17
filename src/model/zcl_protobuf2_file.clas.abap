@@ -11,9 +11,9 @@ ENDCLASS.
 CLASS zcl_protobuf2_file IMPLEMENTATION.
 
   METHOD zif_protobuf2_serializable~serialize.
-    rv_string = |syntax = "proto2";\n|.
+    rv_string = |syntax = "proto2";|.
     LOOP AT mt_messages INTO DATA(lo_message).
-      rv_string = rv_string && lo_message->zif_protobuf2_serializable~serialize( ).
+      rv_string = rv_string && |\n| && lo_message->zif_protobuf2_serializable~serialize( ).
     ENDLOOP.
   ENDMETHOD.
 

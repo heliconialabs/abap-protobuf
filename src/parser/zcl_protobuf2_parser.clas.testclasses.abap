@@ -31,6 +31,10 @@ CLASS ltcl_test IMPLEMENTATION.
       exp = 3
       act = lines( lo_file->mt_messages ) ).
 
+    cl_abap_unit_assert=>assert_equals(
+      exp = lv_proto
+      act = lo_file->zif_protobuf2_serializable~serialize( ) ).
+
   ENDMETHOD.
 
   METHOD test2.

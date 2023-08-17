@@ -14,8 +14,11 @@ CLASS zcl_protobuf2_message IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD zif_protobuf2_serializable~serialize.
-    ASSERT 1 = 'todo'.
-*    rv_string =
+    rv_string = |message { mv_name } \{\n|.
+    LOOP AT mt_fields INTO DATA(lo_field).
+      rv_string = rv_string && |  | && lo_field->zif_protobuf2_serializable~serialize( ) && |\n|.
+    ENDLOOP.
+    rv_string = rv_string && |}|.
   ENDMETHOD.
 
 ENDCLASS.

@@ -11,7 +11,7 @@ ENDCLASS.
 CLASS zcl_protobuf2_field IMPLEMENTATION.
 
   METHOD zif_protobuf2_serializable~serialize.
-    ASSERT 1 = 'todo'.
+    rv_string = |{ mv_label } { mv_type } { mv_field_name } = { mv_field_number };|.
   ENDMETHOD.
 
 ENDCLASS.
