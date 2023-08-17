@@ -5,7 +5,7 @@ CLASS zcl_protobuf2_file DEFINITION PUBLIC.
     INTERFACES zif_protobuf2_serializable.
 
     DATA mt_messages TYPE STANDARD TABLE OF REF TO zcl_protobuf2_message WITH EMPTY KEY.
-*    DATA mt_enums TYPE STANDARD TABLE OF REF TO zcl_protobuf2_enum WITH EMPTY KEY.
+    DATA mt_enums TYPE STANDARD TABLE OF REF TO zcl_protobuf2_enum WITH EMPTY KEY.
 ENDCLASS.
 
 CLASS zcl_protobuf2_file IMPLEMENTATION.

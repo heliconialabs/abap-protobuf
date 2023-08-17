@@ -37,15 +37,12 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
 
   METHOD enum.
 * https://protobuf.dev/reference/protobuf/proto2-spec/#enum_definition
-    ASSERT io_stream IS NOT INITIAL.
-
     ro_enum = NEW #( io_stream->take_token( ) ).
 
     DATA(lo_stream) = io_stream->take_matching_squiggly( ).
     WHILE lo_stream->is_empty( ) = abap_false.
       DATA(lo_statement) = lo_stream->take_statement( ).
       APPEND lo_statement->take_token( ) TO ro_enum->mt_fields.
-*      WRITE / lo_statement->get( ).
     ENDWHILE.
 
   ENDMETHOD.
@@ -64,13 +61,10 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
 
   METHOD message.
 * https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#message_definition
-    ASSERT io_stream IS NOT INITIAL.
-
     ro_message = NEW #( io_stream->take_token( ) ).
 
     DATA(lo_stream) = io_stream->take_matching_squiggly( ).
 
-*    WRITE / io_stream->get( ).
     WHILE lo_stream->is_empty( ) = abap_false.
       DATA(lv_token) = lo_stream->peek_token( ).
       CASE lv_token.
@@ -83,9 +77,6 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
         WHEN OTHERS.
           APPEND field( lo_stream->take_statement( ) ) TO ro_message->mt_fields.
       ENDCASE.
-
-      " DATA(lv_token) = io_stream->take_token( ).
-      " WRITE / lv_token.
     ENDWHILE.
   ENDMETHOD.
 
@@ -114,6 +105,8 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
       CASE lv_token.
         WHEN 'message'.
           APPEND message( io_stream ) TO io_file->mt_messages.
+        WHEN 'enum'.
+          APPEND enum( io_stream ) TO io_file->mt_enums.
         WHEN OTHERS.
           WRITE: / 'todo, handle token:', lv_token.
           ASSERT 1 = 'todo'.
