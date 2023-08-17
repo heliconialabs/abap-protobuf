@@ -14,12 +14,22 @@ CLASS lcl_stream IMPLEMENTATION.
 
   METHOD take_token.
     DATA lv_offset TYPE i.
+
+    IF mv_str(1) = '='.
+      " its a special character, so ignore spaces
+      rv_token = mv_str(1).
+      mv_str = mv_str+1.
+      CONDENSE mv_str.
+      RETURN.
+    ENDIF.
+
     FIND FIRST OCCURRENCE OF | | IN mv_str MATCH OFFSET lv_offset.
     IF sy-subrc <> 0.
       rv_token = mv_str.
       mv_str = ''.
       RETURN.
     ENDIF.
+
     rv_token = mv_str(lv_offset).
     mv_str = mv_str+lv_offset.
     CONDENSE mv_str.

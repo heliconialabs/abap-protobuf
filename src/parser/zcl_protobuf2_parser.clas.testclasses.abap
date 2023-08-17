@@ -3,6 +3,9 @@ CLASS ltcl_test DEFINITION FOR TESTING DURATION SHORT RISK LEVEL HARMLESS FINAL.
     METHODS identity1 FOR TESTING RAISING cx_static_check.
     METHODS identity2 FOR TESTING RAISING cx_static_check.
 
+    METHODS without_space FOR TESTING RAISING cx_static_check.
+    METHODS test_tabs FOR TESTING RAISING cx_static_check.
+
     METHODS remove_comments1 FOR TESTING RAISING cx_static_check.
 ENDCLASS.
 
@@ -36,6 +39,41 @@ CLASS ltcl_test IMPLEMENTATION.
     cl_abap_unit_assert=>assert_equals(
       exp = lv_proto
       act = lo_file->zif_protobuf2_artefact~serialize( ) ).
+
+  ENDMETHOD.
+
+  METHOD without_space.
+
+    DATA(lv_proto) =
+      |syntax = "proto2";\n| &&
+      |message Polyline \{\n| &&
+      |  optional string label =2;\n| &&
+      |\}|.
+
+    DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = 1
+      act = lines( lo_file->mt_artefacts ) ).
+
+  ENDMETHOD.
+
+  METHOD test_tabs.
+
+    DATA(lv_proto) =
+      |syntax = "proto2";\n| &&
+      |message Polyline \{\n| &&
+      |  \t enum ResourceType \{\n| &&
+      |    Producer = 0;\n| &&
+      |  \}\n| &&
+      |  optional string label =2;\n| &&
+      |\}|.
+
+    DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = 1
+      act = lines( lo_file->mt_artefacts ) ).
 
   ENDMETHOD.
 

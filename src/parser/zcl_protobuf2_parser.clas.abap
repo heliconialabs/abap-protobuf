@@ -9,8 +9,9 @@ CLASS zcl_protobuf2_parser DEFINITION PUBLIC.
   PRIVATE SECTION.
     CLASS-METHODS traverse
       IMPORTING
-        io_file   TYPE REF TO zcl_protobuf2_file
-        io_stream TYPE REF TO lcl_stream.
+        io_stream TYPE REF TO lcl_stream
+      RETURNING
+        VALUE(ro_file)   TYPE REF TO zcl_protobuf2_file.
 
     CLASS-METHODS message
       IMPORTING
@@ -60,7 +61,6 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
 
   METHOD field.
 * https://protobuf.dev/reference/protobuf/proto2-spec/#fields
-*    WRITE / io_stream->get( ).
 
     ro_field = NEW #( ).
     ro_field->mv_label = io_stream->take_token( ).
@@ -107,12 +107,9 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
     REPLACE FIRST OCCURRENCE OF |syntax = "proto2";| IN lv_proto WITH ''.
 
     REPLACE ALL OCCURRENCES OF |\n| IN lv_proto WITH | |.
+    REPLACE ALL OCCURRENCES OF |\t| IN lv_proto WITH | |.
 
-    ro_file = NEW #( ).
-
-    traverse(
-      io_file   = ro_file
-      io_stream = NEW lcl_stream( lv_proto ) ).
+    ro_file = traverse( NEW lcl_stream( lv_proto ) ).
   ENDMETHOD.
 
   METHOD remove_comments.
@@ -149,6 +146,8 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
   METHOD traverse.
 * https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#proto_file
 
+    ro_file = NEW #( ).
+
     WHILE io_stream->is_empty( ) = abap_false.
       DATA(lv_token) = io_stream->take_token( ).
       CASE lv_token.
@@ -157,9 +156,9 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
         WHEN 'option'.
           io_stream->take_statement( ).
         WHEN 'message'.
-          APPEND message( io_stream ) TO io_file->mt_artefacts.
+          APPEND message( io_stream ) TO ro_file->mt_artefacts.
         WHEN 'enum'.
-          APPEND enum( io_stream ) TO io_file->mt_artefacts.
+          APPEND enum( io_stream ) TO ro_file->mt_artefacts.
         WHEN OTHERS.
           WRITE: / 'todo, handle token:', lv_token.
           ASSERT 1 = 'todo'.
