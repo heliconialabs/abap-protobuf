@@ -29,7 +29,7 @@ CLASS ltcl_test IMPLEMENTATION.
 
     cl_abap_unit_assert=>assert_equals(
       exp = 3
-      act = lines( lo_file->mt_messages ) ).
+      act = lines( lo_file->mt_artefacts ) ).
 
     cl_abap_unit_assert=>assert_equals(
       exp = lv_proto

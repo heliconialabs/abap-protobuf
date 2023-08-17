@@ -104,9 +104,9 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
       DATA(lv_token) = io_stream->take_token( ).
       CASE lv_token.
         WHEN 'message'.
-          APPEND message( io_stream ) TO io_file->mt_messages.
+          APPEND message( io_stream ) TO io_file->mt_artefacts.
         WHEN 'enum'.
-          APPEND enum( io_stream ) TO io_file->mt_enums.
+          APPEND enum( io_stream ) TO io_file->mt_artefacts.
         WHEN OTHERS.
           WRITE: / 'todo, handle token:', lv_token.
           ASSERT 1 = 'todo'.
