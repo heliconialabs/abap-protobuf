@@ -31,6 +31,12 @@ CLASS lcl_stream IMPLEMENTATION.
     ENDIF.
 
     rv_token = mv_str(lv_offset).
+
+    IF strlen( rv_token ) > 1 AND rv_token CP '*='.
+      REPLACE FIRST OCCURRENCE OF '=' IN rv_token WITH ||.
+      lv_offset = lv_offset - 1.
+    ENDIF.
+
     mv_str = mv_str+lv_offset.
     CONDENSE mv_str.
   ENDMETHOD.

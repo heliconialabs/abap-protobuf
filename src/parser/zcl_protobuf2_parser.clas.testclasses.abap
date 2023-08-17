@@ -4,6 +4,7 @@ CLASS ltcl_test DEFINITION FOR TESTING DURATION SHORT RISK LEVEL HARMLESS FINAL.
     METHODS identity2 FOR TESTING RAISING cx_static_check.
 
     METHODS without_space FOR TESTING RAISING cx_static_check.
+    METHODS without_space2 FOR TESTING RAISING cx_static_check.
     METHODS test_tabs FOR TESTING RAISING cx_static_check.
 
     METHODS remove_comments1 FOR TESTING RAISING cx_static_check.
@@ -48,6 +49,22 @@ CLASS ltcl_test IMPLEMENTATION.
       |syntax = "proto2";\n| &&
       |message Polyline \{\n| &&
       |  optional string label =2;\n| &&
+      |\}|.
+
+    DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = 1
+      act = lines( lo_file->mt_artefacts ) ).
+
+  ENDMETHOD.
+
+  METHOD without_space2.
+
+    DATA(lv_proto) =
+      |syntax = "proto2";\n| &&
+      |message Polyline \{\n| &&
+      |  optional string subscription= 4;\n| &&
       |\}|.
 
     DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
