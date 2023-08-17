@@ -15,10 +15,16 @@ CLASS zcl_protobuf2_enum IMPLEMENTATION.
 
   METHOD zif_protobuf2_serializable~serialize.
     rv_string = |enum { mv_name } \{\n|.
+    DATA(lv_spaces) = repeat(
+      val = |  |
+      occ = iv_nesting + 1 ).
     LOOP AT mt_fields INTO DATA(lo_field).
-      rv_string = rv_string && |  | && lo_field && |\n|.
+      rv_string = rv_string && lv_spaces && lo_field && | = todo;\n|.
     ENDLOOP.
-    rv_string = rv_string && |}|.
+    lv_spaces = repeat(
+      val = |  |
+      occ = iv_nesting ).
+    rv_string = rv_string && lv_spaces && |}|.
   ENDMETHOD.
 
 ENDCLASS.

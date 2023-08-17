@@ -15,6 +15,9 @@ CLASS zcl_protobuf2_file IMPLEMENTATION.
     LOOP AT mt_messages INTO DATA(lo_message).
       rv_string = rv_string && |\n| && lo_message->zif_protobuf2_serializable~serialize( ).
     ENDLOOP.
+    LOOP AT mt_enums INTO DATA(lo_enum).
+      rv_string = rv_string && |\n| && lo_enum->zif_protobuf2_serializable~serialize( ).
+    ENDLOOP.
   ENDMETHOD.
 
 ENDCLASS.
