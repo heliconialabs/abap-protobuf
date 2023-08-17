@@ -129,6 +129,16 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
       rv_output = rv_output(lv_start) && rv_output+lv_end.
     ENDWHILE.
 
+    SPLIT rv_output AT |\n| INTO TABLE DATA(lt_lines).
+    LOOP AT lt_lines ASSIGNING FIELD-SYMBOL(<lv_line>).
+      FIND FIRST OCCURRENCE OF '//' IN <lv_line> MATCH OFFSET lv_start.
+      IF sy-subrc = 0.
+        <lv_line> = <lv_line>(lv_start).
+      ENDIF.
+    ENDLOOP.
+    CONCATENATE LINES OF lt_lines INTO rv_output SEPARATED BY |\n|.
+
+    CONDENSE rv_output.
   ENDMETHOD.
 
   METHOD traverse.

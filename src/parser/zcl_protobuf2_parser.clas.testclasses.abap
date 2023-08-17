@@ -74,7 +74,7 @@ CLASS ltcl_test IMPLEMENTATION.
     DATA(lv_proto) =
       |syntax = "proto2";\n| &&
       |/* hello world */| &&
-      |message AddressBook \{\n| &&
+      |message AddressBook \{ // hello world \n| &&
       |  repeated Person people = 1;\n| &&
       |\}|.
 
