@@ -70,12 +70,12 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
       CASE lv_token.
         WHEN 'message'.
           lo_stream->take_token( ).
-          APPEND message( lo_stream ) TO ro_message->mt_messages.
+          APPEND message( lo_stream ) TO ro_message->mt_artefacts.
         WHEN 'enum'.
           lo_stream->take_token( ).
-          APPEND enum( lo_stream ) TO ro_message->mt_enums.
+          APPEND enum( lo_stream ) TO ro_message->mt_artefacts.
         WHEN OTHERS.
-          APPEND field( lo_stream->take_statement( ) ) TO ro_message->mt_fields.
+          APPEND field( lo_stream->take_statement( ) ) TO ro_message->mt_artefacts.
       ENDCASE.
     ENDWHILE.
   ENDMETHOD.
