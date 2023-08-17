@@ -4,17 +4,39 @@ CLASS lcl_stream IMPLEMENTATION.
     CONDENSE mv_str.
   ENDMETHOD.
 
+  METHOD get.
+    rv_str = mv_str.
+  ENDMETHOD.
+
   METHOD is_empty.
-    rv_empty = boolc( strlen( mv_str ) = 0 ).
+    rv_empty = boolc( strlen( condense( mv_str ) ) = 0 ).
   ENDMETHOD.
 
   METHOD take_token.
     DATA lv_offset TYPE i.
-    FIND FIRST OCCURRENCE OF | | IN mv_str MATCH OFFSET lv_offset.
-    IF sy-subrc <> 0.
+
+    IF mv_str(1) = '='.
+      " its a special character, so ignore spaces
+      rv_token = mv_str(1).
+      mv_str = mv_str+1.
+      CONDENSE mv_str.
       RETURN.
     ENDIF.
+
+    FIND FIRST OCCURRENCE OF | | IN mv_str MATCH OFFSET lv_offset.
+    IF sy-subrc <> 0.
+      rv_token = mv_str.
+      mv_str = ''.
+      RETURN.
+    ENDIF.
+
     rv_token = mv_str(lv_offset).
+
+    IF strlen( rv_token ) > 1 AND rv_token CP '*='.
+      REPLACE FIRST OCCURRENCE OF '=' IN rv_token WITH ||.
+      lv_offset = lv_offset - 1.
+    ENDIF.
+
     mv_str = mv_str+lv_offset.
     CONDENSE mv_str.
   ENDMETHOD.
@@ -28,7 +50,20 @@ CLASS lcl_stream IMPLEMENTATION.
     rv_token = mv_str(lv_offset).
   ENDMETHOD.
 
-  METHOD take_matching.
+  METHOD take_statement.
+    DATA lv_offset TYPE i.
+
+    FIND FIRST OCCURRENCE OF |;| IN mv_str MATCH OFFSET lv_offset.
+    ASSERT sy-subrc = 0.
+
+    ro_stream = NEW #( mv_str(lv_offset) ).
+
+    lv_offset = lv_offset + 1.
+    mv_str = mv_str+lv_offset.
+    CONDENSE mv_str.
+  ENDMETHOD.
+
+  METHOD take_matching_squiggly.
     DATA lt_open  TYPE match_result_tab.
     DATA lt_close TYPE match_result_tab.
     DATA lt_all   TYPE match_result_tab.
@@ -59,6 +94,11 @@ CLASS lcl_stream IMPLEMENTATION.
     ENDLOOP.
 
     DATA(lv_tmp) = mv_str(ls_all-offset).
+    " remove the squirly brackets,
+    lv_tmp = lv_tmp+1.
+    lv_count = strlen( lv_tmp ) - 1.
+    lv_tmp = lv_tmp(lv_count).
+
     ro_stream = NEW #( lv_tmp ).
     mv_str = mv_str+ls_all-offset.
     CONDENSE mv_str.

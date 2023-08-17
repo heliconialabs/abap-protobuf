@@ -1,26 +1,29 @@
-CLASS zcl_protobuf2_message DEFINITION PUBLIC.
+CLASS zcl_protobuf2_enum DEFINITION PUBLIC.
   PUBLIC SECTION.
-* https://protobuf.dev/reference/protobuf/proto2-spec/#message_definition
     INTERFACES zif_protobuf2_artefact.
     METHODS constructor IMPORTING iv_name TYPE string.
     DATA mv_name TYPE string.
 
-    DATA mt_artefacts TYPE STANDARD TABLE OF REF TO zif_protobuf2_artefact WITH EMPTY KEY.
+    TYPES: BEGIN OF ty_enum,
+             name  TYPE string,
+             value TYPE string,
+           END OF ty_enum.
+    DATA mt_fields TYPE STANDARD TABLE OF ty_enum WITH EMPTY KEY.
 ENDCLASS.
 
-CLASS zcl_protobuf2_message IMPLEMENTATION.
+CLASS zcl_protobuf2_enum IMPLEMENTATION.
 
   METHOD constructor.
     mv_name = iv_name.
   ENDMETHOD.
 
   METHOD zif_protobuf2_artefact~serialize.
-    rv_string = |message { mv_name } \{\n|.
+    rv_string = |enum { mv_name } \{\n|.
     DATA(lv_spaces) = repeat(
       val = |  |
       occ = iv_nesting + 1 ).
-    LOOP AT mt_artefacts INTO DATA(lo_artefact).
-      rv_string = rv_string && lv_spaces && lo_artefact->serialize( iv_nesting + 1 ) && |\n|.
+    LOOP AT mt_fields INTO DATA(ls_field).
+      rv_string = rv_string && lv_spaces && ls_field-name && | = { ls_field-value };\n|.
     ENDLOOP.
     lv_spaces = repeat(
       val = |  |

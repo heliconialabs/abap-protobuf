@@ -1,17 +1,18 @@
 CLASS ltcl_test DEFINITION FOR TESTING DURATION SHORT RISK LEVEL HARMLESS FINAL.
   PRIVATE SECTION.
-    METHODS parse IMPORTING iv_spec TYPE string RAISING cx_static_check.
-    METHODS test1 FOR TESTING RAISING cx_static_check.
-    METHODS test2 FOR TESTING RAISING cx_static_check.
+    METHODS identity1 FOR TESTING RAISING cx_static_check.
+    METHODS identity2 FOR TESTING RAISING cx_static_check.
+
+    METHODS without_space FOR TESTING RAISING cx_static_check.
+    METHODS without_space2 FOR TESTING RAISING cx_static_check.
+    METHODS test_tabs FOR TESTING RAISING cx_static_check.
+
+    METHODS remove_comments1 FOR TESTING RAISING cx_static_check.
 ENDCLASS.
 
 CLASS ltcl_test IMPLEMENTATION.
 
-  METHOD parse.
-    zcl_protobuf2_parser=>parse( iv_spec ).
-  ENDMETHOD.
-
-  METHOD test1.
+  METHOD identity1.
 
     DATA(lv_proto) =
       |syntax = "proto2";\n| &&
@@ -30,11 +31,70 @@ CLASS ltcl_test IMPLEMENTATION.
       |  optional string label = 2;\n| &&
       |\}|.
 
-    parse( lv_proto ).
+    DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = 3
+      act = lines( lo_file->mt_artefacts ) ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = lv_proto
+      act = lo_file->zif_protobuf2_artefact~serialize( ) ).
 
   ENDMETHOD.
 
-  METHOD test2.
+  METHOD without_space.
+
+    DATA(lv_proto) =
+      |syntax = "proto2";\n| &&
+      |message Polyline \{\n| &&
+      |  optional string label =2;\n| &&
+      |\}|.
+
+    DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = 1
+      act = lines( lo_file->mt_artefacts ) ).
+
+  ENDMETHOD.
+
+  METHOD without_space2.
+
+    DATA(lv_proto) =
+      |syntax = "proto2";\n| &&
+      |message Polyline \{\n| &&
+      |  optional string subscription= 4;\n| &&
+      |\}|.
+
+    DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = 1
+      act = lines( lo_file->mt_artefacts ) ).
+
+  ENDMETHOD.
+
+  METHOD test_tabs.
+
+    DATA(lv_proto) =
+      |syntax = "proto2";\n| &&
+      |message Polyline \{\n| &&
+      |  \t enum ResourceType \{\n| &&
+      |    Producer = 0;\n| &&
+      |  \}\n| &&
+      |  optional string label =2;\n| &&
+      |\}|.
+
+    DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = 1
+      act = lines( lo_file->mt_artefacts ) ).
+
+  ENDMETHOD.
+
+  METHOD identity2.
     DATA(lv_proto) =
       |syntax = "proto2";\n| &&
       |message Person \{\n| &&
@@ -55,8 +115,26 @@ CLASS ltcl_test IMPLEMENTATION.
       |message AddressBook \{\n| &&
       |  repeated Person people = 1;\n| &&
       |\}|.
-* todo,   parse( lv_proto ).
-    ASSERT lv_proto IS NOT INITIAL.
+
+    DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = lv_proto
+      act = lo_file->zif_protobuf2_artefact~serialize( ) ).
+
+  ENDMETHOD.
+
+  METHOD remove_comments1.
+
+    DATA(lv_proto) =
+      |syntax = "proto2";\n| &&
+      |/* hello world */| &&
+      |message AddressBook \{ // hello world \n| &&
+      |  repeated Person people = 1;\n| &&
+      |\}|.
+
+    zcl_protobuf2_parser=>parse( lv_proto ).
+
   ENDMETHOD.
 
 ENDCLASS.
