@@ -34,7 +34,20 @@ CLASS lcl_stream IMPLEMENTATION.
     rv_token = mv_str(lv_offset).
   ENDMETHOD.
 
-  METHOD take_matching.
+  METHOD take_statement.
+    DATA lv_offset TYPE i.
+
+    FIND FIRST OCCURRENCE OF |;| IN mv_str MATCH OFFSET lv_offset.
+    ASSERT sy-subrc = 0.
+
+    ro_stream = NEW #( mv_str(lv_offset) ).
+
+    lv_offset = lv_offset + 1.
+    mv_str = mv_str+lv_offset.
+    CONDENSE mv_str.
+  ENDMETHOD.
+
+  METHOD take_matching_squiggly.
     DATA lt_open  TYPE match_result_tab.
     DATA lt_close TYPE match_result_tab.
     DATA lt_all   TYPE match_result_tab.
@@ -65,6 +78,11 @@ CLASS lcl_stream IMPLEMENTATION.
     ENDLOOP.
 
     DATA(lv_tmp) = mv_str(ls_all-offset).
+    " remove the squirly brackets,
+    lv_tmp = lv_tmp+1.
+    lv_count = strlen( lv_tmp ) - 1.
+    lv_tmp = lv_tmp(lv_count).
+
     ro_stream = NEW #( lv_tmp ).
     mv_str = mv_str+ls_all-offset.
     CONDENSE mv_str.

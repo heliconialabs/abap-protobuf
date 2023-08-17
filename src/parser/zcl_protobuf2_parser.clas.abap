@@ -11,24 +11,58 @@ CLASS zcl_protobuf2_parser DEFINITION PUBLIC.
       IMPORTING
         io_file   TYPE REF TO zcl_protobuf2_file
         io_stream TYPE REF TO lcl_stream.
-    CLASS-METHODS message_body
+
+    CLASS-METHODS message
       IMPORTING
-        io_stream TYPE REF TO lcl_stream.
+        io_stream TYPE REF TO lcl_stream
+      RETURNING
+        VALUE(ro_message) TYPE REF TO zcl_protobuf2_message.
+
+    CLASS-METHODS field
+      IMPORTING
+        io_stream TYPE REF TO lcl_stream
+      RETURNING
+        VALUE(ro_field) TYPE REF TO zcl_protobuf2_field.
 ENDCLASS.
 
 
 
 CLASS zcl_protobuf2_parser IMPLEMENTATION.
 
+  METHOD field.
+* https://protobuf.dev/reference/protobuf/proto2-spec/#fields
+*    WRITE / io_stream->get( ).
 
-  METHOD message_body.
+    ro_field = NEW #( ).
+    ro_field->mv_label = io_stream->take_token( ).
+    ro_field->mv_type = io_stream->take_token( ).
+    ro_field->mv_field_name = io_stream->take_token( ).
+    ASSERT io_stream->take_token( ) = '='.
+    ro_field->mv_field_number = io_stream->take_token( ).
+  ENDMETHOD.
+
+  METHOD message.
 * https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#message_definition
     ASSERT io_stream IS NOT INITIAL.
 
-    WRITE / io_stream->get( ).
-    WHILE io_stream->is_empty( ) = abap_false.
-      DATA(lv_token) = io_stream->take_token( ).
-      WRITE / lv_token.
+    ro_message = NEW #( io_stream->take_token( ) ).
+
+    DATA(lo_stream) = io_stream->take_matching_squiggly( ).
+
+*    WRITE / io_stream->get( ).
+    WHILE lo_stream->is_empty( ) = abap_false.
+      DATA(lv_token) = lo_stream->peek_token( ).
+      CASE lv_token.
+        WHEN 'message'.
+          ASSERT 1 = 'todo'.
+        WHEN 'enum'.
+          ASSERT 1 = 'todo'.
+        WHEN OTHERS. " then its a field
+          APPEND field( lo_stream->take_statement( ) ) TO ro_message->mt_fields.
+      ENDCASE.
+
+      " DATA(lv_token) = io_stream->take_token( ).
+      " WRITE / lv_token.
     ENDWHILE.
   ENDMETHOD.
 
@@ -56,13 +90,10 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
       DATA(lv_token) = io_stream->take_token( ).
       CASE lv_token.
         WHEN 'message'.
-          DATA(lo_message) = NEW zcl_protobuf2_message( io_stream->take_token( ) ).
-          APPEND lo_message TO io_file->mt_messages.
-*          WRITE: / 'Message:', lo_message->mv_name.
-          message_body( io_stream->take_matching( ) ).
+          APPEND message( io_stream ) TO io_file->mt_messages.
         WHEN OTHERS.
           WRITE: / 'todo, handle token:', lv_token.
-          ASSERT 1 = 2.
+          ASSERT 1 = 'todo'.
       ENDCASE.
     ENDWHILE.
   ENDMETHOD.
