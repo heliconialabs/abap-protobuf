@@ -3,8 +3,12 @@ CLASS zcl_protobuf2_enum DEFINITION PUBLIC.
     INTERFACES zif_protobuf2_artefact.
     METHODS constructor IMPORTING iv_name TYPE string.
     DATA mv_name TYPE string.
-* todo, more here,
-    DATA mt_fields TYPE STANDARD TABLE OF string WITH EMPTY KEY.
+
+    TYPES: BEGIN OF ty_enum,
+             name  TYPE string,
+             value TYPE string,
+           END OF ty_enum.
+    DATA mt_fields TYPE STANDARD TABLE OF ty_enum WITH EMPTY KEY.
 ENDCLASS.
 
 CLASS zcl_protobuf2_enum IMPLEMENTATION.
@@ -18,8 +22,8 @@ CLASS zcl_protobuf2_enum IMPLEMENTATION.
     DATA(lv_spaces) = repeat(
       val = |  |
       occ = iv_nesting + 1 ).
-    LOOP AT mt_fields INTO DATA(lo_field).
-      rv_string = rv_string && lv_spaces && lo_field && | = todo;\n|.
+    LOOP AT mt_fields INTO DATA(ls_field).
+      rv_string = rv_string && lv_spaces && ls_field-name && | = { ls_field-value };\n|.
     ENDLOOP.
     lv_spaces = repeat(
       val = |  |

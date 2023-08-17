@@ -42,7 +42,12 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
     DATA(lo_stream) = io_stream->take_matching_squiggly( ).
     WHILE lo_stream->is_empty( ) = abap_false.
       DATA(lo_statement) = lo_stream->take_statement( ).
-      APPEND lo_statement->take_token( ) TO ro_enum->mt_fields.
+      DATA(lv_name) = lo_statement->take_token( ).
+      lo_statement->take_token( ).
+      DATA(lv_value) = lo_statement->take_token( ).
+      APPEND VALUE #(
+        name  = lv_name
+        value = lv_value ) TO ro_enum->mt_fields.
     ENDWHILE.
 
   ENDMETHOD.
@@ -57,6 +62,8 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
     ro_field->mv_field_name = io_stream->take_token( ).
     ASSERT io_stream->take_token( ) = '='.
     ro_field->mv_field_number = io_stream->take_token( ).
+
+    ro_field->mv_options = io_stream->get( ).
   ENDMETHOD.
 
   METHOD message.

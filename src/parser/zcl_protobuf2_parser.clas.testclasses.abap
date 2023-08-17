@@ -60,7 +60,10 @@ CLASS ltcl_test IMPLEMENTATION.
       |\}|.
 
     DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
-    WRITE / lo_file->zif_protobuf2_artefact~serialize( ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = lv_proto
+      act = lo_file->zif_protobuf2_artefact~serialize( ) ).
 
   ENDMETHOD.
 
