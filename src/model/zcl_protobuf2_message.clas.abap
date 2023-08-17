@@ -1,5 +1,6 @@
 CLASS zcl_protobuf2_message DEFINITION PUBLIC.
   PUBLIC SECTION.
+* https://protobuf.dev/reference/protobuf/proto2-spec/#message_definition
     METHODS constructor IMPORTING iv_name TYPE string.
     DATA mv_name TYPE string.
 ENDCLASS.

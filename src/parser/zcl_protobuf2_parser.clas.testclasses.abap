@@ -1,15 +1,10 @@
 CLASS ltcl_test DEFINITION FOR TESTING DURATION SHORT RISK LEVEL HARMLESS FINAL.
   PRIVATE SECTION.
-    METHODS parse IMPORTING iv_spec TYPE string RAISING cx_static_check.
     METHODS test1 FOR TESTING RAISING cx_static_check.
     METHODS test2 FOR TESTING RAISING cx_static_check.
 ENDCLASS.
 
 CLASS ltcl_test IMPLEMENTATION.
-
-  METHOD parse.
-    zcl_protobuf2_parser=>parse( iv_spec ).
-  ENDMETHOD.
 
   METHOD test1.
 
@@ -30,7 +25,11 @@ CLASS ltcl_test IMPLEMENTATION.
       |  optional string label = 2;\n| &&
       |\}|.
 
-    parse( lv_proto ).
+    DATA(lo_file) = zcl_protobuf2_parser=>parse( lv_proto ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = 3
+      act = lines( lo_file->mt_messages ) ).
 
   ENDMETHOD.
 

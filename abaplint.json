@@ -123,7 +123,7 @@
     "class_attribute_names": true,
     "cloud_types": true,
     "colon_missing_space": true,
-    "commented_code": true,
+    "commented_code": false,
     "constructor_visibility_public": true,
     "contains_tab": true,
     "definitions_top": true,

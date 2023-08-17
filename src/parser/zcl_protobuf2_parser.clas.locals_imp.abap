@@ -4,14 +4,20 @@ CLASS lcl_stream IMPLEMENTATION.
     CONDENSE mv_str.
   ENDMETHOD.
 
+  METHOD get.
+    rv_str = mv_str.
+  ENDMETHOD.
+
   METHOD is_empty.
-    rv_empty = boolc( strlen( mv_str ) = 0 ).
+    rv_empty = boolc( strlen( condense( mv_str ) ) = 0 ).
   ENDMETHOD.
 
   METHOD take_token.
     DATA lv_offset TYPE i.
     FIND FIRST OCCURRENCE OF | | IN mv_str MATCH OFFSET lv_offset.
     IF sy-subrc <> 0.
+      rv_token = mv_str.
+      mv_str = ''.
       RETURN.
     ENDIF.
     rv_token = mv_str(lv_offset).
