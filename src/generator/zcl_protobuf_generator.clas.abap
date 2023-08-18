@@ -30,14 +30,12 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
 
   METHOD generate.
 
-    rv_abap = 'sdfs'.
-
     LOOP AT io_file->mt_artefacts INTO DATA(lo_artefact).
       CASE TYPE OF lo_artefact.
         WHEN TYPE zcl_protobuf2_message INTO DATA(lo_message).
           rv_abap = rv_abap && message( lo_message ).
         WHEN OTHERS.
-          WRITE / 'todo'.
+          ASSERT 1 = 'todo'.
       ENDCASE.
     ENDLOOP.
 
@@ -45,7 +43,7 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
 
   METHOD message.
 
-    rv_abap = 'sdfs'.
+    rv_abap = |TYPES BEGIN OF { io_message->mv_name }.\n|.
 
     LOOP AT io_message->mt_artefacts INTO DATA(lo_artefact).
       CASE TYPE OF lo_artefact.
@@ -56,23 +54,27 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
         WHEN TYPE zcl_protobuf2_field INTO DATA(lo_field).
           rv_abap = rv_abap && field( lo_field ).
         WHEN OTHERS.
-          WRITE / 'todo'.
+          ASSERT 1 = 'todo'.
       ENDCASE.
     ENDLOOP.
+
+    rv_abap = rv_abap && |TYPES END OF { io_message->mv_name }.\n|.
 
   ENDMETHOD.
 
   METHOD enum.
 
-    rv_abap = 'sdfs'.
+    rv_abap = |TYPES BEGIN OF ENUM { io_enum->mv_name }.\n|.
 
     LOOP AT io_enum->mt_fields INTO DATA(ls_field).
-      rv_abap = rv_abap && ls_field-name.
+      rv_abap = rv_abap && |TYPES { ls_field-name }.\n|.
     ENDLOOP.
+
+    rv_abap = rv_abap && |TYPES END OF ENUM { io_enum->mv_name }.\n|.
 
   ENDMETHOD.
 
   METHOD field.
-    rv_abap = io_field->mv_field_name.
+    rv_abap = |TYPES { io_field->mv_field_name } TYPE i.\n|.
   ENDMETHOD.
 ENDCLASS.

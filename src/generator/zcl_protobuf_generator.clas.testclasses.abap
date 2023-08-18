@@ -24,7 +24,8 @@ CLASS ltcl_test IMPLEMENTATION.
       |  optional string label = 2;\n| &&
       |\}|.
 
-    zcl_protobuf_generator=>generate( zcl_protobuf2_parser=>parse( lv_proto ) ).
+    DATA(lv_abap) = zcl_protobuf_generator=>generate( zcl_protobuf2_parser=>parse( lv_proto ) ).
+    WRITE / lv_abap.
 
   ENDMETHOD.
 
