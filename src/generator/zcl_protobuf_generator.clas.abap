@@ -12,16 +12,16 @@ CLASS zcl_protobuf_generator DEFINITION PUBLIC.
         io_message     TYPE REF TO zcl_protobuf2_message
       RETURNING
         VALUE(rv_abap) TYPE string.
-    " CLASS-METHODS enum
-    "   IMPORTING
-    "     io_enum        TYPE REF TO zcl_protobuf2_enum
-    "   RETURNING
-    "     VALUE(rv_abap) TYPE string.
-    " CLASS-METHODS field
-    "   IMPORTING
-    "     io_field       TYPE REF TO zcl_protobuf2_field
-    "   RETURNING
-    "     VALUE(rv_abap) TYPE string.
+    CLASS-METHODS enum
+      IMPORTING
+        io_enum        TYPE REF TO zcl_protobuf2_enum
+      RETURNING
+        VALUE(rv_abap) TYPE string.
+    CLASS-METHODS field
+      IMPORTING
+        io_field       TYPE REF TO zcl_protobuf2_field
+      RETURNING
+        VALUE(rv_abap) TYPE string.
 ENDCLASS.
 
 
@@ -51,10 +51,10 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
       CASE TYPE OF lo_artefact.
         WHEN TYPE zcl_protobuf2_message INTO DATA(lo_message).
           rv_abap = rv_abap && message( lo_message ).
-        " WHEN TYPE zcl_protobuf2_enum INTO DATA(lo_enum).
-        "   rv_abap = rv_abap && enum( lo_enum ).
-        " WHEN TYPE zcl_protobuf2_field INTO DATA(lo_field).
-          " rv_abap = rv_abap && field( lo_field ).
+        WHEN TYPE zcl_protobuf2_enum INTO DATA(lo_enum).
+          rv_abap = rv_abap && enum( lo_enum ).
+        WHEN TYPE zcl_protobuf2_field INTO DATA(lo_field).
+          rv_abap = rv_abap && field( lo_field ).
         WHEN OTHERS.
           WRITE / 'todo'.
       ENDCASE.
@@ -62,17 +62,17 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
 
   ENDMETHOD.
 
-  " METHOD enum.
+  METHOD enum.
 
-  "   rv_abap = 'sdfs'.
+    rv_abap = 'sdfs'.
 
-  "   LOOP AT io_enum->mt_fields INTO DATA(ls_field).
-  "     rv_abap = rv_abap && ls_field-name.
-  "   ENDLOOP.
+    LOOP AT io_enum->mt_fields INTO DATA(ls_field).
+      rv_abap = rv_abap && ls_field-name.
+    ENDLOOP.
 
-  " ENDMETHOD.
+  ENDMETHOD.
 
-  " METHOD field.
-  "   rv_abap = io_field->mv_field_name.
-  " ENDMETHOD.
+  METHOD field.
+    rv_abap = io_field->mv_field_name.
+  ENDMETHOD.
 ENDCLASS.
