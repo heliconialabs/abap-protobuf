@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>ZCL_PROTOBUF</CLSNAME>
+    <CLSNAME>ZCL_PROTOBUF_GENERATOR</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>ZCL_PROTOBUF</DESCRIPT>
+    <DESCRIPT>ZCL_PROTOBUF_GENERATOR</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

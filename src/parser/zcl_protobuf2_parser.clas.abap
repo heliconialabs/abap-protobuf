@@ -42,6 +42,7 @@ ENDCLASS.
 
 CLASS zcl_protobuf2_parser IMPLEMENTATION.
 
+
   METHOD enum.
 * https://protobuf.dev/reference/protobuf/proto2-spec/#enum_definition
     ro_enum = NEW #( io_stream->take_token( ) ).
@@ -59,6 +60,7 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD field.
 * https://protobuf.dev/reference/protobuf/proto2-spec/#fields
 
@@ -71,6 +73,7 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
 
     ro_field->mv_options = io_stream->get( ).
   ENDMETHOD.
+
 
   METHOD message.
 * https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#message_definition
@@ -112,6 +115,7 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
     ro_file = traverse( NEW lcl_stream( lv_proto ) ).
   ENDMETHOD.
 
+
   METHOD remove_comments.
     DATA lv_start TYPE i.
     DATA lv_end   TYPE i.
@@ -131,6 +135,7 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
       rv_output = rv_output(lv_start) && rv_output+lv_end.
     ENDWHILE.
 
+
     SPLIT rv_output AT |\n| INTO TABLE DATA(lt_lines).
     LOOP AT lt_lines ASSIGNING FIELD-SYMBOL(<lv_line>).
       FIND FIRST OCCURRENCE OF '//' IN <lv_line> MATCH OFFSET lv_start.
@@ -138,10 +143,11 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
         <lv_line> = <lv_line>(lv_start).
       ENDIF.
     ENDLOOP.
-    CONCATENATE LINES OF lt_lines INTO rv_output SEPARATED BY |\n|.
+    CONCATENATE LINES OF lt_lines INTO rv_output SEPARATED BY cl_abap_char_utilities=>newline.
 
     CONDENSE rv_output.
   ENDMETHOD.
+
 
   METHOD traverse.
 * https://developers.google.com/protocol-buffers/docs/reference/proto2-spec#proto_file

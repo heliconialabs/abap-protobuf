@@ -9,7 +9,7 @@ CLASS lcl_stream IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD is_empty.
-    rv_empty = boolc( strlen( condense( mv_str ) ) = 0 ).
+    rv_empty = xsdbool( strlen( condense( mv_str ) ) = 0 ).
   ENDMETHOD.
 
   METHOD take_token.
@@ -52,11 +52,13 @@ CLASS lcl_stream IMPLEMENTATION.
 
   METHOD take_statement.
     DATA lv_offset TYPE i.
+    DATA lv_tmp TYPE string.
 
     FIND FIRST OCCURRENCE OF |;| IN mv_str MATCH OFFSET lv_offset.
     ASSERT sy-subrc = 0.
 
-    ro_stream = NEW #( mv_str(lv_offset) ).
+    lv_tmp = mv_str(lv_offset).
+    ro_stream = NEW #( lv_tmp ).
 
     lv_offset = lv_offset + 1.
     mv_str = mv_str+lv_offset.

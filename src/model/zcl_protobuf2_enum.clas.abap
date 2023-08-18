@@ -28,7 +28,7 @@ CLASS zcl_protobuf2_enum IMPLEMENTATION.
     lv_spaces = repeat(
       val = |  |
       occ = iv_nesting ).
-    rv_string = rv_string && lv_spaces && |}|.
+    rv_string = rv_string && lv_spaces && |\}|.
   ENDMETHOD.
 
 ENDCLASS.
