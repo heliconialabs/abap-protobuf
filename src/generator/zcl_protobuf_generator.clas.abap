@@ -11,7 +11,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_PROTOBUF_GENERATOR IMPLEMENTATION.
+CLASS zcl_protobuf_generator IMPLEMENTATION.
 
 
   METHOD generate.
@@ -20,9 +20,9 @@ CLASS ZCL_PROTOBUF_GENERATOR IMPLEMENTATION.
       rv_abap = 'sdfs'.
       CASE TYPE OF lo_artefact.
         WHEN TYPE zcl_protobuf2_message.
-          BREAK-POINT.
+          WRITE / 'todo'.
         WHEN OTHERS.
-          BREAK-POINT.
+          WRITE / 'todo'.
       ENDCASE.
     ENDLOOP.
 

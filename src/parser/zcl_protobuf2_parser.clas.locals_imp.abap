@@ -9,7 +9,7 @@ CLASS lcl_stream IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD is_empty.
-    rv_empty = boolc( strlen( condense( mv_str ) ) = 0 ).
+    rv_empty = xsdbool( strlen( condense( mv_str ) ) = 0 ).
   ENDMETHOD.
 
   METHOD take_token.
