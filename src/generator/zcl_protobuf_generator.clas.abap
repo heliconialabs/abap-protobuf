@@ -7,7 +7,7 @@ CLASS zcl_protobuf_generator DEFINITION PUBLIC.
         VALUE(rv_abap) TYPE string.
   PROTECTED SECTION.
   PRIVATE SECTION.
-    METHODS message
+    CLASS-METHODS message
       IMPORTING
         io_message TYPE REF TO zcl_protobuf2_message.
 ENDCLASS.
