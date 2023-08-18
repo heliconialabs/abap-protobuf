@@ -1,3 +1,0 @@
-INTERFACE zif_protobuf PUBLIC.
-
-ENDINTERFACE.
