@@ -43,7 +43,7 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
 
   METHOD message.
 
-    rv_abap = |TYPES BEGIN OF { io_message->mv_name }.\n|.
+    rv_abap = |TYPES: BEGIN OF { io_message->mv_name },\n|.
 
     LOOP AT io_message->mt_artefacts INTO DATA(lo_artefact).
       CASE TYPE OF lo_artefact.
@@ -58,23 +58,21 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
       ENDCASE.
     ENDLOOP.
 
-    rv_abap = rv_abap && |TYPES END OF { io_message->mv_name }.\n|.
+    rv_abap = rv_abap && |       END OF { io_message->mv_name }.\n|.
 
   ENDMETHOD.
 
   METHOD enum.
 
-    rv_abap = |TYPES BEGIN OF ENUM { io_enum->mv_name }.\n|.
-
+    rv_abap = |TYPES: BEGIN OF ENUM { io_enum->mv_name },\n|.
     LOOP AT io_enum->mt_fields INTO DATA(ls_field).
-      rv_abap = rv_abap && |TYPES { ls_field-name }.\n|.
+      rv_abap = rv_abap && |        { ls_field-name } VALUE { ls_field-value },\n|.
     ENDLOOP.
-
-    rv_abap = rv_abap && |TYPES END OF ENUM { io_enum->mv_name }.\n|.
+    rv_abap = rv_abap && |      END OF ENUM { io_enum->mv_name }.\n|.
 
   ENDMETHOD.
 
   METHOD field.
-    rv_abap = |TYPES { io_field->mv_field_name } TYPE i.\n|.
+    rv_abap = |         { io_field->mv_field_name } TYPE { io_field->mv_type }.\n|.
   ENDMETHOD.
 ENDCLASS.
