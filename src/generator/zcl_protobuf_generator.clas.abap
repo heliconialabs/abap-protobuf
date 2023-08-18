@@ -51,7 +51,7 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
         WHEN TYPE zcl_protobuf2_enum INTO DATA(lo_enum).
           rv_abap = rv_abap && enum( lo_enum ).
         WHEN OTHERS.
-          ASSERT 1 = 'todo'.
+          CONTINUE.
       ENDCASE.
     ENDLOOP.
 
@@ -62,7 +62,7 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
         WHEN TYPE zcl_protobuf2_field INTO DATA(lo_field).
           rv_abap = rv_abap && field( lo_field ).
         WHEN OTHERS.
-          ASSERT 1 = 'todo'.
+          CONTINUE.
       ENDCASE.
     ENDLOOP.
 
