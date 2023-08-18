@@ -9,19 +9,23 @@ CLASS ltcl_test IMPLEMENTATION.
 
     DATA(lv_proto) =
       |syntax = "proto2";\n| &&
-      |message Point \{\n| &&
-      |  required int32 x = 1;\n| &&
-      |  required int32 y = 2;\n| &&
-      |  optional string label = 3;\n| &&
+      |message Person \{\n| &&
+      |  required string name = 1;\n| &&
+      |  required int32 id = 2;\n| &&
+      |  optional string email = 3;\n| &&
+      |  enum PhoneType \{\n| &&
+      |    MOBILE = 0;\n| &&
+      |    HOME = 1;\n| &&
+      |    WORK = 2;\n| &&
+      |  \}\n| &&
+      |  message PhoneNumber \{\n| &&
+      |    required string number = 1;\n| &&
+      |    optional PhoneType type = 2 [default = HOME];\n| &&
+      |  \}\n| &&
+      |  repeated PhoneNumber phones = 4;\n| &&
       |\}\n| &&
-      |message Line \{\n| &&
-      |  required Point start = 1;\n| &&
-      |  required Point end = 2;\n| &&
-      |  optional string label = 3;\n| &&
-      |\}\n| &&
-      |message Polyline \{\n| &&
-      |  repeated Point point = 1;\n| &&
-      |  optional string label = 2;\n| &&
+      |message AddressBook \{\n| &&
+      |  repeated Person people = 1;\n| &&
       |\}|.
 
     DATA(lv_abap) = zcl_protobuf_generator=>generate( zcl_protobuf2_parser=>parse( lv_proto ) ).
