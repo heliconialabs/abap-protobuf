@@ -43,14 +43,22 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
 
   METHOD message.
 
-    rv_abap = |TYPES: BEGIN OF { io_message->mv_name },\n|.
-
+* do the nested messages and types first, if any
     LOOP AT io_message->mt_artefacts INTO DATA(lo_artefact).
       CASE TYPE OF lo_artefact.
         WHEN TYPE zcl_protobuf2_message INTO DATA(lo_message).
           rv_abap = rv_abap && message( lo_message ).
         WHEN TYPE zcl_protobuf2_enum INTO DATA(lo_enum).
           rv_abap = rv_abap && enum( lo_enum ).
+        WHEN OTHERS.
+          ASSERT 1 = 'todo'.
+      ENDCASE.
+    ENDLOOP.
+
+    rv_abap = |TYPES: BEGIN OF { io_message->mv_name },\n|.
+
+    LOOP AT io_message->mt_artefacts INTO lo_artefact.
+      CASE TYPE OF lo_artefact.
         WHEN TYPE zcl_protobuf2_field INTO DATA(lo_field).
           rv_abap = rv_abap && field( lo_field ).
         WHEN OTHERS.
