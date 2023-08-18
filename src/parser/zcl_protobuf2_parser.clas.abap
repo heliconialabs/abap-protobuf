@@ -40,7 +40,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_PROTOBUF2_PARSER IMPLEMENTATION.
+CLASS zcl_protobuf2_parser IMPLEMENTATION.
 
 
   METHOD enum.
@@ -134,6 +134,7 @@ CLASS ZCL_PROTOBUF2_PARSER IMPLEMENTATION.
       lv_end = lv_end + 2.
       rv_output = rv_output(lv_start) && rv_output+lv_end.
     ENDWHILE.
+
 
     SPLIT rv_output AT |\n| INTO TABLE DATA(lt_lines).
     LOOP AT lt_lines ASSIGNING FIELD-SYMBOL(<lv_line>).
