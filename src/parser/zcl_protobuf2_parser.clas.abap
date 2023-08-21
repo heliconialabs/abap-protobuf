@@ -100,10 +100,13 @@ CLASS zcl_protobuf2_parser IMPLEMENTATION.
   METHOD parse.
     ASSERT iv_proto IS NOT INITIAL.
 
-    DATA(lv_proto) = remove_comments( iv_proto ).
+    DATA(lv_proto) = iv_proto.
+    REPLACE ALL OCCURRENCES OF |\r| IN lv_proto WITH ||.
+    lv_proto = remove_comments( lv_proto ).
 
     WHILE lv_proto(1) = |\n|.
       lv_proto = lv_proto+1.
+      CONDENSE lv_proto.
     ENDWHILE.
 
     ASSERT lv_proto CP |syntax = "proto2";*|.
