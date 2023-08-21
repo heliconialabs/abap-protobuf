@@ -137,20 +137,20 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandSubscribe.
 
 * Message "CommandPartitionedTopicMetadata",
-    METHODS ser_CommandPartitionedTopicMetadata
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandPartitionedTopicMetadata
+    METHODS ser_CommandPartitionedTomVmlsw
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandPartitionedTomVmlsw
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandPartitionedTopicMetadata
+    METHODS des_CommandPartitionedTomVmlsw
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandPartitionedTopicMetadata.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandPartitionedTomVmlsw.
 
 * Message "CommandPartitionedTopicMetadataResponse",
-    METHODS ser_CommandPartitionedTopicMetadataResponse
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandPartitionedTopicMetadataResponse
+    METHODS ser_CommandPartitionedToJik1cm
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandPartitionedToJik1cm
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandPartitionedTopicMetadataResponse
+    METHODS des_CommandPartitionedToJik1cm
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandPartitionedTopicMetadataResponse.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandPartitionedToJik1cm.
 
 * Message "CommandLookupTopic",
     METHODS ser_CommandLookupTopic
@@ -225,12 +225,12 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandAckResponse.
 
 * Message "CommandActiveConsumerChange",
-    METHODS ser_CommandActiveConsumerChange
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandActiveConsumerChange
+    METHODS ser_CommandActiveConsumetry0NX
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandActiveConsumetry0NX
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandActiveConsumerChange
+    METHODS des_CommandActiveConsumetry0NX
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandActiveConsumerChange.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandActiveConsumetry0NX.
 
 * Message "CommandFlow",
     METHODS ser_CommandFlow
@@ -289,12 +289,12 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandCloseConsumer.
 
 * Message "CommandRedeliverUnacknowledgedMessages",
-    METHODS ser_CommandRedeliverUnacknowledgedMessages
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandRedeliverUnacknowledgedMessages
+    METHODS ser_CommandRedeliverUnacONw3qa
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandRedeliverUnacONw3qa
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandRedeliverUnacknowledgedMessages
+    METHODS des_CommandRedeliverUnacONw3qa
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandRedeliverUnacknowledgedMessages.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandRedeliverUnacONw3qa.
 
 * Message "CommandSuccess",
     METHODS ser_CommandSuccess
@@ -345,12 +345,12 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandConsumerStats.
 
 * Message "CommandConsumerStatsResponse",
-    METHODS ser_CommandConsumerStatsResponse
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandConsumerStatsResponse
+    METHODS ser_CommandConsumerStatsLMgarI
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandConsumerStatsLMgarI
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandConsumerStatsResponse
+    METHODS des_CommandConsumerStatsLMgarI
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandConsumerStatsResponse.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandConsumerStatsLMgarI.
 
 * Message "CommandGetLastMessageId",
     METHODS ser_CommandGetLastMessageId
@@ -361,28 +361,28 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandGetLastMessageId.
 
 * Message "CommandGetLastMessageIdResponse",
-    METHODS ser_CommandGetLastMessageIdResponse
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandGetLastMessageIdResponse
+    METHODS ser_CommandGetLastMessag2udLG8
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandGetLastMessag2udLG8
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandGetLastMessageIdResponse
+    METHODS des_CommandGetLastMessag2udLG8
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandGetLastMessageIdResponse.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandGetLastMessag2udLG8.
 
 * Message "CommandGetTopicsOfNamespace",
-    METHODS ser_CommandGetTopicsOfNamespace
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandGetTopicsOfNamespace
+    METHODS ser_CommandGetTopicsOfNaW5sMTo
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandGetTopicsOfNaW5sMTo
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandGetTopicsOfNamespace
+    METHODS des_CommandGetTopicsOfNaW5sMTo
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandGetTopicsOfNamespace.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandGetTopicsOfNaW5sMTo.
 
 * Message "CommandGetTopicsOfNamespaceResponse",
-    METHODS ser_CommandGetTopicsOfNamespaceResponse
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandGetTopicsOfNamespaceResponse
+    METHODS ser_CommandGetTopicsOfNa2Zpv1F
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandGetTopicsOfNa2Zpv1F
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandGetTopicsOfNamespaceResponse
+    METHODS des_CommandGetTopicsOfNa2Zpv1F
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandGetTopicsOfNamespaceResponse.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandGetTopicsOfNa2Zpv1F.
 
 * Message "CommandWatchTopicList",
     METHODS ser_CommandWatchTopicList
@@ -393,12 +393,12 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandWatchTopicList.
 
 * Message "CommandWatchTopicListSuccess",
-    METHODS ser_CommandWatchTopicListSuccess
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandWatchTopicListSuccess
+    METHODS ser_CommandWatchTopicLisUXqMY2
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandWatchTopicLisUXqMY2
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandWatchTopicListSuccess
+    METHODS des_CommandWatchTopicLisUXqMY2
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandWatchTopicListSuccess.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandWatchTopicLisUXqMY2.
 
 * Message "CommandWatchTopicUpdate",
     METHODS ser_CommandWatchTopicUpdate
@@ -441,28 +441,28 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandGetOrCreateSchema.
 
 * Message "CommandGetOrCreateSchemaResponse",
-    METHODS ser_CommandGetOrCreateSchemaResponse
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandGetOrCreateSchemaResponse
+    METHODS ser_CommandGetOrCreateScVKbTgH
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandGetOrCreateScVKbTgH
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandGetOrCreateSchemaResponse
+    METHODS des_CommandGetOrCreateScVKbTgH
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandGetOrCreateSchemaResponse.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandGetOrCreateScVKbTgH.
 
 * Message "CommandTcClientConnectRequest",
-    METHODS ser_CommandTcClientConnectRequest
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandTcClientConnectRequest
+    METHODS ser_CommandTcClientConneWIoTIu
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandTcClientConneWIoTIu
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandTcClientConnectRequest
+    METHODS des_CommandTcClientConneWIoTIu
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandTcClientConnectRequest.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandTcClientConneWIoTIu.
 
 * Message "CommandTcClientConnectResponse",
-    METHODS ser_CommandTcClientConnectResponse
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandTcClientConnectResponse
+    METHODS ser_CommandTcClientConneTuQpSf
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandTcClientConneTuQpSf
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandTcClientConnectResponse
+    METHODS des_CommandTcClientConneTuQpSf
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandTcClientConnectResponse.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandTcClientConneTuQpSf.
 
 * Message "CommandNewTxn",
     METHODS ser_CommandNewTxn
@@ -489,12 +489,12 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandAddPartitionToTxn.
 
 * Message "CommandAddPartitionToTxnResponse",
-    METHODS ser_CommandAddPartitionToTxnResponse
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandAddPartitionToTxnResponse
+    METHODS ser_CommandAddPartitionTafUHa4
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandAddPartitionTafUHa4
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandAddPartitionToTxnResponse
+    METHODS des_CommandAddPartitionTafUHa4
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandAddPartitionToTxnResponse.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandAddPartitionTafUHa4.
 
 * Message "Subscription",
     METHODS ser_Subscription
@@ -505,20 +505,20 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>Subscription.
 
 * Message "CommandAddSubscriptionToTxn",
-    METHODS ser_CommandAddSubscriptionToTxn
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandAddSubscriptionToTxn
+    METHODS ser_CommandAddSubscriptisyuJS0
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandAddSubscriptisyuJS0
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandAddSubscriptionToTxn
+    METHODS des_CommandAddSubscriptisyuJS0
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandAddSubscriptionToTxn.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandAddSubscriptisyuJS0.
 
 * Message "CommandAddSubscriptionToTxnResponse",
-    METHODS ser_CommandAddSubscriptionToTxnResponse
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandAddSubscriptionToTxnResponse
+    METHODS ser_CommandAddSubscripti6CDt1m
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandAddSubscripti6CDt1m
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandAddSubscriptionToTxnResponse
+    METHODS des_CommandAddSubscripti6CDt1m
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandAddSubscriptionToTxnResponse.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandAddSubscripti6CDt1m.
 
 * Message "CommandEndTxn",
     METHODS ser_CommandEndTxn
@@ -545,28 +545,28 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandEndTxnOnPartition.
 
 * Message "CommandEndTxnOnPartitionResponse",
-    METHODS ser_CommandEndTxnOnPartitionResponse
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandEndTxnOnPartitionResponse
+    METHODS ser_CommandEndTxnOnPartiOOlMQv
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandEndTxnOnPartiOOlMQv
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandEndTxnOnPartitionResponse
+    METHODS des_CommandEndTxnOnPartiOOlMQv
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandEndTxnOnPartitionResponse.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandEndTxnOnPartiOOlMQv.
 
 * Message "CommandEndTxnOnSubscription",
-    METHODS ser_CommandEndTxnOnSubscription
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandEndTxnOnSubscription
+    METHODS ser_CommandEndTxnOnSubscqx6OWu
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandEndTxnOnSubscqx6OWu
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandEndTxnOnSubscription
+    METHODS des_CommandEndTxnOnSubscqx6OWu
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandEndTxnOnSubscription.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandEndTxnOnSubscqx6OWu.
 
 * Message "CommandEndTxnOnSubscriptionResponse",
-    METHODS ser_CommandEndTxnOnSubscriptionResponse
-      IMPORTING is_message TYPE zif_protobuf_generated=>CommandEndTxnOnSubscriptionResponse
+    METHODS ser_CommandEndTxnOnSubscVUpsoc
+      IMPORTING is_message TYPE zif_protobuf_generated=>CommandEndTxnOnSubscVUpsoc
       RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_CommandEndTxnOnSubscriptionResponse
+    METHODS des_CommandEndTxnOnSubscVUpsoc
       IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandEndTxnOnSubscriptionResponse.
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandEndTxnOnSubscVUpsoc.
 
 * Message "BaseCommand",
     METHODS ser_BaseCommand
@@ -681,16 +681,16 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     METHOD des_CommandSubscribe.
     ENDMETHOD.
 
-    METHOD ser_CommandPartitionedTopicMetadata.
+    METHOD ser_CommandPartitionedTomVmlsw.
     ENDMETHOD.
 
-    METHOD des_CommandPartitionedTopicMetadata.
+    METHOD des_CommandPartitionedTomVmlsw.
     ENDMETHOD.
 
-    METHOD ser_CommandPartitionedTopicMetadataResponse.
+    METHOD ser_CommandPartitionedToJik1cm.
     ENDMETHOD.
 
-    METHOD des_CommandPartitionedTopicMetadataResponse.
+    METHOD des_CommandPartitionedToJik1cm.
     ENDMETHOD.
 
     METHOD ser_CommandLookupTopic.
@@ -747,10 +747,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     METHOD des_CommandAckResponse.
     ENDMETHOD.
 
-    METHOD ser_CommandActiveConsumerChange.
+    METHOD ser_CommandActiveConsumetry0NX.
     ENDMETHOD.
 
-    METHOD des_CommandActiveConsumerChange.
+    METHOD des_CommandActiveConsumetry0NX.
     ENDMETHOD.
 
     METHOD ser_CommandFlow.
@@ -795,10 +795,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     METHOD des_CommandCloseConsumer.
     ENDMETHOD.
 
-    METHOD ser_CommandRedeliverUnacknowledgedMessages.
+    METHOD ser_CommandRedeliverUnacONw3qa.
     ENDMETHOD.
 
-    METHOD des_CommandRedeliverUnacknowledgedMessages.
+    METHOD des_CommandRedeliverUnacONw3qa.
     ENDMETHOD.
 
     METHOD ser_CommandSuccess.
@@ -837,10 +837,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     METHOD des_CommandConsumerStats.
     ENDMETHOD.
 
-    METHOD ser_CommandConsumerStatsResponse.
+    METHOD ser_CommandConsumerStatsLMgarI.
     ENDMETHOD.
 
-    METHOD des_CommandConsumerStatsResponse.
+    METHOD des_CommandConsumerStatsLMgarI.
     ENDMETHOD.
 
     METHOD ser_CommandGetLastMessageId.
@@ -849,22 +849,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     METHOD des_CommandGetLastMessageId.
     ENDMETHOD.
 
-    METHOD ser_CommandGetLastMessageIdResponse.
+    METHOD ser_CommandGetLastMessag2udLG8.
     ENDMETHOD.
 
-    METHOD des_CommandGetLastMessageIdResponse.
+    METHOD des_CommandGetLastMessag2udLG8.
     ENDMETHOD.
 
-    METHOD ser_CommandGetTopicsOfNamespace.
+    METHOD ser_CommandGetTopicsOfNaW5sMTo.
     ENDMETHOD.
 
-    METHOD des_CommandGetTopicsOfNamespace.
+    METHOD des_CommandGetTopicsOfNaW5sMTo.
     ENDMETHOD.
 
-    METHOD ser_CommandGetTopicsOfNamespaceResponse.
+    METHOD ser_CommandGetTopicsOfNa2Zpv1F.
     ENDMETHOD.
 
-    METHOD des_CommandGetTopicsOfNamespaceResponse.
+    METHOD des_CommandGetTopicsOfNa2Zpv1F.
     ENDMETHOD.
 
     METHOD ser_CommandWatchTopicList.
@@ -873,10 +873,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     METHOD des_CommandWatchTopicList.
     ENDMETHOD.
 
-    METHOD ser_CommandWatchTopicListSuccess.
+    METHOD ser_CommandWatchTopicLisUXqMY2.
     ENDMETHOD.
 
-    METHOD des_CommandWatchTopicListSuccess.
+    METHOD des_CommandWatchTopicLisUXqMY2.
     ENDMETHOD.
 
     METHOD ser_CommandWatchTopicUpdate.
@@ -909,22 +909,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     METHOD des_CommandGetOrCreateSchema.
     ENDMETHOD.
 
-    METHOD ser_CommandGetOrCreateSchemaResponse.
+    METHOD ser_CommandGetOrCreateScVKbTgH.
     ENDMETHOD.
 
-    METHOD des_CommandGetOrCreateSchemaResponse.
+    METHOD des_CommandGetOrCreateScVKbTgH.
     ENDMETHOD.
 
-    METHOD ser_CommandTcClientConnectRequest.
+    METHOD ser_CommandTcClientConneWIoTIu.
     ENDMETHOD.
 
-    METHOD des_CommandTcClientConnectRequest.
+    METHOD des_CommandTcClientConneWIoTIu.
     ENDMETHOD.
 
-    METHOD ser_CommandTcClientConnectResponse.
+    METHOD ser_CommandTcClientConneTuQpSf.
     ENDMETHOD.
 
-    METHOD des_CommandTcClientConnectResponse.
+    METHOD des_CommandTcClientConneTuQpSf.
     ENDMETHOD.
 
     METHOD ser_CommandNewTxn.
@@ -945,10 +945,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     METHOD des_CommandAddPartitionToTxn.
     ENDMETHOD.
 
-    METHOD ser_CommandAddPartitionToTxnResponse.
+    METHOD ser_CommandAddPartitionTafUHa4.
     ENDMETHOD.
 
-    METHOD des_CommandAddPartitionToTxnResponse.
+    METHOD des_CommandAddPartitionTafUHa4.
     ENDMETHOD.
 
     METHOD ser_Subscription.
@@ -957,16 +957,16 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     METHOD des_Subscription.
     ENDMETHOD.
 
-    METHOD ser_CommandAddSubscriptionToTxn.
+    METHOD ser_CommandAddSubscriptisyuJS0.
     ENDMETHOD.
 
-    METHOD des_CommandAddSubscriptionToTxn.
+    METHOD des_CommandAddSubscriptisyuJS0.
     ENDMETHOD.
 
-    METHOD ser_CommandAddSubscriptionToTxnResponse.
+    METHOD ser_CommandAddSubscripti6CDt1m.
     ENDMETHOD.
 
-    METHOD des_CommandAddSubscriptionToTxnResponse.
+    METHOD des_CommandAddSubscripti6CDt1m.
     ENDMETHOD.
 
     METHOD ser_CommandEndTxn.
@@ -987,22 +987,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     METHOD des_CommandEndTxnOnPartition.
     ENDMETHOD.
 
-    METHOD ser_CommandEndTxnOnPartitionResponse.
+    METHOD ser_CommandEndTxnOnPartiOOlMQv.
     ENDMETHOD.
 
-    METHOD des_CommandEndTxnOnPartitionResponse.
+    METHOD des_CommandEndTxnOnPartiOOlMQv.
     ENDMETHOD.
 
-    METHOD ser_CommandEndTxnOnSubscription.
+    METHOD ser_CommandEndTxnOnSubscqx6OWu.
     ENDMETHOD.
 
-    METHOD des_CommandEndTxnOnSubscription.
+    METHOD des_CommandEndTxnOnSubscqx6OWu.
     ENDMETHOD.
 
-    METHOD ser_CommandEndTxnOnSubscriptionResponse.
+    METHOD ser_CommandEndTxnOnSubscVUpsoc.
     ENDMETHOD.
 
-    METHOD des_CommandEndTxnOnSubscriptionResponse.
+    METHOD des_CommandEndTxnOnSubscVUpsoc.
     ENDMETHOD.
 
     METHOD ser_BaseCommand.

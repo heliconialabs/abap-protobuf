@@ -72,7 +72,7 @@ CLASS zcl_protobuf_generate_intf IMPLEMENTATION.
     ENDLOOP.
 
     rv_abap = rv_abap && |* Message "| && io_message->mv_name && |",\n|.
-    rv_abap = rv_abap && |TYPES: BEGIN OF { io_message->mv_name },\n|.
+    rv_abap = rv_abap && |TYPES: BEGIN OF { zcl_protobuf_generate=>abap_name( io_message->mv_name ) },\n|.
 
     LOOP AT io_message->mt_artefacts INTO lo_artefact.
       CASE TYPE OF lo_artefact.
@@ -87,19 +87,19 @@ CLASS zcl_protobuf_generate_intf IMPLEMENTATION.
       rv_abap = rv_abap && |         dummy TYPE string,\n|.
     ENDIF.
 
-    rv_abap = rv_abap && |       END OF { io_message->mv_name }.\n|.
+    rv_abap = rv_abap && |       END OF { zcl_protobuf_generate=>abap_name( io_message->mv_name ) }.\n|.
 
   ENDMETHOD.
 
   METHOD enum.
 * targeting 750, so cannot use ENUM,
     rv_abap = rv_abap && |* Enum "| && io_enum->mv_name && |",\n|.
-    rv_abap = rv_abap && |TYPES { io_enum->mv_name } TYPE i.\n|.
+    rv_abap = rv_abap && |TYPES { zcl_protobuf_generate=>abap_name( io_enum->mv_name ) } TYPE i.\n|.
     rv_abap = rv_abap && |CONSTANTS: BEGIN OF { io_enum->mv_name },\n|.
     LOOP AT io_enum->mt_fields INTO DATA(ls_field).
-      rv_abap = rv_abap && |         { ls_field-name } TYPE { io_enum->mv_name } VALUE { ls_field-value },\n|.
+      rv_abap = rv_abap && |         { ls_field-name } TYPE { zcl_protobuf_generate=>abap_name( io_enum->mv_name ) } VALUE { ls_field-value },\n|.
     ENDLOOP.
-    rv_abap = rv_abap && |      END OF { io_enum->mv_name }.\n|.
+    rv_abap = rv_abap && |      END OF { zcl_protobuf_generate=>abap_name( io_enum->mv_name ) }.\n|.
 
   ENDMETHOD.
 
@@ -108,7 +108,7 @@ CLASS zcl_protobuf_generate_intf IMPLEMENTATION.
     IF io_field->mv_label = 'repeated'.
       rv_abap = |         { io_field->mv_field_name } TYPE STANDARD TABLE OF { io_field->mv_type } WITH EMPTY KEY,\n|.
     ELSE.
-      rv_abap = |         { io_field->mv_field_name } TYPE { io_field->mv_type },\n|.
+      rv_abap = |         { io_field->mv_field_name } TYPE { zcl_protobuf_generate=>abap_name( io_field->mv_type ) },\n|.
     ENDIF.
   ENDMETHOD.
 ENDCLASS.
