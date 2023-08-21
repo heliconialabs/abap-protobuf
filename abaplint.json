@@ -98,7 +98,9 @@
     "sql_escape_host_variables": true,
     "try_without_catch": true,
     "unknown_types": true,
-    "unused_variables": true,
+    "unused_variables": {
+      "exclude": ["test/generated"]
+    },
     "xml_consistency": true,
     "begin_single_include": true,
     "check_comments": false,
@@ -167,14 +169,14 @@
       "ignoreKeywords": [],
       "ignoreGlobalClassBoundaries": false
     },
-    "line_length": true,
+    "line_length": false,
     "line_only_punc": true,
     "local_class_naming": true,
     "local_variable_names": true,
     "main_file_contents": true,
     "max_one_statement": true,
     "message_exists": true,
-    "method_length": true,
+    "method_length": false,
     "method_parameter_names": true,
     "mix_returning": true,
     "msag_consistency": true,
