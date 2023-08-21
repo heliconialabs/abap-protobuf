@@ -29,7 +29,8 @@ CLASS ltcl_test IMPLEMENTATION.
       |\}|.
 
     DATA(lv_abap) = zcl_protobuf_generator=>generate( zcl_protobuf2_parser=>parse( lv_proto ) ).
-    WRITE / lv_abap.
+
+    cl_abap_unit_assert=>assert_not_initial( lv_abap ).
 
   ENDMETHOD.
 

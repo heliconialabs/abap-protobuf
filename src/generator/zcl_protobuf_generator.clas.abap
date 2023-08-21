@@ -30,6 +30,7 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
 
   METHOD generate.
 
+    rv_abap = rv_abap && |INTERFACE zif_generated PUBLIC.\n|.
     rv_abap = rv_abap && |TYPES int32  TYPE i.\n|.
     rv_abap = rv_abap && |TYPES uint32 TYPE int8.\n|.
     rv_abap = rv_abap && |TYPES uint64 TYPE int8.\n|. " hmm
@@ -42,10 +43,14 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
       CASE TYPE OF lo_artefact.
         WHEN TYPE zcl_protobuf2_message INTO DATA(lo_message).
           rv_abap = rv_abap && message( lo_message ).
+        WHEN TYPE zcl_protobuf2_enum INTO DATA(lo_enum).
+          rv_abap = rv_abap && enum( lo_enum ).
         WHEN OTHERS.
           ASSERT 1 = 'todo'.
       ENDCASE.
     ENDLOOP.
+
+    rv_abap = rv_abap && |ENDINTERFACE.\n|.
 
   ENDMETHOD.
 
@@ -82,7 +87,7 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
 
     rv_abap = |TYPES: BEGIN OF ENUM { io_enum->mv_name },\n|.
     LOOP AT io_enum->mt_fields INTO DATA(ls_field).
-      rv_abap = rv_abap && |        { ls_field-name },\n|.
+      rv_abap = rv_abap && |         { ls_field-name },\n|.
     ENDLOOP.
     rv_abap = rv_abap && |      END OF ENUM { io_enum->mv_name }.\n|.
 
@@ -90,6 +95,10 @@ CLASS zcl_protobuf_generator IMPLEMENTATION.
 
   METHOD field.
 " todo, handle repeated
-    rv_abap = |         { io_field->mv_field_name } TYPE { io_field->mv_type },\n|.
+    IF io_field->mv_label = 'repeated'.
+      rv_abap = |         { io_field->mv_field_name } TYPE STANDARD TABLE OF { io_field->mv_type } WITH EMPTY KEY,\n|.
+    ELSE.
+      rv_abap = |         { io_field->mv_field_name } TYPE { io_field->mv_type },\n|.
+    ENDIF.
   ENDMETHOD.
 ENDCLASS.
