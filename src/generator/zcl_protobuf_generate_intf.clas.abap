@@ -71,6 +71,7 @@ CLASS zcl_protobuf_generate_intf IMPLEMENTATION.
       ENDCASE.
     ENDLOOP.
 
+    rv_abap = rv_abap && |* Message "| && io_message->mv_name && |",\n|.
     rv_abap = rv_abap && |TYPES: BEGIN OF { io_message->mv_name },\n|.
 
     LOOP AT io_message->mt_artefacts INTO lo_artefact.
@@ -92,6 +93,7 @@ CLASS zcl_protobuf_generate_intf IMPLEMENTATION.
 
   METHOD enum.
 * targeting 750, so cannot use ENUM,
+    rv_abap = rv_abap && |* Enum "| && io_enum->mv_name && |",\n|.
     rv_abap = rv_abap && |TYPES { io_enum->mv_name } TYPE i.\n|.
     rv_abap = rv_abap && |CONSTANTS: BEGIN OF { io_enum->mv_name },\n|.
     LOOP AT io_enum->mt_fields INTO DATA(ls_field).
