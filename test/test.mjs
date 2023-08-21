@@ -10,7 +10,7 @@ async function run() {
   const serialized = await result.get().zif_protobuf2_artefact$serialize();
   fs.writeFileSync("./test/generated/output.proto", serialized.get());
 
-  const generated = await abap.Classes["ZCL_PROTOBUF_GENERATOR"].generate({io_file: result});
+  const generated = await abap.Classes["ZCL_PROTOBUF_GENERATE_INTF"].generate({io_file: result});
   fs.writeFileSync("./test/generated/zif_protobuf_generated.intf.abap", generated.get());
 }
 

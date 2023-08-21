@@ -1,4 +1,4 @@
-CLASS zcl_protobuf_generator DEFINITION PUBLIC.
+CLASS zcl_protobuf_generate_intf DEFINITION PUBLIC.
   PUBLIC SECTION.
     CLASS-METHODS generate
       IMPORTING
@@ -26,7 +26,7 @@ ENDCLASS.
 
 
 
-CLASS zcl_protobuf_generator IMPLEMENTATION.
+CLASS zcl_protobuf_generate_intf IMPLEMENTATION.
 
   METHOD generate.
 
