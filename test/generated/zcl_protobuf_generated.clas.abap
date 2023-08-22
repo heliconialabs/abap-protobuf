@@ -582,791 +582,871 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD ser_KeyValue.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-key
-" is_message-value
+" required string key = 1;
+" required string value = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_KeyValue.
-" rs_message-key
-" rs_message-value
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string key = 1;
+" required string value = 2;
   ENDMETHOD.
 
   METHOD ser_Schema.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-name
-" is_message-schema_data
-" is_message-type
-" is_message-properties
+" required string name = 1;
+" required bytes schema_data = 3;
+" required Type type = 4;
+" repeated KeyValue properties = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_Schema.
-" rs_message-name
-" rs_message-schema_data
-" rs_message-type
-" rs_message-properties
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string name = 1;
+" required bytes schema_data = 3;
+" required Type type = 4;
+" repeated KeyValue properties = 5;
   ENDMETHOD.
 
   METHOD ser_MessageIdData.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-ledgerId
-" is_message-entryId
-" is_message-partition
-" is_message-batch_index
-" is_message-ack_set
-" is_message-batch_size
+" required uint64 ledgerId = 1;
+" required uint64 entryId = 2;
+" optional int32 partition = 3 [default = -1];
+" optional int32 batch_index = 4 [default = -1];
+" repeated int64 ack_set = 5;
+" optional int32 batch_size = 6;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_MessageIdData.
-" rs_message-ledgerId
-" rs_message-entryId
-" rs_message-partition
-" rs_message-batch_index
-" rs_message-ack_set
-" rs_message-batch_size
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 ledgerId = 1;
+" required uint64 entryId = 2;
+" optional int32 partition = 3 [default = -1];
+" optional int32 batch_index = 4 [default = -1];
+" repeated int64 ack_set = 5;
+" optional int32 batch_size = 6;
   ENDMETHOD.
 
   METHOD ser_KeyLongValue.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-key
-" is_message-value
+" required string key = 1;
+" required uint64 value = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_KeyLongValue.
-" rs_message-key
-" rs_message-value
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string key = 1;
+" required uint64 value = 2;
   ENDMETHOD.
 
   METHOD ser_IntRange.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-start
-" is_message-end
+" required int32 start = 1;
+" required int32 end = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_IntRange.
-" rs_message-start
-" rs_message-end
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required int32 start = 1;
+" required int32 end = 2;
   ENDMETHOD.
 
   METHOD ser_EncryptionKeys.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-key
-" is_message-value
-" is_message-metadata
+" required string key = 1;
+" required bytes value = 2;
+" repeated KeyValue metadata = 3;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_EncryptionKeys.
-" rs_message-key
-" rs_message-value
-" rs_message-metadata
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string key = 1;
+" required bytes value = 2;
+" repeated KeyValue metadata = 3;
   ENDMETHOD.
 
   METHOD ser_MessageMetadata.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-producer_name
-" is_message-sequence_id
-" is_message-publish_time
-" is_message-properties
-" is_message-replicated_from
-" is_message-partition_key
-" is_message-replicate_to
-" is_message-compression
-" is_message-uncompressed_size
-" is_message-num_messages_in_batch
-" is_message-event_time
-" is_message-encryption_keys
-" is_message-encryption_algo
-" is_message-encryption_param
-" is_message-schema_version
-" is_message-partition_key_b64_encoded
-" is_message-ordering_key
-" is_message-deliver_at_time
-" is_message-marker_type
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-highest_sequence_id
-" is_message-null_value
-" is_message-uuid
-" is_message-num_chunks_from_msg
-" is_message-total_chunk_msg_size
-" is_message-chunk_id
-" is_message-null_partition_key
+" required string producer_name = 1;
+" required uint64 sequence_id = 2;
+" required uint64 publish_time = 3;
+" repeated KeyValue properties = 4;
+" optional string replicated_from = 5;
+" optional string partition_key = 6;
+" repeated string replicate_to = 7;
+" optional CompressionType compression = 8 [default = NONE];
+" optional uint32 uncompressed_size = 9 [default = 0];
+" optional int32 num_messages_in_batch = 11 [default = 1];
+" optional uint64 event_time = 12 [default = 0];
+" repeated EncryptionKeys encryption_keys = 13;
+" optional string encryption_algo = 14;
+" optional bytes encryption_param = 15;
+" optional bytes schema_version = 16;
+" optional bool partition_key_b64_encoded = 17 [ default = false ];
+" optional bytes ordering_key = 18;
+" optional int64 deliver_at_time = 19;
+" optional int32 marker_type = 20;
+" optional uint64 txnid_least_bits = 22;
+" optional uint64 txnid_most_bits = 23;
+" optional uint64 highest_sequence_id = 24 [default = 0];
+" optional bool null_value = 25 [default = false];
+" optional string uuid = 26;
+" optional int32 num_chunks_from_msg = 27;
+" optional int32 total_chunk_msg_size = 28;
+" optional int32 chunk_id = 29;
+" optional bool null_partition_key = 30 [default = false];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_MessageMetadata.
-" rs_message-producer_name
-" rs_message-sequence_id
-" rs_message-publish_time
-" rs_message-properties
-" rs_message-replicated_from
-" rs_message-partition_key
-" rs_message-replicate_to
-" rs_message-compression
-" rs_message-uncompressed_size
-" rs_message-num_messages_in_batch
-" rs_message-event_time
-" rs_message-encryption_keys
-" rs_message-encryption_algo
-" rs_message-encryption_param
-" rs_message-schema_version
-" rs_message-partition_key_b64_encoded
-" rs_message-ordering_key
-" rs_message-deliver_at_time
-" rs_message-marker_type
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-highest_sequence_id
-" rs_message-null_value
-" rs_message-uuid
-" rs_message-num_chunks_from_msg
-" rs_message-total_chunk_msg_size
-" rs_message-chunk_id
-" rs_message-null_partition_key
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string producer_name = 1;
+" required uint64 sequence_id = 2;
+" required uint64 publish_time = 3;
+" repeated KeyValue properties = 4;
+" optional string replicated_from = 5;
+" optional string partition_key = 6;
+" repeated string replicate_to = 7;
+" optional CompressionType compression = 8 [default = NONE];
+" optional uint32 uncompressed_size = 9 [default = 0];
+" optional int32 num_messages_in_batch = 11 [default = 1];
+" optional uint64 event_time = 12 [default = 0];
+" repeated EncryptionKeys encryption_keys = 13;
+" optional string encryption_algo = 14;
+" optional bytes encryption_param = 15;
+" optional bytes schema_version = 16;
+" optional bool partition_key_b64_encoded = 17 [ default = false ];
+" optional bytes ordering_key = 18;
+" optional int64 deliver_at_time = 19;
+" optional int32 marker_type = 20;
+" optional uint64 txnid_least_bits = 22;
+" optional uint64 txnid_most_bits = 23;
+" optional uint64 highest_sequence_id = 24 [default = 0];
+" optional bool null_value = 25 [default = false];
+" optional string uuid = 26;
+" optional int32 num_chunks_from_msg = 27;
+" optional int32 total_chunk_msg_size = 28;
+" optional int32 chunk_id = 29;
+" optional bool null_partition_key = 30 [default = false];
   ENDMETHOD.
 
   METHOD ser_SingleMessageMetadata.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-properties
-" is_message-partition_key
-" is_message-payload_size
-" is_message-compacted_out
-" is_message-event_time
-" is_message-partition_key_b64_encoded
-" is_message-ordering_key
-" is_message-sequence_id
-" is_message-null_value
-" is_message-null_partition_key
+" repeated KeyValue properties = 1;
+" optional string partition_key = 2;
+" required int32 payload_size = 3;
+" optional bool compacted_out = 4 [default = false];
+" optional uint64 event_time = 5 [default = 0];
+" optional bool partition_key_b64_encoded = 6 [ default = false ];
+" optional bytes ordering_key = 7;
+" optional uint64 sequence_id = 8;
+" optional bool null_value = 9 [ default = false ];
+" optional bool null_partition_key = 10 [ default = false];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_SingleMessageMetadata.
-" rs_message-properties
-" rs_message-partition_key
-" rs_message-payload_size
-" rs_message-compacted_out
-" rs_message-event_time
-" rs_message-partition_key_b64_encoded
-" rs_message-ordering_key
-" rs_message-sequence_id
-" rs_message-null_value
-" rs_message-null_partition_key
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" repeated KeyValue properties = 1;
+" optional string partition_key = 2;
+" required int32 payload_size = 3;
+" optional bool compacted_out = 4 [default = false];
+" optional uint64 event_time = 5 [default = 0];
+" optional bool partition_key_b64_encoded = 6 [ default = false ];
+" optional bytes ordering_key = 7;
+" optional uint64 sequence_id = 8;
+" optional bool null_value = 9 [ default = false ];
+" optional bool null_partition_key = 10 [ default = false];
   ENDMETHOD.
 
   METHOD ser_BrokerEntryMetadata.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-broker_timestamp
-" is_message-index
+" optional uint64 broker_timestamp = 1;
+" optional uint64 index = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_BrokerEntryMetadata.
-" rs_message-broker_timestamp
-" rs_message-index
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" optional uint64 broker_timestamp = 1;
+" optional uint64 index = 2;
   ENDMETHOD.
 
   METHOD ser_FeatureFlags.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-supports_auth_refresh
-" is_message-supports_broker_entry_metadata
-" is_message-supports_partial_producer
-" is_message-supports_topic_watchers
+" optional bool supports_auth_refresh = 1 [default = false];
+" optional bool supports_broker_entry_metadata = 2 [default = false];
+" optional bool supports_partial_producer = 3 [default = false];
+" optional bool supports_topic_watchers = 4 [default = false];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_FeatureFlags.
-" rs_message-supports_auth_refresh
-" rs_message-supports_broker_entry_metadata
-" rs_message-supports_partial_producer
-" rs_message-supports_topic_watchers
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" optional bool supports_auth_refresh = 1 [default = false];
+" optional bool supports_broker_entry_metadata = 2 [default = false];
+" optional bool supports_partial_producer = 3 [default = false];
+" optional bool supports_topic_watchers = 4 [default = false];
   ENDMETHOD.
 
   METHOD ser_CommandConnect.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-client_version
-" is_message-auth_method
-" is_message-auth_method_name
-" is_message-auth_data
-" is_message-protocol_version
-" is_message-proxy_to_broker_url
-" is_message-original_principal
-" is_message-original_auth_data
-" is_message-original_auth_method
-" is_message-feature_flags
-" is_message-proxy_version
+" required string client_version = 1;
+" optional AuthMethod auth_method = 2;
+" optional string auth_method_name = 5;
+" optional bytes auth_data = 3;
+" optional int32 protocol_version = 4 [default = 0];
+" optional string proxy_to_broker_url = 6;
+" optional string original_principal = 7;
+" optional string original_auth_data = 8;
+" optional string original_auth_method = 9;
+" optional FeatureFlags feature_flags = 10;
+" optional string proxy_version = 11;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandConnect.
-" rs_message-client_version
-" rs_message-auth_method
-" rs_message-auth_method_name
-" rs_message-auth_data
-" rs_message-protocol_version
-" rs_message-proxy_to_broker_url
-" rs_message-original_principal
-" rs_message-original_auth_data
-" rs_message-original_auth_method
-" rs_message-feature_flags
-" rs_message-proxy_version
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string client_version = 1;
+" optional AuthMethod auth_method = 2;
+" optional string auth_method_name = 5;
+" optional bytes auth_data = 3;
+" optional int32 protocol_version = 4 [default = 0];
+" optional string proxy_to_broker_url = 6;
+" optional string original_principal = 7;
+" optional string original_auth_data = 8;
+" optional string original_auth_method = 9;
+" optional FeatureFlags feature_flags = 10;
+" optional string proxy_version = 11;
   ENDMETHOD.
 
   METHOD ser_CommandConnected.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-server_version
-" is_message-protocol_version
-" is_message-max_message_size
-" is_message-feature_flags
+" required string server_version = 1;
+" optional int32 protocol_version = 2 [default = 0];
+" optional int32 max_message_size = 3;
+" optional FeatureFlags feature_flags = 4;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandConnected.
-" rs_message-server_version
-" rs_message-protocol_version
-" rs_message-max_message_size
-" rs_message-feature_flags
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string server_version = 1;
+" optional int32 protocol_version = 2 [default = 0];
+" optional int32 max_message_size = 3;
+" optional FeatureFlags feature_flags = 4;
   ENDMETHOD.
 
   METHOD ser_AuthData.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-auth_method_name
-" is_message-auth_data
+" optional string auth_method_name = 1;
+" optional bytes auth_data = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_AuthData.
-" rs_message-auth_method_name
-" rs_message-auth_data
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" optional string auth_method_name = 1;
+" optional bytes auth_data = 2;
   ENDMETHOD.
 
   METHOD ser_CommandAuthResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-client_version
-" is_message-response
-" is_message-protocol_version
+" optional string client_version = 1;
+" optional AuthData response = 2;
+" optional int32 protocol_version = 3 [default = 0];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandAuthResponse.
-" rs_message-client_version
-" rs_message-response
-" rs_message-protocol_version
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" optional string client_version = 1;
+" optional AuthData response = 2;
+" optional int32 protocol_version = 3 [default = 0];
   ENDMETHOD.
 
   METHOD ser_CommandAuthChallenge.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-server_version
-" is_message-challenge
-" is_message-protocol_version
+" optional string server_version = 1;
+" optional AuthData challenge = 2;
+" optional int32 protocol_version = 3 [default = 0];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandAuthChallenge.
-" rs_message-server_version
-" rs_message-challenge
-" rs_message-protocol_version
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" optional string server_version = 1;
+" optional AuthData challenge = 2;
+" optional int32 protocol_version = 3 [default = 0];
   ENDMETHOD.
 
   METHOD ser_KeySharedMeta.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-keySharedMode
-" is_message-hashRanges
-" is_message-allowOutOfOrderDelivery
+" required KeySharedMode keySharedMode = 1;
+" repeated IntRange hashRanges = 3;
+" optional bool allowOutOfOrderDelivery = 4 [default = false];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_KeySharedMeta.
-" rs_message-keySharedMode
-" rs_message-hashRanges
-" rs_message-allowOutOfOrderDelivery
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required KeySharedMode keySharedMode = 1;
+" repeated IntRange hashRanges = 3;
+" optional bool allowOutOfOrderDelivery = 4 [default = false];
   ENDMETHOD.
 
   METHOD ser_CommandSubscribe.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-topic
-" is_message-subscription
-" is_message-subType
-" is_message-consumer_id
-" is_message-request_id
-" is_message-consumer_name
-" is_message-priority_level
-" is_message-durable
-" is_message-start_message_id
-" is_message-metadata
-" is_message-read_compacted
-" is_message-schema
-" is_message-initialPosition
-" is_message-replicate_subscription_state
-" is_message-force_topic_creation
-" is_message-start_message_rollback_duration_sec
-" is_message-keySharedMeta
-" is_message-subscription_properties
-" is_message-consumer_epoch
+" required string topic = 1;
+" required string subscription = 2;
+" required SubType subType = 3;
+" required uint64 consumer_id = 4;
+" required uint64 request_id = 5;
+" optional string consumer_name = 6;
+" optional int32 priority_level = 7;
+" optional bool durable = 8 [default = true];
+" optional MessageIdData start_message_id = 9;
+" repeated KeyValue metadata = 10;
+" optional bool read_compacted = 11;
+" optional Schema schema = 12;
+" optional InitialPosition initialPosition = 13 [default = Latest];
+" optional bool replicate_subscription_state = 14;
+" optional bool force_topic_creation = 15 [default = true];
+" optional uint64 start_message_rollback_duration_sec = 16 [default = 0];
+" optional KeySharedMeta keySharedMeta = 17;
+" repeated KeyValue subscription_properties = 18;
+" optional uint64 consumer_epoch = 19;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandSubscribe.
-" rs_message-topic
-" rs_message-subscription
-" rs_message-subType
-" rs_message-consumer_id
-" rs_message-request_id
-" rs_message-consumer_name
-" rs_message-priority_level
-" rs_message-durable
-" rs_message-start_message_id
-" rs_message-metadata
-" rs_message-read_compacted
-" rs_message-schema
-" rs_message-initialPosition
-" rs_message-replicate_subscription_state
-" rs_message-force_topic_creation
-" rs_message-start_message_rollback_duration_sec
-" rs_message-keySharedMeta
-" rs_message-subscription_properties
-" rs_message-consumer_epoch
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string topic = 1;
+" required string subscription = 2;
+" required SubType subType = 3;
+" required uint64 consumer_id = 4;
+" required uint64 request_id = 5;
+" optional string consumer_name = 6;
+" optional int32 priority_level = 7;
+" optional bool durable = 8 [default = true];
+" optional MessageIdData start_message_id = 9;
+" repeated KeyValue metadata = 10;
+" optional bool read_compacted = 11;
+" optional Schema schema = 12;
+" optional InitialPosition initialPosition = 13 [default = Latest];
+" optional bool replicate_subscription_state = 14;
+" optional bool force_topic_creation = 15 [default = true];
+" optional uint64 start_message_rollback_duration_sec = 16 [default = 0];
+" optional KeySharedMeta keySharedMeta = 17;
+" repeated KeyValue subscription_properties = 18;
+" optional uint64 consumer_epoch = 19;
   ENDMETHOD.
 
   METHOD ser_CommandPartitionedTomVmlsw.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-topic
-" is_message-request_id
-" is_message-original_principal
-" is_message-original_auth_data
-" is_message-original_auth_method
+" required string topic = 1;
+" required uint64 request_id = 2;
+" optional string original_principal = 3;
+" optional string original_auth_data = 4;
+" optional string original_auth_method = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandPartitionedTomVmlsw.
-" rs_message-topic
-" rs_message-request_id
-" rs_message-original_principal
-" rs_message-original_auth_data
-" rs_message-original_auth_method
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string topic = 1;
+" required uint64 request_id = 2;
+" optional string original_principal = 3;
+" optional string original_auth_data = 4;
+" optional string original_auth_method = 5;
   ENDMETHOD.
 
   METHOD ser_CommandPartitionedToJik1cm.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-partitions
-" is_message-request_id
-" is_message-response
-" is_message-error
-" is_message-message
+" optional uint32 partitions = 1;
+" required uint64 request_id = 2;
+" optional CLookupType response = 3;
+" optional ServerError error = 4;
+" optional string message = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandPartitionedToJik1cm.
-" rs_message-partitions
-" rs_message-request_id
-" rs_message-response
-" rs_message-error
-" rs_message-message
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" optional uint32 partitions = 1;
+" required uint64 request_id = 2;
+" optional CLookupType response = 3;
+" optional ServerError error = 4;
+" optional string message = 5;
   ENDMETHOD.
 
   METHOD ser_CommandLookupTopic.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-topic
-" is_message-request_id
-" is_message-authoritative
-" is_message-original_principal
-" is_message-original_auth_data
-" is_message-original_auth_method
-" is_message-advertised_listener_name
+" required string topic = 1;
+" required uint64 request_id = 2;
+" optional bool authoritative = 3 [default = false];
+" optional string original_principal = 4;
+" optional string original_auth_data = 5;
+" optional string original_auth_method = 6;
+" optional string advertised_listener_name = 7;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandLookupTopic.
-" rs_message-topic
-" rs_message-request_id
-" rs_message-authoritative
-" rs_message-original_principal
-" rs_message-original_auth_data
-" rs_message-original_auth_method
-" rs_message-advertised_listener_name
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string topic = 1;
+" required uint64 request_id = 2;
+" optional bool authoritative = 3 [default = false];
+" optional string original_principal = 4;
+" optional string original_auth_data = 5;
+" optional string original_auth_method = 6;
+" optional string advertised_listener_name = 7;
   ENDMETHOD.
 
   METHOD ser_CommandLookupTopicResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-brokerServiceUrl
-" is_message-brokerServiceUrlTls
-" is_message-response
-" is_message-request_id
-" is_message-authoritative
-" is_message-error
-" is_message-message
-" is_message-proxy_through_service_url
+" optional string brokerServiceUrl = 1;
+" optional string brokerServiceUrlTls = 2;
+" optional LookupType response = 3;
+" required uint64 request_id = 4;
+" optional bool authoritative = 5 [default = false];
+" optional ServerError error = 6;
+" optional string message = 7;
+" optional bool proxy_through_service_url = 8 [default = false];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandLookupTopicResponse.
-" rs_message-brokerServiceUrl
-" rs_message-brokerServiceUrlTls
-" rs_message-response
-" rs_message-request_id
-" rs_message-authoritative
-" rs_message-error
-" rs_message-message
-" rs_message-proxy_through_service_url
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" optional string brokerServiceUrl = 1;
+" optional string brokerServiceUrlTls = 2;
+" optional LookupType response = 3;
+" required uint64 request_id = 4;
+" optional bool authoritative = 5 [default = false];
+" optional ServerError error = 6;
+" optional string message = 7;
+" optional bool proxy_through_service_url = 8 [default = false];
   ENDMETHOD.
 
   METHOD ser_CommandProducer.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-topic
-" is_message-producer_id
-" is_message-request_id
-" is_message-producer_name
-" is_message-encrypted
-" is_message-metadata
-" is_message-schema
-" is_message-epoch
-" is_message-user_provided_producer_name
-" is_message-producer_access_mode
-" is_message-topic_epoch
-" is_message-txn_enabled
-" is_message-initial_subscription_name
+" required string topic = 1;
+" required uint64 producer_id = 2;
+" required uint64 request_id = 3;
+" optional string producer_name = 4;
+" optional bool encrypted = 5 [default = false];
+" repeated KeyValue metadata = 6;
+" optional Schema schema = 7;
+" optional uint64 epoch = 8 [default = 0];
+" optional bool user_provided_producer_name = 9 [default = true];
+" optional ProducerAccessMode producer_access_mode = 10 [default = Shared];
+" optional uint64 topic_epoch = 11;
+" optional bool txn_enabled = 12 [default = false];
+" optional string initial_subscription_name = 13;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandProducer.
-" rs_message-topic
-" rs_message-producer_id
-" rs_message-request_id
-" rs_message-producer_name
-" rs_message-encrypted
-" rs_message-metadata
-" rs_message-schema
-" rs_message-epoch
-" rs_message-user_provided_producer_name
-" rs_message-producer_access_mode
-" rs_message-topic_epoch
-" rs_message-txn_enabled
-" rs_message-initial_subscription_name
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string topic = 1;
+" required uint64 producer_id = 2;
+" required uint64 request_id = 3;
+" optional string producer_name = 4;
+" optional bool encrypted = 5 [default = false];
+" repeated KeyValue metadata = 6;
+" optional Schema schema = 7;
+" optional uint64 epoch = 8 [default = 0];
+" optional bool user_provided_producer_name = 9 [default = true];
+" optional ProducerAccessMode producer_access_mode = 10 [default = Shared];
+" optional uint64 topic_epoch = 11;
+" optional bool txn_enabled = 12 [default = false];
+" optional string initial_subscription_name = 13;
   ENDMETHOD.
 
   METHOD ser_CommandSend.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-producer_id
-" is_message-sequence_id
-" is_message-num_messages
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-highest_sequence_id
-" is_message-is_chunk
-" is_message-marker
-" is_message-message_id
+" required uint64 producer_id = 1;
+" required uint64 sequence_id = 2;
+" optional int32 num_messages = 3 [default = 1];
+" optional uint64 txnid_least_bits = 4 [default = 0];
+" optional uint64 txnid_most_bits = 5 [default = 0];
+" optional uint64 highest_sequence_id = 6 [default = 0];
+" optional bool is_chunk = 7 [default = false];
+" optional bool marker = 8 [default = false];
+" optional MessageIdData message_id = 9;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandSend.
-" rs_message-producer_id
-" rs_message-sequence_id
-" rs_message-num_messages
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-highest_sequence_id
-" rs_message-is_chunk
-" rs_message-marker
-" rs_message-message_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 producer_id = 1;
+" required uint64 sequence_id = 2;
+" optional int32 num_messages = 3 [default = 1];
+" optional uint64 txnid_least_bits = 4 [default = 0];
+" optional uint64 txnid_most_bits = 5 [default = 0];
+" optional uint64 highest_sequence_id = 6 [default = 0];
+" optional bool is_chunk = 7 [default = false];
+" optional bool marker = 8 [default = false];
+" optional MessageIdData message_id = 9;
   ENDMETHOD.
 
   METHOD ser_CommandSendReceipt.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-producer_id
-" is_message-sequence_id
-" is_message-message_id
-" is_message-highest_sequence_id
+" required uint64 producer_id = 1;
+" required uint64 sequence_id = 2;
+" optional MessageIdData message_id = 3;
+" optional uint64 highest_sequence_id = 4 [default = 0];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandSendReceipt.
-" rs_message-producer_id
-" rs_message-sequence_id
-" rs_message-message_id
-" rs_message-highest_sequence_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 producer_id = 1;
+" required uint64 sequence_id = 2;
+" optional MessageIdData message_id = 3;
+" optional uint64 highest_sequence_id = 4 [default = 0];
   ENDMETHOD.
 
   METHOD ser_CommandSendError.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-producer_id
-" is_message-sequence_id
-" is_message-error
-" is_message-message
+" required uint64 producer_id = 1;
+" required uint64 sequence_id = 2;
+" required ServerError error = 3;
+" required string message = 4;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandSendError.
-" rs_message-producer_id
-" rs_message-sequence_id
-" rs_message-error
-" rs_message-message
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 producer_id = 1;
+" required uint64 sequence_id = 2;
+" required ServerError error = 3;
+" required string message = 4;
   ENDMETHOD.
 
   METHOD ser_CommandMessage.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-consumer_id
-" is_message-message_id
-" is_message-redelivery_count
-" is_message-ack_set
-" is_message-consumer_epoch
+" required uint64 consumer_id = 1;
+" required MessageIdData message_id = 2;
+" optional uint32 redelivery_count = 3 [default = 0];
+" repeated int64 ack_set = 4;
+" optional uint64 consumer_epoch = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandMessage.
-" rs_message-consumer_id
-" rs_message-message_id
-" rs_message-redelivery_count
-" rs_message-ack_set
-" rs_message-consumer_epoch
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 consumer_id = 1;
+" required MessageIdData message_id = 2;
+" optional uint32 redelivery_count = 3 [default = 0];
+" repeated int64 ack_set = 4;
+" optional uint64 consumer_epoch = 5;
   ENDMETHOD.
 
   METHOD ser_CommandAck.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-consumer_id
-" is_message-ack_type
-" is_message-message_id
-" is_message-validation_error
-" is_message-properties
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-request_id
+" required uint64 consumer_id = 1;
+" required AckType ack_type = 2;
+" repeated MessageIdData message_id = 3;
+" optional ValidationError validation_error = 4;
+" repeated KeyLongValue properties = 5;
+" optional uint64 txnid_least_bits = 6 [default = 0];
+" optional uint64 txnid_most_bits = 7 [default = 0];
+" optional uint64 request_id = 8;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandAck.
-" rs_message-consumer_id
-" rs_message-ack_type
-" rs_message-message_id
-" rs_message-validation_error
-" rs_message-properties
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-request_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 consumer_id = 1;
+" required AckType ack_type = 2;
+" repeated MessageIdData message_id = 3;
+" optional ValidationError validation_error = 4;
+" repeated KeyLongValue properties = 5;
+" optional uint64 txnid_least_bits = 6 [default = 0];
+" optional uint64 txnid_most_bits = 7 [default = 0];
+" optional uint64 request_id = 8;
   ENDMETHOD.
 
   METHOD ser_CommandAckResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-consumer_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-error
-" is_message-message
-" is_message-request_id
+" required uint64 consumer_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
+" optional uint64 request_id = 6;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandAckResponse.
-" rs_message-consumer_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-error
-" rs_message-message
-" rs_message-request_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 consumer_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
+" optional uint64 request_id = 6;
   ENDMETHOD.
 
   METHOD ser_CommandActiveConsumetry0NX.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-consumer_id
-" is_message-is_active
+" required uint64 consumer_id = 1;
+" optional bool is_active = 2 [default = false];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandActiveConsumetry0NX.
-" rs_message-consumer_id
-" rs_message-is_active
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 consumer_id = 1;
+" optional bool is_active = 2 [default = false];
   ENDMETHOD.
 
   METHOD ser_CommandFlow.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-consumer_id
-" is_message-messagePermits
+" required uint64 consumer_id = 1;
+" required uint32 messagePermits = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandFlow.
-" rs_message-consumer_id
-" rs_message-messagePermits
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 consumer_id = 1;
+" required uint32 messagePermits = 2;
   ENDMETHOD.
 
   METHOD ser_CommandUnsubscribe.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-consumer_id
-" is_message-request_id
+" required uint64 consumer_id = 1;
+" required uint64 request_id = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandUnsubscribe.
-" rs_message-consumer_id
-" rs_message-request_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 consumer_id = 1;
+" required uint64 request_id = 2;
   ENDMETHOD.
 
   METHOD ser_CommandSeek.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-consumer_id
-" is_message-request_id
-" is_message-message_id
-" is_message-message_publish_time
+" required uint64 consumer_id = 1;
+" required uint64 request_id = 2;
+" optional MessageIdData message_id = 3;
+" optional uint64 message_publish_time = 4;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandSeek.
-" rs_message-consumer_id
-" rs_message-request_id
-" rs_message-message_id
-" rs_message-message_publish_time
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 consumer_id = 1;
+" required uint64 request_id = 2;
+" optional MessageIdData message_id = 3;
+" optional uint64 message_publish_time = 4;
   ENDMETHOD.
 
   METHOD ser_CommandReachedEndOfTopic.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-consumer_id
+" required uint64 consumer_id = 1;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandReachedEndOfTopic.
-" rs_message-consumer_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 consumer_id = 1;
   ENDMETHOD.
 
   METHOD ser_CommandTopicMigrated.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-resource_id
-" is_message-resource_type
-" is_message-brokerServiceUrl
-" is_message-brokerServiceUrlTls
+" required uint64 resource_id = 1;
+" required ResourceType resource_type = 2;
+" optional string brokerServiceUrl = 3;
+" optional string brokerServiceUrlTls = 4;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandTopicMigrated.
-" rs_message-resource_id
-" rs_message-resource_type
-" rs_message-brokerServiceUrl
-" rs_message-brokerServiceUrlTls
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 resource_id = 1;
+" required ResourceType resource_type = 2;
+" optional string brokerServiceUrl = 3;
+" optional string brokerServiceUrlTls = 4;
   ENDMETHOD.
 
   METHOD ser_CommandCloseProducer.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-producer_id
-" is_message-request_id
+" required uint64 producer_id = 1;
+" required uint64 request_id = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandCloseProducer.
-" rs_message-producer_id
-" rs_message-request_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 producer_id = 1;
+" required uint64 request_id = 2;
   ENDMETHOD.
 
   METHOD ser_CommandCloseConsumer.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-consumer_id
-" is_message-request_id
+" required uint64 consumer_id = 1;
+" required uint64 request_id = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandCloseConsumer.
-" rs_message-consumer_id
-" rs_message-request_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 consumer_id = 1;
+" required uint64 request_id = 2;
   ENDMETHOD.
 
   METHOD ser_CommandRedeliverUnacONw3qa.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-consumer_id
-" is_message-message_ids
-" is_message-consumer_epoch
+" required uint64 consumer_id = 1;
+" repeated MessageIdData message_ids = 2;
+" optional uint64 consumer_epoch = 3;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandRedeliverUnacONw3qa.
-" rs_message-consumer_id
-" rs_message-message_ids
-" rs_message-consumer_epoch
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 consumer_id = 1;
+" repeated MessageIdData message_ids = 2;
+" optional uint64 consumer_epoch = 3;
   ENDMETHOD.
 
   METHOD ser_CommandSuccess.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-schema
+" required uint64 request_id = 1;
+" optional Schema schema = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandSuccess.
-" rs_message-request_id
-" rs_message-schema
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional Schema schema = 2;
   ENDMETHOD.
 
   METHOD ser_CommandProducerSuccess.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-producer_name
-" is_message-last_sequence_id
-" is_message-schema_version
-" is_message-topic_epoch
-" is_message-producer_ready
+" required uint64 request_id = 1;
+" required string producer_name = 2;
+" optional int64 last_sequence_id = 3 [default = -1];
+" optional bytes schema_version = 4;
+" optional uint64 topic_epoch = 5;
+" optional bool producer_ready = 6 [default = true];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandProducerSuccess.
-" rs_message-request_id
-" rs_message-producer_name
-" rs_message-last_sequence_id
-" rs_message-schema_version
-" rs_message-topic_epoch
-" rs_message-producer_ready
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" required string producer_name = 2;
+" optional int64 last_sequence_id = 3 [default = -1];
+" optional bytes schema_version = 4;
+" optional uint64 topic_epoch = 5;
+" optional bool producer_ready = 6 [default = true];
   ENDMETHOD.
 
   METHOD ser_CommandError.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-error
-" is_message-message
+" required uint64 request_id = 1;
+" required ServerError error = 2;
+" required string message = 3;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandError.
-" rs_message-request_id
-" rs_message-error
-" rs_message-message
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" required ServerError error = 2;
+" required string message = 3;
   ENDMETHOD.
 
   METHOD ser_CommandPing.
@@ -1376,6 +1456,8 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD des_CommandPing.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
   ENDMETHOD.
 
   METHOD ser_CommandPong.
@@ -1385,648 +1467,710 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD des_CommandPong.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
   ENDMETHOD.
 
   METHOD ser_CommandConsumerStats.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-consumer_id
+" required uint64 request_id = 1;
+" required uint64 consumer_id = 4;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandConsumerStats.
-" rs_message-request_id
-" rs_message-consumer_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" required uint64 consumer_id = 4;
   ENDMETHOD.
 
   METHOD ser_CommandConsumerStatsLMgarI.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-error_code
-" is_message-error_message
-" is_message-msgRateOut
-" is_message-msgThroughputOut
-" is_message-msgRateRedeliver
-" is_message-consumerName
-" is_message-availablePermits
-" is_message-unackedMessages
-" is_message-blockedConsumerOnUnackedMsgs
-" is_message-address
-" is_message-connectedSince
-" is_message-type
-" is_message-msgRateExpired
-" is_message-msgBacklog
-" is_message-messageAckRate
+" required uint64 request_id = 1;
+" optional ServerError error_code = 2;
+" optional string error_message = 3;
+" optional double msgRateOut = 4;
+" optional double msgThroughputOut = 5;
+" optional double msgRateRedeliver = 6;
+" optional string consumerName = 7;
+" optional uint64 availablePermits = 8;
+" optional uint64 unackedMessages = 9;
+" optional bool blockedConsumerOnUnackedMsgs = 10;
+" optional string address = 11;
+" optional string connectedSince = 12;
+" optional string type = 13;
+" optional double msgRateExpired = 14;
+" optional uint64 msgBacklog = 15;
+" optional double messageAckRate = 16;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandConsumerStatsLMgarI.
-" rs_message-request_id
-" rs_message-error_code
-" rs_message-error_message
-" rs_message-msgRateOut
-" rs_message-msgThroughputOut
-" rs_message-msgRateRedeliver
-" rs_message-consumerName
-" rs_message-availablePermits
-" rs_message-unackedMessages
-" rs_message-blockedConsumerOnUnackedMsgs
-" rs_message-address
-" rs_message-connectedSince
-" rs_message-type
-" rs_message-msgRateExpired
-" rs_message-msgBacklog
-" rs_message-messageAckRate
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional ServerError error_code = 2;
+" optional string error_message = 3;
+" optional double msgRateOut = 4;
+" optional double msgThroughputOut = 5;
+" optional double msgRateRedeliver = 6;
+" optional string consumerName = 7;
+" optional uint64 availablePermits = 8;
+" optional uint64 unackedMessages = 9;
+" optional bool blockedConsumerOnUnackedMsgs = 10;
+" optional string address = 11;
+" optional string connectedSince = 12;
+" optional string type = 13;
+" optional double msgRateExpired = 14;
+" optional uint64 msgBacklog = 15;
+" optional double messageAckRate = 16;
   ENDMETHOD.
 
   METHOD ser_CommandGetLastMessageId.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-consumer_id
-" is_message-request_id
+" required uint64 consumer_id = 1;
+" required uint64 request_id = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandGetLastMessageId.
-" rs_message-consumer_id
-" rs_message-request_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 consumer_id = 1;
+" required uint64 request_id = 2;
   ENDMETHOD.
 
   METHOD ser_CommandGetLastMessag2udLG8.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-last_message_id
-" is_message-request_id
-" is_message-consumer_mark_delete_position
+" required MessageIdData last_message_id = 1;
+" required uint64 request_id = 2;
+" optional MessageIdData consumer_mark_delete_position = 3;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandGetLastMessag2udLG8.
-" rs_message-last_message_id
-" rs_message-request_id
-" rs_message-consumer_mark_delete_position
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required MessageIdData last_message_id = 1;
+" required uint64 request_id = 2;
+" optional MessageIdData consumer_mark_delete_position = 3;
   ENDMETHOD.
 
   METHOD ser_CommandGetTopicsOfNaW5sMTo.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-namespace
-" is_message-mode
-" is_message-topics_pattern
-" is_message-topics_hash
+" required uint64 request_id = 1;
+" required string namespace = 2;
+" optional Mode mode = 3 [default = PERSISTENT];
+" optional string topics_pattern = 4;
+" optional string topics_hash = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandGetTopicsOfNaW5sMTo.
-" rs_message-request_id
-" rs_message-namespace
-" rs_message-mode
-" rs_message-topics_pattern
-" rs_message-topics_hash
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" required string namespace = 2;
+" optional Mode mode = 3 [default = PERSISTENT];
+" optional string topics_pattern = 4;
+" optional string topics_hash = 5;
   ENDMETHOD.
 
   METHOD ser_CommandGetTopicsOfNa2Zpv1F.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-topics
-" is_message-filtered
-" is_message-topics_hash
-" is_message-changed
+" required uint64 request_id = 1;
+" repeated string topics = 2;
+" optional bool filtered = 3 [default = false];
+" optional string topics_hash = 4;
+" optional bool changed = 5 [default = true];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandGetTopicsOfNa2Zpv1F.
-" rs_message-request_id
-" rs_message-topics
-" rs_message-filtered
-" rs_message-topics_hash
-" rs_message-changed
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" repeated string topics = 2;
+" optional bool filtered = 3 [default = false];
+" optional string topics_hash = 4;
+" optional bool changed = 5 [default = true];
   ENDMETHOD.
 
   METHOD ser_CommandWatchTopicList.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-watcher_id
-" is_message-namespace
-" is_message-topics_pattern
-" is_message-topics_hash
+" required uint64 request_id = 1;
+" required uint64 watcher_id = 2;
+" required string namespace = 3;
+" required string topics_pattern = 4;
+" optional string topics_hash = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandWatchTopicList.
-" rs_message-request_id
-" rs_message-watcher_id
-" rs_message-namespace
-" rs_message-topics_pattern
-" rs_message-topics_hash
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" required uint64 watcher_id = 2;
+" required string namespace = 3;
+" required string topics_pattern = 4;
+" optional string topics_hash = 5;
   ENDMETHOD.
 
   METHOD ser_CommandWatchTopicLisUXqMY2.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-watcher_id
-" is_message-topic
-" is_message-topics_hash
+" required uint64 request_id = 1;
+" required uint64 watcher_id = 2;
+" repeated string topic = 3;
+" required string topics_hash = 4;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandWatchTopicLisUXqMY2.
-" rs_message-request_id
-" rs_message-watcher_id
-" rs_message-topic
-" rs_message-topics_hash
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" required uint64 watcher_id = 2;
+" repeated string topic = 3;
+" required string topics_hash = 4;
   ENDMETHOD.
 
   METHOD ser_CommandWatchTopicUpdate.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-watcher_id
-" is_message-new_topics
-" is_message-deleted_topics
-" is_message-topics_hash
+" required uint64 watcher_id = 1;
+" repeated string new_topics = 2;
+" repeated string deleted_topics = 3;
+" required string topics_hash = 4;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandWatchTopicUpdate.
-" rs_message-watcher_id
-" rs_message-new_topics
-" rs_message-deleted_topics
-" rs_message-topics_hash
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 watcher_id = 1;
+" repeated string new_topics = 2;
+" repeated string deleted_topics = 3;
+" required string topics_hash = 4;
   ENDMETHOD.
 
   METHOD ser_CommandWatchTopicListClose.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-watcher_id
+" required uint64 request_id = 1;
+" required uint64 watcher_id = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandWatchTopicListClose.
-" rs_message-request_id
-" rs_message-watcher_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" required uint64 watcher_id = 2;
   ENDMETHOD.
 
   METHOD ser_CommandGetSchema.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-topic
-" is_message-schema_version
+" required uint64 request_id = 1;
+" required string topic = 2;
+" optional bytes schema_version = 3;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandGetSchema.
-" rs_message-request_id
-" rs_message-topic
-" rs_message-schema_version
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" required string topic = 2;
+" optional bytes schema_version = 3;
   ENDMETHOD.
 
   METHOD ser_CommandGetSchemaResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-error_code
-" is_message-error_message
-" is_message-schema
-" is_message-schema_version
+" required uint64 request_id = 1;
+" optional ServerError error_code = 2;
+" optional string error_message = 3;
+" optional Schema schema = 4;
+" optional bytes schema_version = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandGetSchemaResponse.
-" rs_message-request_id
-" rs_message-error_code
-" rs_message-error_message
-" rs_message-schema
-" rs_message-schema_version
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional ServerError error_code = 2;
+" optional string error_message = 3;
+" optional Schema schema = 4;
+" optional bytes schema_version = 5;
   ENDMETHOD.
 
   METHOD ser_CommandGetOrCreateSchema.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-topic
-" is_message-schema
+" required uint64 request_id = 1;
+" required string topic = 2;
+" required Schema schema = 3;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandGetOrCreateSchema.
-" rs_message-request_id
-" rs_message-topic
-" rs_message-schema
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" required string topic = 2;
+" required Schema schema = 3;
   ENDMETHOD.
 
   METHOD ser_CommandGetOrCreateScVKbTgH.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-error_code
-" is_message-error_message
-" is_message-schema_version
+" required uint64 request_id = 1;
+" optional ServerError error_code = 2;
+" optional string error_message = 3;
+" optional bytes schema_version = 4;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandGetOrCreateScVKbTgH.
-" rs_message-request_id
-" rs_message-error_code
-" rs_message-error_message
-" rs_message-schema_version
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional ServerError error_code = 2;
+" optional string error_message = 3;
+" optional bytes schema_version = 4;
   ENDMETHOD.
 
   METHOD ser_CommandTcClientConneWIoTIu.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-tc_id
+" required uint64 request_id = 1;
+" required uint64 tc_id = 2 [default = 0];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandTcClientConneWIoTIu.
-" rs_message-request_id
-" rs_message-tc_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" required uint64 tc_id = 2 [default = 0];
   ENDMETHOD.
 
   METHOD ser_CommandTcClientConneTuQpSf.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-error
-" is_message-message
+" required uint64 request_id = 1;
+" optional ServerError error = 2;
+" optional string message = 3;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandTcClientConneTuQpSf.
-" rs_message-request_id
-" rs_message-error
-" rs_message-message
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional ServerError error = 2;
+" optional string message = 3;
   ENDMETHOD.
 
   METHOD ser_CommandNewTxn.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txn_ttl_seconds
-" is_message-tc_id
+" required uint64 request_id = 1;
+" optional uint64 txn_ttl_seconds = 2 [default = 0];
+" optional uint64 tc_id = 3 [default = 0];
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandNewTxn.
-" rs_message-request_id
-" rs_message-txn_ttl_seconds
-" rs_message-tc_id
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txn_ttl_seconds = 2 [default = 0];
+" optional uint64 tc_id = 3 [default = 0];
   ENDMETHOD.
 
   METHOD ser_CommandNewTxnResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-error
-" is_message-message
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandNewTxnResponse.
-" rs_message-request_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-error
-" rs_message-message
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
   ENDMETHOD.
 
   METHOD ser_CommandAddPartitionToTxn.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-partitions
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" repeated string partitions = 4;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandAddPartitionToTxn.
-" rs_message-request_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-partitions
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" repeated string partitions = 4;
   ENDMETHOD.
 
   METHOD ser_CommandAddPartitionTafUHa4.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-error
-" is_message-message
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandAddPartitionTafUHa4.
-" rs_message-request_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-error
-" rs_message-message
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
   ENDMETHOD.
 
   METHOD ser_Subscription.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-topic
-" is_message-subscription
+" required string topic = 1;
+" required string subscription = 2;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_Subscription.
-" rs_message-topic
-" rs_message-subscription
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required string topic = 1;
+" required string subscription = 2;
   ENDMETHOD.
 
   METHOD ser_CommandAddSubscriptisyuJS0.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-subscription
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" repeated Subscription subscription = 4;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandAddSubscriptisyuJS0.
-" rs_message-request_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-subscription
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" repeated Subscription subscription = 4;
   ENDMETHOD.
 
   METHOD ser_CommandAddSubscripti6CDt1m.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-error
-" is_message-message
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandAddSubscripti6CDt1m.
-" rs_message-request_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-error
-" rs_message-message
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
   ENDMETHOD.
 
   METHOD ser_CommandEndTxn.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-txn_action
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional TxnAction txn_action = 4;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandEndTxn.
-" rs_message-request_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-txn_action
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional TxnAction txn_action = 4;
   ENDMETHOD.
 
   METHOD ser_CommandEndTxnResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-error
-" is_message-message
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandEndTxnResponse.
-" rs_message-request_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-error
-" rs_message-message
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
   ENDMETHOD.
 
   METHOD ser_CommandEndTxnOnPartition.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-topic
-" is_message-txn_action
-" is_message-txnid_least_bits_of_low_watermark
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional string topic = 4;
+" optional TxnAction txn_action = 5;
+" optional uint64 txnid_least_bits_of_low_watermark = 6;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandEndTxnOnPartition.
-" rs_message-request_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-topic
-" rs_message-txn_action
-" rs_message-txnid_least_bits_of_low_watermark
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional string topic = 4;
+" optional TxnAction txn_action = 5;
+" optional uint64 txnid_least_bits_of_low_watermark = 6;
   ENDMETHOD.
 
   METHOD ser_CommandEndTxnOnPartiOOlMQv.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-error
-" is_message-message
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandEndTxnOnPartiOOlMQv.
-" rs_message-request_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-error
-" rs_message-message
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
   ENDMETHOD.
 
   METHOD ser_CommandEndTxnOnSubscqx6OWu.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-subscription
-" is_message-txn_action
-" is_message-txnid_least_bits_of_low_watermark
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional Subscription subscription = 4;
+" optional TxnAction txn_action = 5;
+" optional uint64 txnid_least_bits_of_low_watermark = 6;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandEndTxnOnSubscqx6OWu.
-" rs_message-request_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-subscription
-" rs_message-txn_action
-" rs_message-txnid_least_bits_of_low_watermark
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional Subscription subscription = 4;
+" optional TxnAction txn_action = 5;
+" optional uint64 txnid_least_bits_of_low_watermark = 6;
   ENDMETHOD.
 
   METHOD ser_CommandEndTxnOnSubscVUpsoc.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-request_id
-" is_message-txnid_least_bits
-" is_message-txnid_most_bits
-" is_message-error
-" is_message-message
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_CommandEndTxnOnSubscVUpsoc.
-" rs_message-request_id
-" rs_message-txnid_least_bits
-" rs_message-txnid_most_bits
-" rs_message-error
-" rs_message-message
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required uint64 request_id = 1;
+" optional uint64 txnid_least_bits = 2 [default = 0];
+" optional uint64 txnid_most_bits = 3 [default = 0];
+" optional ServerError error = 4;
+" optional string message = 5;
   ENDMETHOD.
 
   METHOD ser_BaseCommand.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" is_message-type
-" is_message-connect
-" is_message-connected
-" is_message-subscribe
-" is_message-producer
-" is_message-send
-" is_message-send_receipt
-" is_message-send_error
-" is_message-message
-" is_message-ack
-" is_message-flow
-" is_message-unsubscribe
-" is_message-success
-" is_message-error
-" is_message-close_producer
-" is_message-close_consumer
-" is_message-producer_success
-" is_message-ping
-" is_message-pong
-" is_message-redeliverUnacknowledgedMessages
-" is_message-partitionMetadata
-" is_message-partitionMetadataResponse
-" is_message-lookupTopic
-" is_message-lookupTopicResponse
-" is_message-consumerStats
-" is_message-consumerStatsResponse
-" is_message-reachedEndOfTopic
-" is_message-seek
-" is_message-getLastMessageId
-" is_message-getLastMessageIdResponse
-" is_message-active_consumer_change
-" is_message-getTopicsOfNamespace
-" is_message-getTopicsOfNamespaceResponse
-" is_message-getSchema
-" is_message-getSchemaResponse
-" is_message-authChallenge
-" is_message-authResponse
-" is_message-ackResponse
-" is_message-getOrCreateSchema
-" is_message-getOrCreateSchemaResponse
-" is_message-newTxn
-" is_message-newTxnResponse
-" is_message-addPartitionToTxn
-" is_message-addPartitionToTxnResponse
-" is_message-addSubscriptionToTxn
-" is_message-addSubscriptionToTxnResponse
-" is_message-endTxn
-" is_message-endTxnResponse
-" is_message-endTxnOnPartition
-" is_message-endTxnOnPartitionResponse
-" is_message-endTxnOnSubscription
-" is_message-endTxnOnSubscriptionResponse
-" is_message-tcClientConnectRequest
-" is_message-tcClientConnectResponse
-" is_message-watchTopicList
-" is_message-watchTopicListSuccess
-" is_message-watchTopicUpdate
-" is_message-watchTopicListClose
-" is_message-topicMigrated
+" required BaseCommandType type = 1;
+" optional CommandConnect connect = 2;
+" optional CommandConnected connected = 3;
+" optional CommandSubscribe subscribe = 4;
+" optional CommandProducer producer = 5;
+" optional CommandSend send = 6;
+" optional CommandSendReceipt send_receipt = 7;
+" optional CommandSendError send_error = 8;
+" optional CommandMessage message = 9;
+" optional CommandAck ack = 10;
+" optional CommandFlow flow = 11;
+" optional CommandUnsubscribe unsubscribe = 12;
+" optional CommandSuccess success = 13;
+" optional CommandError error = 14;
+" optional CommandCloseProducer close_producer = 15;
+" optional CommandCloseConsumer close_consumer = 16;
+" optional CommandProducerSuccess producer_success = 17;
+" optional CommandPing ping = 18;
+" optional CommandPong pong = 19;
+" optional CommandRedeliverUnacknowledgedMessages redeliverUnacknowledgedMessages = 20;
+" optional CommandPartitionedTopicMetadata partitionMetadata = 21;
+" optional CommandPartitionedTopicMetadataResponse partitionMetadataResponse = 22;
+" optional CommandLookupTopic lookupTopic = 23;
+" optional CommandLookupTopicResponse lookupTopicResponse = 24;
+" optional CommandConsumerStats consumerStats = 25;
+" optional CommandConsumerStatsResponse consumerStatsResponse = 26;
+" optional CommandReachedEndOfTopic reachedEndOfTopic = 27;
+" optional CommandSeek seek = 28;
+" optional CommandGetLastMessageId getLastMessageId = 29;
+" optional CommandGetLastMessageIdResponse getLastMessageIdResponse = 30;
+" optional CommandActiveConsumerChange active_consumer_change = 31;
+" optional CommandGetTopicsOfNamespace getTopicsOfNamespace = 32;
+" optional CommandGetTopicsOfNamespaceResponse getTopicsOfNamespaceResponse = 33;
+" optional CommandGetSchema getSchema = 34;
+" optional CommandGetSchemaResponse getSchemaResponse = 35;
+" optional CommandAuthChallenge authChallenge = 36;
+" optional CommandAuthResponse authResponse = 37;
+" optional CommandAckResponse ackResponse = 38;
+" optional CommandGetOrCreateSchema getOrCreateSchema = 39;
+" optional CommandGetOrCreateSchemaResponse getOrCreateSchemaResponse = 40;
+" optional CommandNewTxn newTxn = 50;
+" optional CommandNewTxnResponse newTxnResponse = 51;
+" optional CommandAddPartitionToTxn addPartitionToTxn = 52;
+" optional CommandAddPartitionToTxnResponse addPartitionToTxnResponse = 53;
+" optional CommandAddSubscriptionToTxn addSubscriptionToTxn = 54;
+" optional CommandAddSubscriptionToTxnResponse addSubscriptionToTxnResponse = 55;
+" optional CommandEndTxn endTxn = 56;
+" optional CommandEndTxnResponse endTxnResponse = 57;
+" optional CommandEndTxnOnPartition endTxnOnPartition = 58;
+" optional CommandEndTxnOnPartitionResponse endTxnOnPartitionResponse = 59;
+" optional CommandEndTxnOnSubscription endTxnOnSubscription = 60;
+" optional CommandEndTxnOnSubscriptionResponse endTxnOnSubscriptionResponse = 61;
+" optional CommandTcClientConnectRequest tcClientConnectRequest = 62;
+" optional CommandTcClientConnectResponse tcClientConnectResponse = 63;
+" optional CommandWatchTopicList watchTopicList = 64;
+" optional CommandWatchTopicListSuccess watchTopicListSuccess = 65;
+" optional CommandWatchTopicUpdate watchTopicUpdate = 66;
+" optional CommandWatchTopicListClose watchTopicListClose = 67;
+" optional CommandTopicMigrated topicMigrated = 68;
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
   METHOD des_BaseCommand.
-" rs_message-type
-" rs_message-connect
-" rs_message-connected
-" rs_message-subscribe
-" rs_message-producer
-" rs_message-send
-" rs_message-send_receipt
-" rs_message-send_error
-" rs_message-message
-" rs_message-ack
-" rs_message-flow
-" rs_message-unsubscribe
-" rs_message-success
-" rs_message-error
-" rs_message-close_producer
-" rs_message-close_consumer
-" rs_message-producer_success
-" rs_message-ping
-" rs_message-pong
-" rs_message-redeliverUnacknowledgedMessages
-" rs_message-partitionMetadata
-" rs_message-partitionMetadataResponse
-" rs_message-lookupTopic
-" rs_message-lookupTopicResponse
-" rs_message-consumerStats
-" rs_message-consumerStatsResponse
-" rs_message-reachedEndOfTopic
-" rs_message-seek
-" rs_message-getLastMessageId
-" rs_message-getLastMessageIdResponse
-" rs_message-active_consumer_change
-" rs_message-getTopicsOfNamespace
-" rs_message-getTopicsOfNamespaceResponse
-" rs_message-getSchema
-" rs_message-getSchemaResponse
-" rs_message-authChallenge
-" rs_message-authResponse
-" rs_message-ackResponse
-" rs_message-getOrCreateSchema
-" rs_message-getOrCreateSchemaResponse
-" rs_message-newTxn
-" rs_message-newTxnResponse
-" rs_message-addPartitionToTxn
-" rs_message-addPartitionToTxnResponse
-" rs_message-addSubscriptionToTxn
-" rs_message-addSubscriptionToTxnResponse
-" rs_message-endTxn
-" rs_message-endTxnResponse
-" rs_message-endTxnOnPartition
-" rs_message-endTxnOnPartitionResponse
-" rs_message-endTxnOnSubscription
-" rs_message-endTxnOnSubscriptionResponse
-" rs_message-tcClientConnectRequest
-" rs_message-tcClientConnectResponse
-" rs_message-watchTopicList
-" rs_message-watchTopicListSuccess
-" rs_message-watchTopicUpdate
-" rs_message-watchTopicListClose
-" rs_message-topicMigrated
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+" required BaseCommandType type = 1;
+" optional CommandConnect connect = 2;
+" optional CommandConnected connected = 3;
+" optional CommandSubscribe subscribe = 4;
+" optional CommandProducer producer = 5;
+" optional CommandSend send = 6;
+" optional CommandSendReceipt send_receipt = 7;
+" optional CommandSendError send_error = 8;
+" optional CommandMessage message = 9;
+" optional CommandAck ack = 10;
+" optional CommandFlow flow = 11;
+" optional CommandUnsubscribe unsubscribe = 12;
+" optional CommandSuccess success = 13;
+" optional CommandError error = 14;
+" optional CommandCloseProducer close_producer = 15;
+" optional CommandCloseConsumer close_consumer = 16;
+" optional CommandProducerSuccess producer_success = 17;
+" optional CommandPing ping = 18;
+" optional CommandPong pong = 19;
+" optional CommandRedeliverUnacknowledgedMessages redeliverUnacknowledgedMessages = 20;
+" optional CommandPartitionedTopicMetadata partitionMetadata = 21;
+" optional CommandPartitionedTopicMetadataResponse partitionMetadataResponse = 22;
+" optional CommandLookupTopic lookupTopic = 23;
+" optional CommandLookupTopicResponse lookupTopicResponse = 24;
+" optional CommandConsumerStats consumerStats = 25;
+" optional CommandConsumerStatsResponse consumerStatsResponse = 26;
+" optional CommandReachedEndOfTopic reachedEndOfTopic = 27;
+" optional CommandSeek seek = 28;
+" optional CommandGetLastMessageId getLastMessageId = 29;
+" optional CommandGetLastMessageIdResponse getLastMessageIdResponse = 30;
+" optional CommandActiveConsumerChange active_consumer_change = 31;
+" optional CommandGetTopicsOfNamespace getTopicsOfNamespace = 32;
+" optional CommandGetTopicsOfNamespaceResponse getTopicsOfNamespaceResponse = 33;
+" optional CommandGetSchema getSchema = 34;
+" optional CommandGetSchemaResponse getSchemaResponse = 35;
+" optional CommandAuthChallenge authChallenge = 36;
+" optional CommandAuthResponse authResponse = 37;
+" optional CommandAckResponse ackResponse = 38;
+" optional CommandGetOrCreateSchema getOrCreateSchema = 39;
+" optional CommandGetOrCreateSchemaResponse getOrCreateSchemaResponse = 40;
+" optional CommandNewTxn newTxn = 50;
+" optional CommandNewTxnResponse newTxnResponse = 51;
+" optional CommandAddPartitionToTxn addPartitionToTxn = 52;
+" optional CommandAddPartitionToTxnResponse addPartitionToTxnResponse = 53;
+" optional CommandAddSubscriptionToTxn addSubscriptionToTxn = 54;
+" optional CommandAddSubscriptionToTxnResponse addSubscriptionToTxnResponse = 55;
+" optional CommandEndTxn endTxn = 56;
+" optional CommandEndTxnResponse endTxnResponse = 57;
+" optional CommandEndTxnOnPartition endTxnOnPartition = 58;
+" optional CommandEndTxnOnPartitionResponse endTxnOnPartitionResponse = 59;
+" optional CommandEndTxnOnSubscription endTxnOnSubscription = 60;
+" optional CommandEndTxnOnSubscriptionResponse endTxnOnSubscriptionResponse = 61;
+" optional CommandTcClientConnectRequest tcClientConnectRequest = 62;
+" optional CommandTcClientConnectResponse tcClientConnectResponse = 63;
+" optional CommandWatchTopicList watchTopicList = 64;
+" optional CommandWatchTopicListSuccess watchTopicListSuccess = 65;
+" optional CommandWatchTopicUpdate watchTopicUpdate = 66;
+" optional CommandWatchTopicListClose watchTopicListClose = 67;
+" optional CommandTopicMigrated topicMigrated = 68;
   ENDMETHOD.
 
 ENDCLASS.
