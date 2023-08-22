@@ -2,6 +2,7 @@ CLASS zcl_protobuf_generate_clas DEFINITION PUBLIC.
   PUBLIC SECTION.
     CLASS-METHODS generate
       IMPORTING
+        iv_description TYPE string OPTIONAL
         io_file        TYPE REF TO zcl_protobuf2_file
       RETURNING
         VALUE(rv_abap) TYPE string.
@@ -25,6 +26,9 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
     go_file = io_file.
 
     gv_def = gv_def && |CLASS zcl_protobuf_generated DEFINITION PUBLIC.\n|.
+    IF iv_description IS NOT INITIAL.
+      gv_def = gv_def && |* { iv_description }\n|.
+    ENDIF.
     gv_def = gv_def && |  PUBLIC SECTION.\n|.
 
     gv_impl = gv_impl && |CLASS zcl_protobuf_generated IMPLEMENTATION.\n|.

@@ -1,4 +1,5 @@
 CLASS zcl_protobuf_generated DEFINITION PUBLIC.
+* https://github.com/apache/pulsar/blob/master/pulsar-common/src/main/proto/PulsarApi.proto
   PUBLIC SECTION.
 * Message "KeyValue",
     METHODS ser_KeyValue

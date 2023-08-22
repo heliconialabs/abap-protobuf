@@ -2,6 +2,7 @@ CLASS zcl_protobuf_generate_intf DEFINITION PUBLIC.
   PUBLIC SECTION.
     CLASS-METHODS generate
       IMPORTING
+        iv_description TYPE string OPTIONAL
         io_file        TYPE REF TO zcl_protobuf2_file
       RETURNING
         VALUE(rv_abap) TYPE string.
@@ -31,6 +32,9 @@ CLASS zcl_protobuf_generate_intf IMPLEMENTATION.
   METHOD generate.
 
     rv_abap = rv_abap && |INTERFACE zif_protobuf_generated PUBLIC.\n|.
+    IF iv_description IS NOT INITIAL.
+      rv_abap = rv_abap && |* { iv_description }\n|.
+    ENDIF.
     rv_abap = rv_abap && zcl_protobuf_generate=>build_builtin( ).
 
     LOOP AT io_file->mt_artefacts INTO DATA(lo_artefact).
