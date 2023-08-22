@@ -47,6 +47,8 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
 
   METHOD message.
 
+    DATA lv_name TYPE string.
+
     gv_def = gv_def && |* Message "| && io_message->mv_name && |",\n|.
     gv_def = gv_def && |    METHODS ser_{ zcl_protobuf_generate=>abap_name( io_message->mv_name ) }\n|.
     gv_def = gv_def && |      IMPORTING is_message TYPE zif_protobuf_generated=>{ zcl_protobuf_generate=>abap_name( io_message->mv_name ) }\n|.
@@ -62,6 +64,7 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
     LOOP AT io_message->mt_artefacts INTO DATA(lo_artefact).
       CASE TYPE OF lo_artefact.
         WHEN TYPE zcl_protobuf2_field INTO DATA(lo_field).
+          lv_name = |is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }|.
           gv_impl = gv_impl && |" { lo_field->zif_protobuf2_artefact~serialize( ) }\n|.
           IF lo_field->mv_label = 'repeated'.
             gv_impl = gv_impl && |" todo, repeated\n|.
@@ -71,15 +74,15 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
             gv_impl = gv_impl && |      iv_wire_type    = { zcl_protobuf_generate=>map_builtin( lo_field->mv_type ) } ).\n|.
             CASE lo_field->mv_type.
               WHEN 'bool'.
-                gv_impl = gv_impl && |    lo_stream->encode_bool( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ).\n|.
+                gv_impl = gv_impl && |    lo_stream->encode_bool( { lv_name } ).\n|.
               WHEN 'double' OR 'float'.
-                gv_impl = gv_impl && |    lo_stream->encode_double( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ).\n|.
+                gv_impl = gv_impl && |    lo_stream->encode_double( { lv_name } ).\n|.
               WHEN 'string'.
-                gv_impl = gv_impl && |    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ) ).\n|.
+                gv_impl = gv_impl && |    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( { lv_name } ) ).\n|.
               WHEN 'bytes'.
-                gv_impl = gv_impl && |    lo_stream->encode_delimited( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ).\n|.
+                gv_impl = gv_impl && |    lo_stream->encode_delimited( { lv_name } ).\n|.
               WHEN 'int64' OR 'uint64' OR 'uint32' OR 'int32'.
-                gv_impl = gv_impl && |    lo_stream->encode_varint( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ).\n|.
+                gv_impl = gv_impl && |    lo_stream->encode_varint( { lv_name } ).\n|.
               WHEN OTHERS.
                 gv_impl = gv_impl && |" todo, encoding\n|.
             ENDCASE.
@@ -87,12 +90,12 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
             gv_impl = gv_impl && |    lo_stream->encode_field_and_type2(\n|.
             gv_impl = gv_impl && |      iv_field_number = { lo_field->mv_field_number }\n|.
             gv_impl = gv_impl && |      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).\n|.
-            gv_impl = gv_impl && |    lo_stream->encode_varint( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ).\n|.
+            gv_impl = gv_impl && |    lo_stream->encode_varint( { lv_name } ).\n|.
           ELSE.
             gv_impl = gv_impl && |    lo_stream->encode_field_and_type2(\n|.
             gv_impl = gv_impl && |      iv_field_number = { lo_field->mv_field_number }\n|.
             gv_impl = gv_impl && |      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).\n|.
-            gv_impl = gv_impl && |    lo_stream->encode_delimited( ser_{ zcl_protobuf_generate=>abap_name( lo_field->mv_type ) }( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ) ).\n|.
+            gv_impl = gv_impl && |    lo_stream->encode_delimited( ser_{ zcl_protobuf_generate=>abap_name( lo_field->mv_type ) }( { lv_name } ) ).\n|.
           ENDIF.
       ENDCASE.
     ENDLOOP.
