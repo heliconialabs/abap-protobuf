@@ -65,7 +65,7 @@ CLASS zcl_protobuf_stream DEFINITION
         VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
     METHODS encode_varint
       IMPORTING
-        !iv_int       TYPE i
+        !iv_int       TYPE numeric
       RETURNING
         VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
     METHODS encode_bool
@@ -234,10 +234,11 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
 * https://en.wikipedia.org/wiki/Variable-length_quantity
     DATA lv_lower TYPE x LENGTH 1.
     DATA lv_encoded TYPE xstring.
+    DATA lv_int TYPE int8.
 
     ASSERT iv_int >= 0. " todo
 
-    DATA(lv_int) = iv_int.
+    lv_int = iv_int.
     WHILE lv_int > 0.
       lv_lower = lv_int MOD 128.
       lv_int = lv_int DIV 128.
