@@ -59,9 +59,17 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
     LOOP AT io_message->mt_artefacts INTO DATA(lo_artefact).
       CASE TYPE OF lo_artefact.
         WHEN TYPE zcl_protobuf2_field INTO DATA(lo_field).
-          " CASE lo_field->mv_type.
-          " ENDCASE.
           gv_implementation = gv_implementation && |" { lo_field->zif_protobuf2_artefact~serialize( ) }\n|.
+          IF zcl_protobuf_generate=>is_builtin( lo_field->mv_type ) = abap_true.
+            gv_implementation = gv_implementation && |    lo_stream->encode_field_and_type2(\n|.
+            gv_implementation = gv_implementation && |      iv_field_number = { lo_field->mv_field_number }\n|.
+            gv_implementation = gv_implementation && |      iv_wire_type    = { zcl_protobuf_generate=>map_builtin( lo_field->mv_type ) } ).\n|.
+          " ELSEIF io_message->is_enum( lo_field->mv_type ).
+          "   gv_implementation = gv_implementation && | " todo, enum\n|.
+          ELSE.
+            gv_implementation = gv_implementation && | " todo\n|.
+            gv_implementation = gv_implementation && | "   ser_{ zcl_protobuf_generate=>abap_name( lo_field->mv_type ) }( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ).\n|.
+          ENDIF.
       ENDCASE.
     ENDLOOP.
 

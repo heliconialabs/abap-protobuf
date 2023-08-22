@@ -9,10 +9,47 @@ CLASS zcl_protobuf_generate DEFINITION PUBLIC.
     CLASS-METHODS build_builtin
       RETURNING
         VALUE(rv_abap) TYPE string.
+
+    CLASS-METHODS is_builtin
+      IMPORTING iv_type TYPE string
+      RETURNING VALUE(rv_bool) TYPE abap_bool.
+
+    CLASS-METHODS map_builtin
+      IMPORTING iv_type TYPE string
+      RETURNING VALUE(rv_type) TYPE string.
 ENDCLASS.
 
 CLASS zcl_protobuf_generate IMPLEMENTATION.
+  METHOD is_builtin.
+    rv_bool = xsdbool( iv_type = 'int32' OR
+      iv_type = 'uint32' OR
+      iv_type = 'uint64' OR
+      iv_type = 'int64' OR
+      iv_type = 'bool' OR
+      iv_type = 'string' OR
+      iv_type = 'bytes' OR
+      iv_type = 'double' OR
+      iv_type = 'float' ).
+  ENDMETHOD.
+
+  METHOD map_builtin.
+* https://protobuf.dev/programming-guides/encoding/#structure
+    CASE iv_type.
+      WHEN 'int32' OR 'uint32' OR 'uint64' OR 'int64' OR 'bool'.
+        rv_type = 'zcl_protobuf_stream=>gc_wire_type-varint'.
+      WHEN 'double'.
+        rv_type = 'zcl_protobuf_stream=>gc_wire_type-bit64'.
+      WHEN 'bytes' OR 'string'.
+        rv_type = 'zcl_protobuf_stream=>gc_wire_type-length_delimited'.
+      WHEN 'float'.
+        rv_type = 'zcl_protobuf_stream=>gc_wire_type-bit32'.
+      WHEN OTHERS.
+        ASSERT 1 = 'todo.'.
+    ENDCASE.
+  ENDMETHOD.
+
   METHOD build_builtin.
+" 'string' cannot be redefined
     rv_abap = rv_abap && |  TYPES int32  TYPE i.\n|.
     rv_abap = rv_abap && |  TYPES uint32 TYPE int8.\n|.
     rv_abap = rv_abap && |  TYPES uint64 TYPE int8.\n|. " hmm

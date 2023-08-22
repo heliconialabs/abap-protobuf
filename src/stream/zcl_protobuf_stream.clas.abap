@@ -46,6 +46,12 @@ CLASS zcl_protobuf_stream DEFINITION
         !is_field_and_type TYPE ty_field_and_type
       RETURNING
         VALUE(ro_ref)      TYPE REF TO zcl_protobuf_stream .
+    METHODS encode_field_and_type2
+      IMPORTING
+        iv_field_number TYPE i
+        iv_wire_type    TYPE ty_wire_type
+      RETURNING
+        VALUE(ro_ref)      TYPE REF TO zcl_protobuf_stream .
     METHODS encode_fixed64
       IMPORTING
         !iv_int       TYPE int8
@@ -81,7 +87,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
+CLASS zcl_protobuf_stream IMPLEMENTATION.
 
 
   METHOD append.
@@ -177,7 +183,6 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD encode_field_and_type.
     DATA lv_hex TYPE x LENGTH 1.
     lv_hex = is_field_and_type-field_number * 8 + is_field_and_type-wire_type.
@@ -185,6 +190,13 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
     ro_ref = me.
   ENDMETHOD.
 
+  METHOD encode_field_and_type2.
+    DATA ls_structure TYPE ty_field_and_type.
+    ls_structure-field_number = iv_field_number.
+    ls_structure-wire_type = iv_wire_type.
+    encode_field_and_type( ls_structure ).
+    ro_ref = me.
+  ENDMETHOD.
 
   METHOD encode_fixed64.
 * always 8 bytes, little-endian
