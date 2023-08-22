@@ -659,8 +659,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-type = lo_stream->decode_varint( ).
         WHEN 5.
 " repeated KeyValue properties = 5;
-" todo
-          CONTINUE.
+          INSERT des_KeyValue( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-properties.
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -725,8 +724,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-batch_index = lo_stream->decode_varint( ).
         WHEN 5.
 " repeated int64 ack_set = 5;
-" todo
-          CONTINUE.
+          INSERT lo_stream->decode_varint( ) INTO TABLE rs_message-ack_set.
         WHEN 6.
 " optional int32 batch_size = 6;
           rs_message-batch_size = lo_stream->decode_varint( ).
@@ -841,8 +839,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-value = lo_stream->decode_delimited( ).
         WHEN 3.
 " repeated KeyValue metadata = 3;
-" todo
-          CONTINUE.
+          INSERT des_KeyValue( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-metadata.
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -1018,8 +1015,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-publish_time = lo_stream->decode_varint( ).
         WHEN 4.
 " repeated KeyValue properties = 4;
-" todo
-          CONTINUE.
+          INSERT des_KeyValue( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-properties.
         WHEN 5.
 " optional string replicated_from = 5;
           rs_message-replicated_from = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -1028,8 +1024,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-partition_key = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN 7.
 " repeated string replicate_to = 7;
-" todo
-          CONTINUE.
+          INSERT cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-replicate_to.
         WHEN 8.
 " optional CompressionType compression = 8 [default = NONE];
           rs_message-compression = lo_stream->decode_varint( ).
@@ -1044,8 +1039,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-event_time = lo_stream->decode_varint( ).
         WHEN 13.
 " repeated EncryptionKeys encryption_keys = 13;
-" todo
-          CONTINUE.
+          INSERT des_EncryptionKeys( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-encryption_keys.
         WHEN 14.
 " optional string encryption_algo = 14;
           rs_message-encryption_algo = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -1166,8 +1160,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " repeated KeyValue properties = 1;
-" todo
-          CONTINUE.
+          INSERT des_KeyValue( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-properties.
         WHEN 2.
 " optional string partition_key = 2;
           rs_message-partition_key = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -1593,8 +1586,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-keySharedMode = lo_stream->decode_varint( ).
         WHEN 3.
 " repeated IntRange hashRanges = 3;
-" todo
-          CONTINUE.
+          INSERT des_IntRange( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-hashRanges.
         WHEN 4.
 " optional bool allowOutOfOrderDelivery = 4 [default = false];
           rs_message-allowOutOfOrderDelivery = lo_stream->decode_bool( ).
@@ -1744,8 +1736,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-start_message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
         WHEN 10.
 " repeated KeyValue metadata = 10;
-" todo
-          CONTINUE.
+          INSERT des_KeyValue( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-metadata.
         WHEN 11.
 " optional bool read_compacted = 11;
           rs_message-read_compacted = lo_stream->decode_bool( ).
@@ -1769,8 +1760,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-keySharedMeta = des_KeySharedMeta( lo_stream->decode_delimited( ) ).
         WHEN 18.
 " repeated KeyValue subscription_properties = 18;
-" todo
-          CONTINUE.
+          INSERT des_KeyValue( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-subscription_properties.
         WHEN 19.
 " optional uint64 consumer_epoch = 19;
           rs_message-consumer_epoch = lo_stream->decode_varint( ).
@@ -2148,8 +2138,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-encrypted = lo_stream->decode_bool( ).
         WHEN 6.
 " repeated KeyValue metadata = 6;
-" todo
-          CONTINUE.
+          INSERT des_KeyValue( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-metadata.
         WHEN 7.
 " optional Schema schema = 7;
           rs_message-schema = des_Schema( lo_stream->decode_delimited( ) ).
@@ -2417,8 +2406,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-redelivery_count = lo_stream->decode_varint( ).
         WHEN 4.
 " repeated int64 ack_set = 4;
-" todo
-          CONTINUE.
+          INSERT lo_stream->decode_varint( ) INTO TABLE rs_message-ack_set.
         WHEN 5.
 " optional uint64 consumer_epoch = 5;
           rs_message-consumer_epoch = lo_stream->decode_varint( ).
@@ -2492,15 +2480,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-ack_type = lo_stream->decode_varint( ).
         WHEN 3.
 " repeated MessageIdData message_id = 3;
-" todo
-          CONTINUE.
+          INSERT des_MessageIdData( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-message_id.
         WHEN 4.
 " optional ValidationError validation_error = 4;
           rs_message-validation_error = lo_stream->decode_varint( ).
         WHEN 5.
 " repeated KeyLongValue properties = 5;
-" todo
-          CONTINUE.
+          INSERT des_KeyLongValue( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-properties.
         WHEN 6.
 " optional uint64 txnid_least_bits = 6 [default = 0];
           rs_message-txnid_least_bits = lo_stream->decode_varint( ).
@@ -2912,8 +2898,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-consumer_id = lo_stream->decode_varint( ).
         WHEN 2.
 " repeated MessageIdData message_ids = 2;
-" todo
-          CONTINUE.
+          INSERT des_MessageIdData( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-message_ids.
         WHEN 3.
 " optional uint64 consumer_epoch = 3;
           rs_message-consumer_epoch = lo_stream->decode_varint( ).
@@ -3459,8 +3444,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-request_id = lo_stream->decode_varint( ).
         WHEN 2.
 " repeated string topics = 2;
-" todo
-          CONTINUE.
+          INSERT cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-topics.
         WHEN 3.
 " optional bool filtered = 3 [default = false];
           rs_message-filtered = lo_stream->decode_bool( ).
@@ -3576,8 +3560,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-watcher_id = lo_stream->decode_varint( ).
         WHEN 3.
 " repeated string topic = 3;
-" todo
-          CONTINUE.
+          INSERT cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-topic.
         WHEN 4.
 " required string topics_hash = 4;
           rs_message-topics_hash = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -3628,12 +3611,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-watcher_id = lo_stream->decode_varint( ).
         WHEN 2.
 " repeated string new_topics = 2;
-" todo
-          CONTINUE.
+          INSERT cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-new_topics.
         WHEN 3.
 " repeated string deleted_topics = 3;
-" todo
-          CONTINUE.
+          INSERT cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-deleted_topics.
         WHEN 4.
 " required string topics_hash = 4;
           rs_message-topics_hash = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -4090,8 +4071,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-txnid_most_bits = lo_stream->decode_varint( ).
         WHEN 4.
 " repeated string partitions = 4;
-" todo
-          CONTINUE.
+          INSERT cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-partitions.
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -4235,8 +4215,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-txnid_most_bits = lo_stream->decode_varint( ).
         WHEN 4.
 " repeated Subscription subscription = 4;
-" todo
-          CONTINUE.
+          INSERT des_Subscription( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-subscription.
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
