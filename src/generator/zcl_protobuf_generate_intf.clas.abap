@@ -31,14 +31,7 @@ CLASS zcl_protobuf_generate_intf IMPLEMENTATION.
   METHOD generate.
 
     rv_abap = rv_abap && |INTERFACE zif_protobuf_generated PUBLIC.\n|.
-    rv_abap = rv_abap && |  TYPES int32  TYPE i.\n|.
-    rv_abap = rv_abap && |  TYPES uint32 TYPE int8.\n|.
-    rv_abap = rv_abap && |  TYPES uint64 TYPE int8.\n|. " hmm
-    rv_abap = rv_abap && |  TYPES int64  TYPE int8.\n|.
-    rv_abap = rv_abap && |  TYPES bool   TYPE abap_bool.\n|.
-    rv_abap = rv_abap && |  TYPES bytes  TYPE xstring.\n|.
-    rv_abap = rv_abap && |  TYPES double TYPE f.\n|.
-    rv_abap = rv_abap && |  TYPES float  TYPE f.\n|.
+    rv_abap = rv_abap && zcl_protobuf_generate=>build_builtin( ).
 
     LOOP AT io_file->mt_artefacts INTO DATA(lo_artefact).
       CASE TYPE OF lo_artefact.
@@ -84,7 +77,7 @@ CLASS zcl_protobuf_generate_intf IMPLEMENTATION.
       ENDCASE.
     ENDLOOP.
     IF lv_fields = 0.
-      rv_abap = rv_abap && |           dummy TYPE string,\n|.
+      rv_abap = rv_abap && |           dummydummydummy TYPE string,\n|.
     ENDIF.
 
     rv_abap = rv_abap && |         END OF { zcl_protobuf_generate=>abap_name( io_message->mv_name ) }.\n|.

@@ -54,8 +54,23 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
     gv_definition = gv_definition && |\n|.
 
     gv_implementation = gv_implementation && |    METHOD ser_| && zcl_protobuf_generate=>abap_name( io_message->mv_name ) && |.\n|.
+    gv_implementation = gv_implementation && |      DATA lo_stream TYPE REF TO zcl_protobuf_stream.\n|.
+    gv_implementation = gv_implementation && |      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.\n|.
+    LOOP AT io_message->mt_artefacts INTO DATA(lo_artefact).
+      CASE TYPE OF lo_artefact.
+        WHEN TYPE zcl_protobuf2_field INTO DATA(lo_field).
+          gv_implementation = gv_implementation && |" is_message-{ lo_field->mv_field_name }\n|.
+      ENDCASE.
+    ENDLOOP.
+
     gv_implementation = gv_implementation && |    ENDMETHOD.\n\n|.
     gv_implementation = gv_implementation && |    METHOD des_| && zcl_protobuf_generate=>abap_name( io_message->mv_name ) && |.\n|.
+    LOOP AT io_message->mt_artefacts INTO lo_artefact.
+      CASE TYPE OF lo_artefact.
+        WHEN TYPE zcl_protobuf2_field INTO lo_field.
+          gv_implementation = gv_implementation && |" rs_message-{ lo_field->mv_field_name }\n|.
+      ENDCASE.
+    ENDLOOP.
     gv_implementation = gv_implementation && |    ENDMETHOD.\n\n|.
 
   ENDMETHOD.

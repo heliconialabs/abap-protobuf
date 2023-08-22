@@ -504,11 +504,11 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF CommandError.
 * Message "CommandPing",
   TYPES: BEGIN OF CommandPing,
-           dummy TYPE string,
+           dummydummydummy TYPE string,
          END OF CommandPing.
 * Message "CommandPong",
   TYPES: BEGIN OF CommandPong,
-           dummy TYPE string,
+           dummydummydummy TYPE string,
          END OF CommandPong.
 * Message "CommandConsumerStats",
   TYPES: BEGIN OF CommandConsumerStats,
