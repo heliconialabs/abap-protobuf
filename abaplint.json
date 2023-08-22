@@ -147,7 +147,11 @@
     "identical_form_names": true,
     "if_in_if": true,
     "implement_methods": true,
-    "in_statement_indentation": true,
+    "in_statement_indentation": {
+      "exclude": ["test/generated"],
+      "blockStatements": 2,
+      "ignoreExceptions": true
+    },
     "indentation": {
       "exclude": ["test/generated"],
       "ignoreExceptions": true,

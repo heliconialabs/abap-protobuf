@@ -621,7 +621,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-type ).
 " repeated KeyValue properties = 5;
-" todo, repeated
+    LOOP AT is_message-properties INTO DATA(lv_properties).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 5
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_KeyValue( lv_properties ) ).
+    ENDLOOP.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -658,7 +663,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-batch_index ).
 " repeated int64 ack_set = 5;
-" todo, repeated
+    LOOP AT is_message-ack_set INTO DATA(lv_ack_set).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 5
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( lv_ack_set ).
+    ENDLOOP.
 " optional int32 batch_size = 6;
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
@@ -738,7 +748,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( is_message-value ).
 " repeated KeyValue metadata = 3;
-" todo, repeated
+    LOOP AT is_message-metadata INTO DATA(lv_metadata).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_KeyValue( lv_metadata ) ).
+    ENDLOOP.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -769,7 +784,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-publish_time ).
 " repeated KeyValue properties = 4;
-" todo, repeated
+    LOOP AT is_message-properties INTO DATA(lv_properties).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_KeyValue( lv_properties ) ).
+    ENDLOOP.
 " optional string replicated_from = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
@@ -781,7 +801,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-partition_key ) ).
 " repeated string replicate_to = 7;
-" todo, repeated
+    LOOP AT is_message-replicate_to INTO DATA(lv_replicate_to).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 7
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( lv_replicate_to ) ).
+    ENDLOOP.
 " optional CompressionType compression = 8 [default = NONE];
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
@@ -803,7 +828,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-event_time ).
 " repeated EncryptionKeys encryption_keys = 13;
-" todo, repeated
+    LOOP AT is_message-encryption_keys INTO DATA(lv_encryption_keys).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 13
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_EncryptionKeys( lv_encryption_keys ) ).
+    ENDLOOP.
 " optional string encryption_algo = 14;
     lo_stream->encode_field_and_type2(
       iv_field_number = 14
@@ -924,7 +954,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " repeated KeyValue properties = 1;
-" todo, repeated
+    LOOP AT is_message-properties INTO DATA(lv_properties).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 1
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_KeyValue( lv_properties ) ).
+    ENDLOOP.
 " optional string partition_key = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
@@ -1248,7 +1283,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-keySharedMode ).
 " repeated IntRange hashRanges = 3;
-" todo, repeated
+    LOOP AT is_message-hashRanges INTO DATA(lv_hashRanges).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_IntRange( lv_hashRanges ) ).
+    ENDLOOP.
 " optional bool allowOutOfOrderDelivery = 4 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
@@ -1314,7 +1354,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_MessageIdData( is_message-start_message_id ) ).
 " repeated KeyValue metadata = 10;
-" todo, repeated
+    LOOP AT is_message-metadata INTO DATA(lv_metadata).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 10
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_KeyValue( lv_metadata ) ).
+    ENDLOOP.
 " optional bool read_compacted = 11;
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
@@ -1351,7 +1396,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_KeySharedMeta( is_message-keySharedMeta ) ).
 " repeated KeyValue subscription_properties = 18;
-" todo, repeated
+    LOOP AT is_message-subscription_properties INTO DATA(lv_subscription_properties).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 18
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_KeyValue( lv_subscription_properties ) ).
+    ENDLOOP.
 " optional uint64 consumer_epoch = 19;
     lo_stream->encode_field_and_type2(
       iv_field_number = 19
@@ -1607,7 +1657,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-encrypted ).
 " repeated KeyValue metadata = 6;
-" todo, repeated
+    LOOP AT is_message-metadata INTO DATA(lv_metadata).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 6
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_KeyValue( lv_metadata ) ).
+    ENDLOOP.
 " optional Schema schema = 7;
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
@@ -1818,7 +1873,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-redelivery_count ).
 " repeated int64 ack_set = 4;
-" todo, repeated
+    LOOP AT is_message-ack_set INTO DATA(lv_ack_set).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( lv_ack_set ).
+    ENDLOOP.
 " optional uint64 consumer_epoch = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
@@ -1851,14 +1911,24 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-ack_type ).
 " repeated MessageIdData message_id = 3;
-" todo, repeated
+    LOOP AT is_message-message_id INTO DATA(lv_message_id).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_MessageIdData( lv_message_id ) ).
+    ENDLOOP.
 " optional ValidationError validation_error = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-validation_error ).
 " repeated KeyLongValue properties = 5;
-" todo, repeated
+    LOOP AT is_message-properties INTO DATA(lv_properties).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 5
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_KeyLongValue( lv_properties ) ).
+    ENDLOOP.
 " optional uint64 txnid_least_bits = 6 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
@@ -2148,7 +2218,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-consumer_id ).
 " repeated MessageIdData message_ids = 2;
-" todo, repeated
+    LOOP AT is_message-message_ids INTO DATA(lv_message_ids).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 2
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_MessageIdData( lv_message_ids ) ).
+    ENDLOOP.
 " optional uint64 consumer_epoch = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
@@ -2518,7 +2593,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " repeated string topics = 2;
-" todo, repeated
+    LOOP AT is_message-topics INTO DATA(lv_topics).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 2
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( lv_topics ) ).
+    ENDLOOP.
 " optional bool filtered = 3 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
@@ -2602,7 +2682,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-watcher_id ).
 " repeated string topic = 3;
-" todo, repeated
+    LOOP AT is_message-topic INTO DATA(lv_topic).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( lv_topic ) ).
+    ENDLOOP.
 " required string topics_hash = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
@@ -2629,9 +2714,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-watcher_id ).
 " repeated string new_topics = 2;
-" todo, repeated
+    LOOP AT is_message-new_topics INTO DATA(lv_new_topics).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 2
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( lv_new_topics ) ).
+    ENDLOOP.
 " repeated string deleted_topics = 3;
-" todo, repeated
+    LOOP AT is_message-deleted_topics INTO DATA(lv_deleted_topics).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( lv_deleted_topics ) ).
+    ENDLOOP.
 " required string topics_hash = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
@@ -2947,7 +3042,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
 " repeated string partitions = 4;
-" todo, repeated
+    LOOP AT is_message-partitions INTO DATA(lv_partitions).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( lv_partitions ) ).
+    ENDLOOP.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3043,7 +3143,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
 " repeated Subscription subscription = 4;
-" todo, repeated
+    LOOP AT is_message-subscription INTO DATA(lv_subscription).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_Subscription( lv_subscription ) ).
+    ENDLOOP.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 

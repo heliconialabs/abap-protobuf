@@ -67,8 +67,11 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
           lv_name = |is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }|.
           gv_impl = gv_impl && |" { lo_field->zif_protobuf2_artefact~serialize( ) }\n|.
           IF lo_field->mv_label = 'repeated'.
-            gv_impl = gv_impl && |" todo, repeated\n|.
-          ELSEIF zcl_protobuf_generate=>is_builtin( lo_field->mv_type ) = abap_true.
+            gv_impl = gv_impl && |    LOOP AT { lv_name } INTO DATA(lv_{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }).\n|.
+            lv_name = |lv_{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }|.
+          ENDIF.
+
+          IF zcl_protobuf_generate=>is_builtin( lo_field->mv_type ) = abap_true.
             gv_impl = gv_impl && |    lo_stream->encode_field_and_type2(\n|.
             gv_impl = gv_impl && |      iv_field_number = { lo_field->mv_field_number }\n|.
             gv_impl = gv_impl && |      iv_wire_type    = { zcl_protobuf_generate=>map_builtin( lo_field->mv_type ) } ).\n|.
@@ -96,6 +99,10 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
             gv_impl = gv_impl && |      iv_field_number = { lo_field->mv_field_number }\n|.
             gv_impl = gv_impl && |      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).\n|.
             gv_impl = gv_impl && |    lo_stream->encode_delimited( ser_{ zcl_protobuf_generate=>abap_name( lo_field->mv_type ) }( { lv_name } ) ).\n|.
+          ENDIF.
+
+          IF lo_field->mv_label = 'repeated'.
+            gv_impl = gv_impl && |    ENDLOOP.\n|.
           ENDIF.
       ENDCASE.
     ENDLOOP.
