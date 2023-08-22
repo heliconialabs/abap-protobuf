@@ -201,7 +201,9 @@
     "tabl_enhancement_category": true,
     "type_form_parameters": true,
     "unreachable_code": true,
-    "use_new": true,
+    "use_new": {
+      "exclude": ["test/generated"]
+    },
     "when_others_last": true,
     "whitespace_end": true
   }

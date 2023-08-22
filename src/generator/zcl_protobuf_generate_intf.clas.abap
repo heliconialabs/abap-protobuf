@@ -77,7 +77,7 @@ CLASS zcl_protobuf_generate_intf IMPLEMENTATION.
       ENDCASE.
     ENDLOOP.
     IF lv_fields = 0.
-      rv_abap = rv_abap && |           dummydummydummy TYPE string,\n|.
+      rv_abap = rv_abap && |           { zcl_protobuf_generate=>gc_dummy } TYPE string,\n|.
     ENDIF.
 
     rv_abap = rv_abap && |         END OF { zcl_protobuf_generate=>abap_name( io_message->mv_name ) }.\n|.

@@ -579,95 +579,101 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
 ENDCLASS.
 
 CLASS zcl_protobuf_generated IMPLEMENTATION.
-    METHOD ser_KeyValue.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_KeyValue.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-key
 " is_message-value
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_KeyValue.
+  METHOD des_KeyValue.
 " rs_message-key
 " rs_message-value
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_Schema.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_Schema.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-name
 " is_message-schema_data
 " is_message-type
 " is_message-properties
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_Schema.
+  METHOD des_Schema.
 " rs_message-name
 " rs_message-schema_data
 " rs_message-type
 " rs_message-properties
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_MessageIdData.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_MessageIdData.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-ledgerId
 " is_message-entryId
 " is_message-partition
 " is_message-batch_index
 " is_message-ack_set
 " is_message-batch_size
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_MessageIdData.
+  METHOD des_MessageIdData.
 " rs_message-ledgerId
 " rs_message-entryId
 " rs_message-partition
 " rs_message-batch_index
 " rs_message-ack_set
 " rs_message-batch_size
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_KeyLongValue.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_KeyLongValue.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-key
 " is_message-value
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_KeyLongValue.
+  METHOD des_KeyLongValue.
 " rs_message-key
 " rs_message-value
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_IntRange.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_IntRange.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-start
 " is_message-end
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_IntRange.
+  METHOD des_IntRange.
 " rs_message-start
 " rs_message-end
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_EncryptionKeys.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_EncryptionKeys.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-key
 " is_message-value
 " is_message-metadata
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_EncryptionKeys.
+  METHOD des_EncryptionKeys.
 " rs_message-key
 " rs_message-value
 " rs_message-metadata
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_MessageMetadata.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_MessageMetadata.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-producer_name
 " is_message-sequence_id
 " is_message-publish_time
@@ -696,9 +702,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " is_message-total_chunk_msg_size
 " is_message-chunk_id
 " is_message-null_partition_key
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_MessageMetadata.
+  METHOD des_MessageMetadata.
 " rs_message-producer_name
 " rs_message-sequence_id
 " rs_message-publish_time
@@ -727,11 +734,11 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " rs_message-total_chunk_msg_size
 " rs_message-chunk_id
 " rs_message-null_partition_key
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_SingleMessageMetadata.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_SingleMessageMetadata.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-properties
 " is_message-partition_key
 " is_message-payload_size
@@ -742,9 +749,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " is_message-sequence_id
 " is_message-null_value
 " is_message-null_partition_key
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_SingleMessageMetadata.
+  METHOD des_SingleMessageMetadata.
 " rs_message-properties
 " rs_message-partition_key
 " rs_message-payload_size
@@ -755,39 +763,41 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " rs_message-sequence_id
 " rs_message-null_value
 " rs_message-null_partition_key
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_BrokerEntryMetadata.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_BrokerEntryMetadata.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-broker_timestamp
 " is_message-index
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_BrokerEntryMetadata.
+  METHOD des_BrokerEntryMetadata.
 " rs_message-broker_timestamp
 " rs_message-index
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_FeatureFlags.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_FeatureFlags.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-supports_auth_refresh
 " is_message-supports_broker_entry_metadata
 " is_message-supports_partial_producer
 " is_message-supports_topic_watchers
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_FeatureFlags.
+  METHOD des_FeatureFlags.
 " rs_message-supports_auth_refresh
 " rs_message-supports_broker_entry_metadata
 " rs_message-supports_partial_producer
 " rs_message-supports_topic_watchers
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandConnect.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandConnect.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-client_version
 " is_message-auth_method
 " is_message-auth_method_name
@@ -799,9 +809,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " is_message-original_auth_method
 " is_message-feature_flags
 " is_message-proxy_version
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandConnect.
+  METHOD des_CommandConnect.
 " rs_message-client_version
 " rs_message-auth_method
 " rs_message-auth_method_name
@@ -813,81 +824,86 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " rs_message-original_auth_method
 " rs_message-feature_flags
 " rs_message-proxy_version
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandConnected.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandConnected.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-server_version
 " is_message-protocol_version
 " is_message-max_message_size
 " is_message-feature_flags
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandConnected.
+  METHOD des_CommandConnected.
 " rs_message-server_version
 " rs_message-protocol_version
 " rs_message-max_message_size
 " rs_message-feature_flags
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_AuthData.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_AuthData.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-auth_method_name
 " is_message-auth_data
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_AuthData.
+  METHOD des_AuthData.
 " rs_message-auth_method_name
 " rs_message-auth_data
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandAuthResponse.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandAuthResponse.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-client_version
 " is_message-response
 " is_message-protocol_version
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandAuthResponse.
+  METHOD des_CommandAuthResponse.
 " rs_message-client_version
 " rs_message-response
 " rs_message-protocol_version
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandAuthChallenge.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandAuthChallenge.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-server_version
 " is_message-challenge
 " is_message-protocol_version
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandAuthChallenge.
+  METHOD des_CommandAuthChallenge.
 " rs_message-server_version
 " rs_message-challenge
 " rs_message-protocol_version
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_KeySharedMeta.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_KeySharedMeta.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-keySharedMode
 " is_message-hashRanges
 " is_message-allowOutOfOrderDelivery
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_KeySharedMeta.
+  METHOD des_KeySharedMeta.
 " rs_message-keySharedMode
 " rs_message-hashRanges
 " rs_message-allowOutOfOrderDelivery
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandSubscribe.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandSubscribe.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-topic
 " is_message-subscription
 " is_message-subType
@@ -907,9 +923,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " is_message-keySharedMeta
 " is_message-subscription_properties
 " is_message-consumer_epoch
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandSubscribe.
+  METHOD des_CommandSubscribe.
 " rs_message-topic
 " rs_message-subscription
 " rs_message-subType
@@ -929,47 +946,49 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " rs_message-keySharedMeta
 " rs_message-subscription_properties
 " rs_message-consumer_epoch
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandPartitionedTomVmlsw.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandPartitionedTomVmlsw.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-topic
 " is_message-request_id
 " is_message-original_principal
 " is_message-original_auth_data
 " is_message-original_auth_method
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandPartitionedTomVmlsw.
+  METHOD des_CommandPartitionedTomVmlsw.
 " rs_message-topic
 " rs_message-request_id
 " rs_message-original_principal
 " rs_message-original_auth_data
 " rs_message-original_auth_method
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandPartitionedToJik1cm.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandPartitionedToJik1cm.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-partitions
 " is_message-request_id
 " is_message-response
 " is_message-error
 " is_message-message
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandPartitionedToJik1cm.
+  METHOD des_CommandPartitionedToJik1cm.
 " rs_message-partitions
 " rs_message-request_id
 " rs_message-response
 " rs_message-error
 " rs_message-message
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandLookupTopic.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandLookupTopic.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-topic
 " is_message-request_id
 " is_message-authoritative
@@ -977,9 +996,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " is_message-original_auth_data
 " is_message-original_auth_method
 " is_message-advertised_listener_name
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandLookupTopic.
+  METHOD des_CommandLookupTopic.
 " rs_message-topic
 " rs_message-request_id
 " rs_message-authoritative
@@ -987,11 +1007,11 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " rs_message-original_auth_data
 " rs_message-original_auth_method
 " rs_message-advertised_listener_name
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandLookupTopicResponse.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandLookupTopicResponse.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-brokerServiceUrl
 " is_message-brokerServiceUrlTls
 " is_message-response
@@ -1000,9 +1020,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " is_message-error
 " is_message-message
 " is_message-proxy_through_service_url
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandLookupTopicResponse.
+  METHOD des_CommandLookupTopicResponse.
 " rs_message-brokerServiceUrl
 " rs_message-brokerServiceUrlTls
 " rs_message-response
@@ -1011,11 +1032,11 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " rs_message-error
 " rs_message-message
 " rs_message-proxy_through_service_url
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandProducer.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandProducer.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-topic
 " is_message-producer_id
 " is_message-request_id
@@ -1029,9 +1050,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " is_message-topic_epoch
 " is_message-txn_enabled
 " is_message-initial_subscription_name
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandProducer.
+  METHOD des_CommandProducer.
 " rs_message-topic
 " rs_message-producer_id
 " rs_message-request_id
@@ -1045,11 +1067,11 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " rs_message-topic_epoch
 " rs_message-txn_enabled
 " rs_message-initial_subscription_name
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandSend.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandSend.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-producer_id
 " is_message-sequence_id
 " is_message-num_messages
@@ -1059,9 +1081,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " is_message-is_chunk
 " is_message-marker
 " is_message-message_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandSend.
+  METHOD des_CommandSend.
 " rs_message-producer_id
 " rs_message-sequence_id
 " rs_message-num_messages
@@ -1071,61 +1094,64 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " rs_message-is_chunk
 " rs_message-marker
 " rs_message-message_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandSendReceipt.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandSendReceipt.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-producer_id
 " is_message-sequence_id
 " is_message-message_id
 " is_message-highest_sequence_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandSendReceipt.
+  METHOD des_CommandSendReceipt.
 " rs_message-producer_id
 " rs_message-sequence_id
 " rs_message-message_id
 " rs_message-highest_sequence_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandSendError.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandSendError.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-producer_id
 " is_message-sequence_id
 " is_message-error
 " is_message-message
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandSendError.
+  METHOD des_CommandSendError.
 " rs_message-producer_id
 " rs_message-sequence_id
 " rs_message-error
 " rs_message-message
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandMessage.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandMessage.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-consumer_id
 " is_message-message_id
 " is_message-redelivery_count
 " is_message-ack_set
 " is_message-consumer_epoch
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandMessage.
+  METHOD des_CommandMessage.
 " rs_message-consumer_id
 " rs_message-message_id
 " rs_message-redelivery_count
 " rs_message-ack_set
 " rs_message-consumer_epoch
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandAck.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandAck.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-consumer_id
 " is_message-ack_type
 " is_message-message_id
@@ -1134,9 +1160,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-request_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandAck.
+  METHOD des_CommandAck.
 " rs_message-consumer_id
 " rs_message-ack_type
 " rs_message-message_id
@@ -1145,221 +1172,237 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-request_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandAckResponse.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandAckResponse.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-consumer_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-error
 " is_message-message
 " is_message-request_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandAckResponse.
+  METHOD des_CommandAckResponse.
 " rs_message-consumer_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-error
 " rs_message-message
 " rs_message-request_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandActiveConsumetry0NX.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandActiveConsumetry0NX.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-consumer_id
 " is_message-is_active
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandActiveConsumetry0NX.
+  METHOD des_CommandActiveConsumetry0NX.
 " rs_message-consumer_id
 " rs_message-is_active
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandFlow.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandFlow.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-consumer_id
 " is_message-messagePermits
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandFlow.
+  METHOD des_CommandFlow.
 " rs_message-consumer_id
 " rs_message-messagePermits
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandUnsubscribe.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandUnsubscribe.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-consumer_id
 " is_message-request_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandUnsubscribe.
+  METHOD des_CommandUnsubscribe.
 " rs_message-consumer_id
 " rs_message-request_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandSeek.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandSeek.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-consumer_id
 " is_message-request_id
 " is_message-message_id
 " is_message-message_publish_time
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandSeek.
+  METHOD des_CommandSeek.
 " rs_message-consumer_id
 " rs_message-request_id
 " rs_message-message_id
 " rs_message-message_publish_time
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandReachedEndOfTopic.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandReachedEndOfTopic.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-consumer_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandReachedEndOfTopic.
+  METHOD des_CommandReachedEndOfTopic.
 " rs_message-consumer_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandTopicMigrated.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandTopicMigrated.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-resource_id
 " is_message-resource_type
 " is_message-brokerServiceUrl
 " is_message-brokerServiceUrlTls
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandTopicMigrated.
+  METHOD des_CommandTopicMigrated.
 " rs_message-resource_id
 " rs_message-resource_type
 " rs_message-brokerServiceUrl
 " rs_message-brokerServiceUrlTls
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandCloseProducer.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandCloseProducer.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-producer_id
 " is_message-request_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandCloseProducer.
+  METHOD des_CommandCloseProducer.
 " rs_message-producer_id
 " rs_message-request_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandCloseConsumer.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandCloseConsumer.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-consumer_id
 " is_message-request_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandCloseConsumer.
+  METHOD des_CommandCloseConsumer.
 " rs_message-consumer_id
 " rs_message-request_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandRedeliverUnacONw3qa.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandRedeliverUnacONw3qa.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-consumer_id
 " is_message-message_ids
 " is_message-consumer_epoch
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandRedeliverUnacONw3qa.
+  METHOD des_CommandRedeliverUnacONw3qa.
 " rs_message-consumer_id
 " rs_message-message_ids
 " rs_message-consumer_epoch
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandSuccess.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandSuccess.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-schema
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandSuccess.
+  METHOD des_CommandSuccess.
 " rs_message-request_id
 " rs_message-schema
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandProducerSuccess.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandProducerSuccess.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-producer_name
 " is_message-last_sequence_id
 " is_message-schema_version
 " is_message-topic_epoch
 " is_message-producer_ready
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandProducerSuccess.
+  METHOD des_CommandProducerSuccess.
 " rs_message-request_id
 " rs_message-producer_name
 " rs_message-last_sequence_id
 " rs_message-schema_version
 " rs_message-topic_epoch
 " rs_message-producer_ready
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandError.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandError.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-error
 " is_message-message
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandError.
+  METHOD des_CommandError.
 " rs_message-request_id
 " rs_message-error
 " rs_message-message
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandPing.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
-    ENDMETHOD.
+  METHOD ser_CommandPing.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandPing.
-    ENDMETHOD.
+  METHOD des_CommandPing.
+  ENDMETHOD.
 
-    METHOD ser_CommandPong.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
-    ENDMETHOD.
+  METHOD ser_CommandPong.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandPong.
-    ENDMETHOD.
+  METHOD des_CommandPong.
+  ENDMETHOD.
 
-    METHOD ser_CommandConsumerStats.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandConsumerStats.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-consumer_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandConsumerStats.
+  METHOD des_CommandConsumerStats.
 " rs_message-request_id
 " rs_message-consumer_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandConsumerStatsLMgarI.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandConsumerStatsLMgarI.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-error_code
 " is_message-error_message
@@ -1376,9 +1419,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " is_message-msgRateExpired
 " is_message-msgBacklog
 " is_message-messageAckRate
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandConsumerStatsLMgarI.
+  METHOD des_CommandConsumerStatsLMgarI.
 " rs_message-request_id
 " rs_message-error_code
 " rs_message-error_message
@@ -1395,445 +1439,472 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " rs_message-msgRateExpired
 " rs_message-msgBacklog
 " rs_message-messageAckRate
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandGetLastMessageId.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandGetLastMessageId.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-consumer_id
 " is_message-request_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandGetLastMessageId.
+  METHOD des_CommandGetLastMessageId.
 " rs_message-consumer_id
 " rs_message-request_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandGetLastMessag2udLG8.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandGetLastMessag2udLG8.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-last_message_id
 " is_message-request_id
 " is_message-consumer_mark_delete_position
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandGetLastMessag2udLG8.
+  METHOD des_CommandGetLastMessag2udLG8.
 " rs_message-last_message_id
 " rs_message-request_id
 " rs_message-consumer_mark_delete_position
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandGetTopicsOfNaW5sMTo.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandGetTopicsOfNaW5sMTo.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-namespace
 " is_message-mode
 " is_message-topics_pattern
 " is_message-topics_hash
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandGetTopicsOfNaW5sMTo.
+  METHOD des_CommandGetTopicsOfNaW5sMTo.
 " rs_message-request_id
 " rs_message-namespace
 " rs_message-mode
 " rs_message-topics_pattern
 " rs_message-topics_hash
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandGetTopicsOfNa2Zpv1F.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandGetTopicsOfNa2Zpv1F.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-topics
 " is_message-filtered
 " is_message-topics_hash
 " is_message-changed
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandGetTopicsOfNa2Zpv1F.
+  METHOD des_CommandGetTopicsOfNa2Zpv1F.
 " rs_message-request_id
 " rs_message-topics
 " rs_message-filtered
 " rs_message-topics_hash
 " rs_message-changed
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandWatchTopicList.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandWatchTopicList.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-watcher_id
 " is_message-namespace
 " is_message-topics_pattern
 " is_message-topics_hash
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandWatchTopicList.
+  METHOD des_CommandWatchTopicList.
 " rs_message-request_id
 " rs_message-watcher_id
 " rs_message-namespace
 " rs_message-topics_pattern
 " rs_message-topics_hash
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandWatchTopicLisUXqMY2.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandWatchTopicLisUXqMY2.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-watcher_id
 " is_message-topic
 " is_message-topics_hash
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandWatchTopicLisUXqMY2.
+  METHOD des_CommandWatchTopicLisUXqMY2.
 " rs_message-request_id
 " rs_message-watcher_id
 " rs_message-topic
 " rs_message-topics_hash
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandWatchTopicUpdate.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandWatchTopicUpdate.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-watcher_id
 " is_message-new_topics
 " is_message-deleted_topics
 " is_message-topics_hash
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandWatchTopicUpdate.
+  METHOD des_CommandWatchTopicUpdate.
 " rs_message-watcher_id
 " rs_message-new_topics
 " rs_message-deleted_topics
 " rs_message-topics_hash
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandWatchTopicListClose.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandWatchTopicListClose.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-watcher_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandWatchTopicListClose.
+  METHOD des_CommandWatchTopicListClose.
 " rs_message-request_id
 " rs_message-watcher_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandGetSchema.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandGetSchema.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-topic
 " is_message-schema_version
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandGetSchema.
+  METHOD des_CommandGetSchema.
 " rs_message-request_id
 " rs_message-topic
 " rs_message-schema_version
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandGetSchemaResponse.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandGetSchemaResponse.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-error_code
 " is_message-error_message
 " is_message-schema
 " is_message-schema_version
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandGetSchemaResponse.
+  METHOD des_CommandGetSchemaResponse.
 " rs_message-request_id
 " rs_message-error_code
 " rs_message-error_message
 " rs_message-schema
 " rs_message-schema_version
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandGetOrCreateSchema.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandGetOrCreateSchema.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-topic
 " is_message-schema
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandGetOrCreateSchema.
+  METHOD des_CommandGetOrCreateSchema.
 " rs_message-request_id
 " rs_message-topic
 " rs_message-schema
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandGetOrCreateScVKbTgH.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandGetOrCreateScVKbTgH.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-error_code
 " is_message-error_message
 " is_message-schema_version
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandGetOrCreateScVKbTgH.
+  METHOD des_CommandGetOrCreateScVKbTgH.
 " rs_message-request_id
 " rs_message-error_code
 " rs_message-error_message
 " rs_message-schema_version
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandTcClientConneWIoTIu.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandTcClientConneWIoTIu.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-tc_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandTcClientConneWIoTIu.
+  METHOD des_CommandTcClientConneWIoTIu.
 " rs_message-request_id
 " rs_message-tc_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandTcClientConneTuQpSf.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandTcClientConneTuQpSf.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-error
 " is_message-message
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandTcClientConneTuQpSf.
+  METHOD des_CommandTcClientConneTuQpSf.
 " rs_message-request_id
 " rs_message-error
 " rs_message-message
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandNewTxn.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandNewTxn.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txn_ttl_seconds
 " is_message-tc_id
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandNewTxn.
+  METHOD des_CommandNewTxn.
 " rs_message-request_id
 " rs_message-txn_ttl_seconds
 " rs_message-tc_id
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandNewTxnResponse.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandNewTxnResponse.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-error
 " is_message-message
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandNewTxnResponse.
+  METHOD des_CommandNewTxnResponse.
 " rs_message-request_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-error
 " rs_message-message
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandAddPartitionToTxn.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandAddPartitionToTxn.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-partitions
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandAddPartitionToTxn.
+  METHOD des_CommandAddPartitionToTxn.
 " rs_message-request_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-partitions
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandAddPartitionTafUHa4.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandAddPartitionTafUHa4.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-error
 " is_message-message
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandAddPartitionTafUHa4.
+  METHOD des_CommandAddPartitionTafUHa4.
 " rs_message-request_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-error
 " rs_message-message
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_Subscription.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_Subscription.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-topic
 " is_message-subscription
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_Subscription.
+  METHOD des_Subscription.
 " rs_message-topic
 " rs_message-subscription
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandAddSubscriptisyuJS0.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandAddSubscriptisyuJS0.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-subscription
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandAddSubscriptisyuJS0.
+  METHOD des_CommandAddSubscriptisyuJS0.
 " rs_message-request_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-subscription
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandAddSubscripti6CDt1m.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandAddSubscripti6CDt1m.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-error
 " is_message-message
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandAddSubscripti6CDt1m.
+  METHOD des_CommandAddSubscripti6CDt1m.
 " rs_message-request_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-error
 " rs_message-message
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandEndTxn.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandEndTxn.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-txn_action
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandEndTxn.
+  METHOD des_CommandEndTxn.
 " rs_message-request_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-txn_action
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandEndTxnResponse.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandEndTxnResponse.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-error
 " is_message-message
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandEndTxnResponse.
+  METHOD des_CommandEndTxnResponse.
 " rs_message-request_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-error
 " rs_message-message
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandEndTxnOnPartition.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandEndTxnOnPartition.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-topic
 " is_message-txn_action
 " is_message-txnid_least_bits_of_low_watermark
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandEndTxnOnPartition.
+  METHOD des_CommandEndTxnOnPartition.
 " rs_message-request_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-topic
 " rs_message-txn_action
 " rs_message-txnid_least_bits_of_low_watermark
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandEndTxnOnPartiOOlMQv.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandEndTxnOnPartiOOlMQv.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-error
 " is_message-message
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandEndTxnOnPartiOOlMQv.
+  METHOD des_CommandEndTxnOnPartiOOlMQv.
 " rs_message-request_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-error
 " rs_message-message
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandEndTxnOnSubscqx6OWu.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandEndTxnOnSubscqx6OWu.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-subscription
 " is_message-txn_action
 " is_message-txnid_least_bits_of_low_watermark
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandEndTxnOnSubscqx6OWu.
+  METHOD des_CommandEndTxnOnSubscqx6OWu.
 " rs_message-request_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-subscription
 " rs_message-txn_action
 " rs_message-txnid_least_bits_of_low_watermark
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_CommandEndTxnOnSubscVUpsoc.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_CommandEndTxnOnSubscVUpsoc.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-request_id
 " is_message-txnid_least_bits
 " is_message-txnid_most_bits
 " is_message-error
 " is_message-message
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_CommandEndTxnOnSubscVUpsoc.
+  METHOD des_CommandEndTxnOnSubscVUpsoc.
 " rs_message-request_id
 " rs_message-txnid_least_bits
 " rs_message-txnid_most_bits
 " rs_message-error
 " rs_message-message
-    ENDMETHOD.
+  ENDMETHOD.
 
-    METHOD ser_BaseCommand.
-      DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-      CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+  METHOD ser_BaseCommand.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
 " is_message-type
 " is_message-connect
 " is_message-connected
@@ -1893,9 +1964,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " is_message-watchTopicUpdate
 " is_message-watchTopicListClose
 " is_message-topicMigrated
-    ENDMETHOD.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
 
-    METHOD des_BaseCommand.
+  METHOD des_BaseCommand.
 " rs_message-type
 " rs_message-connect
 " rs_message-connected
@@ -1955,6 +2027,6 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " rs_message-watchTopicUpdate
 " rs_message-watchTopicListClose
 " rs_message-topicMigrated
-    ENDMETHOD.
+  ENDMETHOD.
 
 ENDCLASS.

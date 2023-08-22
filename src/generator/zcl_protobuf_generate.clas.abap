@@ -1,9 +1,14 @@
 CLASS zcl_protobuf_generate DEFINITION PUBLIC.
   PUBLIC SECTION.
+    CONSTANTS gc_dummy TYPE string VALUE 'dummydummydummy'.
+
     CLASS-METHODS abap_name
       IMPORTING iv_name TYPE string
       RETURNING VALUE(rv_name) TYPE string.
-    CLASS-METHODS build_builtin RETURNING VALUE(rv_abap) TYPE string.
+
+    CLASS-METHODS build_builtin
+      RETURNING
+        VALUE(rv_abap) TYPE string.
 ENDCLASS.
 
 CLASS zcl_protobuf_generate IMPLEMENTATION.
