@@ -36,6 +36,7 @@ CLASS zcl_protobuf_stream DEFINITION
     METHODS decode_varint
       RETURNING
         VALUE(rv_int) TYPE i .
+
     METHODS encode_delimited
       IMPORTING
         !iv_hex       TYPE xstring
@@ -67,6 +68,12 @@ CLASS zcl_protobuf_stream DEFINITION
         !iv_int       TYPE i
       RETURNING
         VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
+    METHODS encode_bool
+      IMPORTING
+        !iv_bool      TYPE abap_bool
+      RETURNING
+        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
+
     METHODS get
       RETURNING
         VALUE(rv_hex) TYPE xstring .
@@ -99,6 +106,15 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
     mv_hex = iv_hex.
   ENDMETHOD.
 
+
+  METHOD encode_bool.
+    IF iv_bool = abap_true.
+      encode_varint( 1 ).
+    ELSE.
+      encode_varint( 0 ).
+    ENDIF.
+    ro_ref = me.
+  ENDMETHOD.
 
   METHOD decode_delimited.
     DATA(lv_length) = decode_varint( ).

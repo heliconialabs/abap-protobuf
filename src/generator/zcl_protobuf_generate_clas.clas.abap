@@ -7,6 +7,7 @@ CLASS zcl_protobuf_generate_clas DEFINITION PUBLIC.
         VALUE(rv_abap) TYPE string.
   PROTECTED SECTION.
   PRIVATE SECTION.
+    CLASS-DATA go_file TYPE REF TO zcl_protobuf2_file.
     CLASS-DATA gv_definition TYPE string.
     CLASS-DATA gv_implementation TYPE string.
 
@@ -20,6 +21,8 @@ ENDCLASS.
 CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
 
   METHOD generate.
+
+    go_file = io_file.
 
     gv_definition = gv_definition && |CLASS zcl_protobuf_generated DEFINITION PUBLIC.\n|.
     gv_definition = gv_definition && |  PUBLIC SECTION.\n|.
@@ -64,11 +67,25 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
             gv_implementation = gv_implementation && |    lo_stream->encode_field_and_type2(\n|.
             gv_implementation = gv_implementation && |      iv_field_number = { lo_field->mv_field_number }\n|.
             gv_implementation = gv_implementation && |      iv_wire_type    = { zcl_protobuf_generate=>map_builtin( lo_field->mv_type ) } ).\n|.
-          " ELSEIF io_message->is_enum( lo_field->mv_type ).
-          "   gv_implementation = gv_implementation && | " todo, enum\n|.
+            CASE lo_field->mv_type.
+              WHEN 'bool'.
+                gv_implementation = gv_implementation && |    lo_stream->encode_bool( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ).\n|.
+              WHEN 'double' OR 'float'.
+                gv_implementation = gv_implementation && |    lo_stream->encode_double( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ).\n|.
+              WHEN 'int32' OR 'uint32'.
+                gv_implementation = gv_implementation && |    lo_stream->encode_varint( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ).\n|.
+              WHEN OTHERS.
+                gv_implementation = gv_implementation && |" todo, encoding\n|.
+            ENDCASE.
+          ELSEIF io_message->is_enum( lo_field->mv_type ) OR go_file->is_enum( lo_field->mv_type ).
+            gv_implementation = gv_implementation && |" todo, enum\n|.
+          ELSEIF lo_field->mv_label = 'repeated'.
+            gv_implementation = gv_implementation && |" todo, repeated\n|.
           ELSE.
-            gv_implementation = gv_implementation && | " todo\n|.
-            gv_implementation = gv_implementation && | "   ser_{ zcl_protobuf_generate=>abap_name( lo_field->mv_type ) }( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ).\n|.
+            gv_implementation = gv_implementation && |    lo_stream->encode_field_and_type2(\n|.
+            gv_implementation = gv_implementation && |      iv_field_number = { lo_field->mv_field_number }\n|.
+            gv_implementation = gv_implementation && |      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).\n|.
+            gv_implementation = gv_implementation && |    lo_stream->encode_delimited( ser_{ zcl_protobuf_generate=>abap_name( lo_field->mv_type ) }( is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } ) ).\n|.
           ENDIF.
       ENDCASE.
     ENDLOOP.

@@ -586,10 +586,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required string value = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -607,16 +609,16 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required bytes schema_data = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required Type type = 4;
- " todo
- "   ser_Type( is_message-type ).
+" todo, enum
 " repeated KeyValue properties = 5;
- " todo
- "   ser_KeyValue( is_message-properties ).
+" todo, repeated
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -636,26 +638,32 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 entryId = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional int32 partition = 3 [default = -1];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-partition ).
 " optional int32 batch_index = 4 [default = -1];
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-batch_index ).
 " repeated int64 ack_set = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional int32 batch_size = 6;
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-batch_size ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -677,10 +685,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required uint64 value = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -698,10 +708,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-start ).
 " required int32 end = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-end ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -719,13 +731,14 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required bytes value = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " repeated KeyValue metadata = 3;
- " todo
- "   ser_KeyValue( is_message-metadata ).
+" todo, repeated
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -744,111 +757,133 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required uint64 sequence_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 publish_time = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " repeated KeyValue properties = 4;
- " todo
- "   ser_KeyValue( is_message-properties ).
+" todo, repeated
 " optional string replicated_from = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string partition_key = 6;
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " repeated string replicate_to = 7;
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional CompressionType compression = 8 [default = NONE];
- " todo
- "   ser_CompressionType( is_message-compression ).
+" todo, enum
 " optional uint32 uncompressed_size = 9 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional int32 num_messages_in_batch = 11 [default = 1];
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-num_messages_in_batch ).
 " optional uint64 event_time = 12 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 12
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " repeated EncryptionKeys encryption_keys = 13;
- " todo
- "   ser_EncryptionKeys( is_message-encryption_keys ).
+" todo, repeated
 " optional string encryption_algo = 14;
     lo_stream->encode_field_and_type2(
       iv_field_number = 14
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional bytes encryption_param = 15;
     lo_stream->encode_field_and_type2(
       iv_field_number = 15
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional bytes schema_version = 16;
     lo_stream->encode_field_and_type2(
       iv_field_number = 16
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional bool partition_key_b64_encoded = 17 [ default = false ];
     lo_stream->encode_field_and_type2(
       iv_field_number = 17
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-partition_key_b64_encoded ).
 " optional bytes ordering_key = 18;
     lo_stream->encode_field_and_type2(
       iv_field_number = 18
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional int64 deliver_at_time = 19;
     lo_stream->encode_field_and_type2(
       iv_field_number = 19
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional int32 marker_type = 20;
     lo_stream->encode_field_and_type2(
       iv_field_number = 20
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-marker_type ).
 " optional uint64 txnid_least_bits = 22;
     lo_stream->encode_field_and_type2(
       iv_field_number = 22
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 23;
     lo_stream->encode_field_and_type2(
       iv_field_number = 23
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 highest_sequence_id = 24 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 24
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bool null_value = 25 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 25
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-null_value ).
 " optional string uuid = 26;
     lo_stream->encode_field_and_type2(
       iv_field_number = 26
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional int32 num_chunks_from_msg = 27;
     lo_stream->encode_field_and_type2(
       iv_field_number = 27
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-num_chunks_from_msg ).
 " optional int32 total_chunk_msg_size = 28;
     lo_stream->encode_field_and_type2(
       iv_field_number = 28
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-total_chunk_msg_size ).
 " optional int32 chunk_id = 29;
     lo_stream->encode_field_and_type2(
       iv_field_number = 29
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-chunk_id ).
 " optional bool null_partition_key = 30 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 30
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-null_partition_key ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -889,44 +924,52 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " repeated KeyValue properties = 1;
- " todo
- "   ser_KeyValue( is_message-properties ).
+" todo, repeated
 " optional string partition_key = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required int32 payload_size = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-payload_size ).
 " optional bool compacted_out = 4 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-compacted_out ).
 " optional uint64 event_time = 5 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bool partition_key_b64_encoded = 6 [ default = false ];
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-partition_key_b64_encoded ).
 " optional bytes ordering_key = 7;
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional uint64 sequence_id = 8;
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bool null_value = 9 [ default = false ];
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-null_value ).
 " optional bool null_partition_key = 10 [ default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 10
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-null_partition_key ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -952,10 +995,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 index = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -973,18 +1018,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-supports_auth_refresh ).
 " optional bool supports_broker_entry_metadata = 2 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-supports_broker_entrKEEJJg ).
 " optional bool supports_partial_producer = 3 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-supports_partial_producer ).
 " optional bool supports_topic_watchers = 4 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-supports_topic_watchers ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1004,44 +1053,54 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional AuthMethod auth_method = 2;
- " todo
- "   ser_AuthMethod( is_message-auth_method ).
+" todo, enum
 " optional string auth_method_name = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional bytes auth_data = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional int32 protocol_version = 4 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-protocol_version ).
 " optional string proxy_to_broker_url = 6;
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string original_principal = 7;
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string original_auth_data = 8;
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string original_auth_method = 9;
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional FeatureFlags feature_flags = 10;
- " todo
- "   ser_FeatureFlags( is_message-feature_flags ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 10
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_FeatureFlags( is_message-feature_flags ) ).
 " optional string proxy_version = 11;
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1068,17 +1127,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional int32 protocol_version = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-protocol_version ).
 " optional int32 max_message_size = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-max_message_size ).
 " optional FeatureFlags feature_flags = 4;
- " todo
- "   ser_FeatureFlags( is_message-feature_flags ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_FeatureFlags( is_message-feature_flags ) ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1098,10 +1162,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional bytes auth_data = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1119,13 +1185,17 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional AuthData response = 2;
- " todo
- "   ser_AuthData( is_message-response ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 2
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_AuthData( is_message-response ) ).
 " optional int32 protocol_version = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-protocol_version ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1144,13 +1214,17 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional AuthData challenge = 2;
- " todo
- "   ser_AuthData( is_message-challenge ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 2
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_AuthData( is_message-challenge ) ).
 " optional int32 protocol_version = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-protocol_version ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1166,15 +1240,14 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " required KeySharedMode keySharedMode = 1;
- " todo
- "   ser_KeySharedMode( is_message-keySharedMode ).
+" todo, enum
 " repeated IntRange hashRanges = 3;
- " todo
- "   ser_IntRange( is_message-hashRanges ).
+" todo, repeated
 " optional bool allowOutOfOrderDelivery = 4 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-allowOutOfOrderDelivery ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1193,71 +1266,85 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required string subscription = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required SubType subType = 3;
- " todo
- "   ser_SubType( is_message-subType ).
+" todo, enum
 " required uint64 consumer_id = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 request_id = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional string consumer_name = 6;
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional int32 priority_level = 7;
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-priority_level ).
 " optional bool durable = 8 [default = true];
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-durable ).
 " optional MessageIdData start_message_id = 9;
- " todo
- "   ser_MessageIdData( is_message-start_message_id ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 9
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_MessageIdData( is_message-start_message_id ) ).
 " repeated KeyValue metadata = 10;
- " todo
- "   ser_KeyValue( is_message-metadata ).
+" todo, repeated
 " optional bool read_compacted = 11;
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-read_compacted ).
 " optional Schema schema = 12;
- " todo
- "   ser_Schema( is_message-schema ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 12
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_Schema( is_message-schema ) ).
 " optional InitialPosition initialPosition = 13 [default = Latest];
- " todo
- "   ser_InitialPosition( is_message-initialPosition ).
+" todo, enum
 " optional bool replicate_subscription_state = 14;
     lo_stream->encode_field_and_type2(
       iv_field_number = 14
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-replicate_subscriptiLS0h9F ).
 " optional bool force_topic_creation = 15 [default = true];
     lo_stream->encode_field_and_type2(
       iv_field_number = 15
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-force_topic_creation ).
 " optional uint64 start_message_rollback_duration_sec = 16 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 16
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional KeySharedMeta keySharedMeta = 17;
- " todo
- "   ser_KeySharedMeta( is_message-keySharedMeta ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 17
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_KeySharedMeta( is_message-keySharedMeta ) ).
 " repeated KeyValue subscription_properties = 18;
- " todo
- "   ser_KeyValue( is_message-subscription_properties ).
+" todo, repeated
 " optional uint64 consumer_epoch = 19;
     lo_stream->encode_field_and_type2(
       iv_field_number = 19
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1292,22 +1379,27 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required uint64 request_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional string original_principal = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string original_auth_data = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string original_auth_method = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1328,20 +1420,21 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 request_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional CLookupType response = 3;
- " todo
- "   ser_CLookupType( is_message-response ).
+" todo, enum
 " optional ServerError error = 4;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " optional string message = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1362,30 +1455,37 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required uint64 request_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bool authoritative = 3 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-authoritative ).
 " optional string original_principal = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string original_auth_data = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string original_auth_method = 6;
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string advertised_listener_name = 7;
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1408,32 +1508,36 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string brokerServiceUrlTls = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional LookupType response = 3;
- " todo
- "   ser_LookupType( is_message-response ).
+" todo, enum
 " required uint64 request_id = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bool authoritative = 5 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-authoritative ).
 " optional ServerError error = 6;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " optional string message = 7;
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional bool proxy_through_service_url = 8 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-proxy_through_service_url ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1457,51 +1561,61 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required uint64 producer_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 request_id = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional string producer_name = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional bool encrypted = 5 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-encrypted ).
 " repeated KeyValue metadata = 6;
- " todo
- "   ser_KeyValue( is_message-metadata ).
+" todo, repeated
 " optional Schema schema = 7;
- " todo
- "   ser_Schema( is_message-schema ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 7
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_Schema( is_message-schema ) ).
 " optional uint64 epoch = 8 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bool user_provided_producer_name = 9 [default = true];
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-user_provided_produccajvVT ).
 " optional ProducerAccessMode producer_access_mode = 10 [default = Shared];
- " todo
- "   ser_ProducerAccessMode( is_message-producer_access_mode ).
+" todo, enum
 " optional uint64 topic_epoch = 11;
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bool txn_enabled = 12 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 12
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-txn_enabled ).
 " optional string initial_subscription_name = 13;
     lo_stream->encode_field_and_type2(
       iv_field_number = 13
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1530,37 +1644,47 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 sequence_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional int32 num_messages = 3 [default = 1];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_varint( is_message-num_messages ).
 " optional uint64 txnid_least_bits = 4 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 5 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 highest_sequence_id = 6 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bool is_chunk = 7 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-is_chunk ).
 " optional bool marker = 8 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-marker ).
 " optional MessageIdData message_id = 9;
- " todo
- "   ser_MessageIdData( is_message-message_id ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 9
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_MessageIdData( is_message-message_id ) ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1585,17 +1709,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 sequence_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional MessageIdData message_id = 3;
- " todo
- "   ser_MessageIdData( is_message-message_id ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_MessageIdData( is_message-message_id ) ).
 " optional uint64 highest_sequence_id = 4 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1615,17 +1744,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 sequence_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required ServerError error = 3;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " required string message = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1645,21 +1776,27 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required MessageIdData message_id = 2;
- " todo
- "   ser_MessageIdData( is_message-message_id ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 2
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_MessageIdData( is_message-message_id ) ).
 " optional uint32 redelivery_count = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " repeated int64 ack_set = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 consumer_epoch = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1680,30 +1817,30 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required AckType ack_type = 2;
- " todo
- "   ser_AckType( is_message-ack_type ).
+" todo, enum
 " repeated MessageIdData message_id = 3;
- " todo
- "   ser_MessageIdData( is_message-message_id ).
+" todo, repeated
 " optional ValidationError validation_error = 4;
- " todo
- "   ser_ValidationError( is_message-validation_error ).
+" todo, enum
 " repeated KeyLongValue properties = 5;
- " todo
- "   ser_KeyLongValue( is_message-properties ).
+" todo, repeated
 " optional uint64 txnid_least_bits = 6 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 7 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 request_id = 8;
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1727,25 +1864,29 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional ServerError error = 4;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " optional string message = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional uint64 request_id = 6;
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1767,10 +1908,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bool is_active = 2 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-is_active ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1788,10 +1931,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint32 messagePermits = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1809,10 +1954,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 request_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1830,17 +1977,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 request_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional MessageIdData message_id = 3;
- " todo
- "   ser_MessageIdData( is_message-message_id ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_MessageIdData( is_message-message_id ) ).
 " optional uint64 message_publish_time = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1860,6 +2012,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1876,17 +2029,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required ResourceType resource_type = 2;
- " todo
- "   ser_ResourceType( is_message-resource_type ).
+" todo, enum
 " optional string brokerServiceUrl = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string brokerServiceUrlTls = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1906,10 +2061,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 request_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1927,10 +2084,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 request_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1948,13 +2107,14 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " repeated MessageIdData message_ids = 2;
- " todo
- "   ser_MessageIdData( is_message-message_ids ).
+" todo, repeated
 " optional uint64 consumer_epoch = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1973,9 +2133,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional Schema schema = 2;
- " todo
- "   ser_Schema( is_message-schema ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 2
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_Schema( is_message-schema ) ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1993,26 +2156,32 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required string producer_name = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional int64 last_sequence_id = 3 [default = -1];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bytes schema_version = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional uint64 topic_epoch = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bool producer_ready = 6 [default = true];
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-producer_ready ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2034,13 +2203,14 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required ServerError error = 2;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " required string message = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2081,10 +2251,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 consumer_id = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2102,65 +2274,79 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional ServerError error_code = 2;
- " todo
- "   ser_ServerError( is_message-error_code ).
+" todo, enum
 " optional string error_message = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional double msgRateOut = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-bit64 ).
+    lo_stream->encode_double( is_message-msgRateOut ).
 " optional double msgThroughputOut = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-bit64 ).
+    lo_stream->encode_double( is_message-msgThroughputOut ).
 " optional double msgRateRedeliver = 6;
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-bit64 ).
+    lo_stream->encode_double( is_message-msgRateRedeliver ).
 " optional string consumerName = 7;
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional uint64 availablePermits = 8;
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 unackedMessages = 9;
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional bool blockedConsumerOnUnackedMsgs = 10;
     lo_stream->encode_field_and_type2(
       iv_field_number = 10
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-blockedConsumerOnUnazyMHzQ ).
 " optional string address = 11;
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string connectedSince = 12;
     lo_stream->encode_field_and_type2(
       iv_field_number = 12
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string type = 13;
     lo_stream->encode_field_and_type2(
       iv_field_number = 13
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional double msgRateExpired = 14;
     lo_stream->encode_field_and_type2(
       iv_field_number = 14
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-bit64 ).
+    lo_stream->encode_double( is_message-msgRateExpired ).
 " optional uint64 msgBacklog = 15;
     lo_stream->encode_field_and_type2(
       iv_field_number = 15
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional double messageAckRate = 16;
     lo_stream->encode_field_and_type2(
       iv_field_number = 16
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-bit64 ).
+    lo_stream->encode_double( is_message-messageAckRate ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2192,10 +2378,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 request_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2210,15 +2398,20 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " required MessageIdData last_message_id = 1;
- " todo
- "   ser_MessageIdData( is_message-last_message_id ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 1
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_MessageIdData( is_message-last_message_id ) ).
 " required uint64 request_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional MessageIdData consumer_mark_delete_position = 3;
- " todo
- "   ser_MessageIdData( is_message-consumer_mark_delete7o38Uz ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_MessageIdData( is_message-consumer_mark_delete7o38Uz ) ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2237,21 +2430,24 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required string namespace = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional Mode mode = 3 [default = PERSISTENT];
- " todo
- "   ser_Mode( is_message-mode ).
+" todo, enum
 " optional string topics_pattern = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string topics_hash = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2272,22 +2468,27 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " repeated string topics = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional bool filtered = 3 [default = false];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-filtered ).
 " optional string topics_hash = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional bool changed = 5 [default = true];
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-changed ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2308,22 +2509,27 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 watcher_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required string namespace = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required string topics_pattern = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional string topics_hash = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2344,18 +2550,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 watcher_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " repeated string topic = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required string topics_hash = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2375,18 +2585,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " repeated string new_topics = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " repeated string deleted_topics = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required string topics_hash = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2406,10 +2620,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 watcher_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2427,14 +2643,17 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required string topic = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional bytes schema_version = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2453,20 +2672,24 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional ServerError error_code = 2;
- " todo
- "   ser_ServerError( is_message-error_code ).
+" todo, enum
 " optional string error_message = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional Schema schema = 4;
- " todo
- "   ser_Schema( is_message-schema ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_Schema( is_message-schema ) ).
 " optional bytes schema_version = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2487,13 +2710,17 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required string topic = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required Schema schema = 3;
- " todo
- "   ser_Schema( is_message-schema ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_Schema( is_message-schema ) ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2512,17 +2739,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional ServerError error_code = 2;
- " todo
- "   ser_ServerError( is_message-error_code ).
+" todo, enum
 " optional string error_message = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional bytes schema_version = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2542,10 +2771,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " required uint64 tc_id = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2563,13 +2794,14 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional ServerError error = 2;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " optional string message = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2588,14 +2820,17 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txn_ttl_seconds = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 tc_id = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2614,21 +2849,24 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional ServerError error = 4;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " optional string message = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2649,18 +2887,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " repeated string partitions = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2680,21 +2922,24 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional ServerError error = 4;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " optional string message = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2715,10 +2960,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " required string subscription = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2736,17 +2983,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " repeated Subscription subscription = 4;
- " todo
- "   ser_Subscription( is_message-subscription ).
+" todo, repeated
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2766,21 +3015,24 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional ServerError error = 4;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " optional string message = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2801,17 +3053,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional TxnAction txn_action = 4;
- " todo
- "   ser_TxnAction( is_message-txn_action ).
+" todo, enum
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2831,21 +3085,24 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional ServerError error = 4;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " optional string message = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2866,25 +3123,29 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional string topic = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
 " optional TxnAction txn_action = 5;
- " todo
- "   ser_TxnAction( is_message-txn_action ).
+" todo, enum
 " optional uint64 txnid_least_bits_of_low_watermark = 6;
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2906,21 +3167,24 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional ServerError error = 4;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " optional string message = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2941,24 +3205,29 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional Subscription subscription = 4;
- " todo
- "   ser_Subscription( is_message-subscription ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_Subscription( is_message-subscription ) ).
 " optional TxnAction txn_action = 5;
- " todo
- "   ser_TxnAction( is_message-txn_action ).
+" todo, enum
 " optional uint64 txnid_least_bits_of_low_watermark = 6;
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2980,21 +3249,24 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_least_bits = 2 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional uint64 txnid_most_bits = 3 [default = 0];
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+" todo, encoding
 " optional ServerError error = 4;
- " todo
- "   ser_ServerError( is_message-error ).
+" todo, enum
 " optional string message = 5;
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+" todo, encoding
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3012,182 +3284,297 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " required BaseCommandType type = 1;
- " todo
- "   ser_BaseCommandType( is_message-type ).
+" todo, enum
 " optional CommandConnect connect = 2;
- " todo
- "   ser_CommandConnect( is_message-connect ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 2
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandConnect( is_message-connect ) ).
 " optional CommandConnected connected = 3;
- " todo
- "   ser_CommandConnected( is_message-connected ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandConnected( is_message-connected ) ).
 " optional CommandSubscribe subscribe = 4;
- " todo
- "   ser_CommandSubscribe( is_message-subscribe ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandSubscribe( is_message-subscribe ) ).
 " optional CommandProducer producer = 5;
- " todo
- "   ser_CommandProducer( is_message-producer ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 5
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandProducer( is_message-producer ) ).
 " optional CommandSend send = 6;
- " todo
- "   ser_CommandSend( is_message-send ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 6
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandSend( is_message-send ) ).
 " optional CommandSendReceipt send_receipt = 7;
- " todo
- "   ser_CommandSendReceipt( is_message-send_receipt ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 7
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandSendReceipt( is_message-send_receipt ) ).
 " optional CommandSendError send_error = 8;
- " todo
- "   ser_CommandSendError( is_message-send_error ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 8
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandSendError( is_message-send_error ) ).
 " optional CommandMessage message = 9;
- " todo
- "   ser_CommandMessage( is_message-message ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 9
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandMessage( is_message-message ) ).
 " optional CommandAck ack = 10;
- " todo
- "   ser_CommandAck( is_message-ack ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 10
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandAck( is_message-ack ) ).
 " optional CommandFlow flow = 11;
- " todo
- "   ser_CommandFlow( is_message-flow ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 11
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandFlow( is_message-flow ) ).
 " optional CommandUnsubscribe unsubscribe = 12;
- " todo
- "   ser_CommandUnsubscribe( is_message-unsubscribe ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 12
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandUnsubscribe( is_message-unsubscribe ) ).
 " optional CommandSuccess success = 13;
- " todo
- "   ser_CommandSuccess( is_message-success ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 13
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandSuccess( is_message-success ) ).
 " optional CommandError error = 14;
- " todo
- "   ser_CommandError( is_message-error ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 14
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandError( is_message-error ) ).
 " optional CommandCloseProducer close_producer = 15;
- " todo
- "   ser_CommandCloseProducer( is_message-close_producer ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 15
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandCloseProducer( is_message-close_producer ) ).
 " optional CommandCloseConsumer close_consumer = 16;
- " todo
- "   ser_CommandCloseConsumer( is_message-close_consumer ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 16
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandCloseConsumer( is_message-close_consumer ) ).
 " optional CommandProducerSuccess producer_success = 17;
- " todo
- "   ser_CommandProducerSuccess( is_message-producer_success ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 17
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandProducerSuccess( is_message-producer_success ) ).
 " optional CommandPing ping = 18;
- " todo
- "   ser_CommandPing( is_message-ping ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 18
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandPing( is_message-ping ) ).
 " optional CommandPong pong = 19;
- " todo
- "   ser_CommandPong( is_message-pong ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 19
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandPong( is_message-pong ) ).
 " optional CommandRedeliverUnacknowledgedMessages redeliverUnacknowledgedMessages = 20;
- " todo
- "   ser_CommandRedeliverUnacONw3qa( is_message-redeliverUnacknowledK1b75e ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 20
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandRedeliverUnacONw3qa( is_message-redeliverUnacknowledK1b75e ) ).
 " optional CommandPartitionedTopicMetadata partitionMetadata = 21;
- " todo
- "   ser_CommandPartitionedTomVmlsw( is_message-partitionMetadata ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 21
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandPartitionedTomVmlsw( is_message-partitionMetadata ) ).
 " optional CommandPartitionedTopicMetadataResponse partitionMetadataResponse = 22;
- " todo
- "   ser_CommandPartitionedToJik1cm( is_message-partitionMetadataResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 22
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandPartitionedToJik1cm( is_message-partitionMetadataResponse ) ).
 " optional CommandLookupTopic lookupTopic = 23;
- " todo
- "   ser_CommandLookupTopic( is_message-lookupTopic ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 23
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandLookupTopic( is_message-lookupTopic ) ).
 " optional CommandLookupTopicResponse lookupTopicResponse = 24;
- " todo
- "   ser_CommandLookupTopicResponse( is_message-lookupTopicResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 24
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandLookupTopicResponse( is_message-lookupTopicResponse ) ).
 " optional CommandConsumerStats consumerStats = 25;
- " todo
- "   ser_CommandConsumerStats( is_message-consumerStats ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 25
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandConsumerStats( is_message-consumerStats ) ).
 " optional CommandConsumerStatsResponse consumerStatsResponse = 26;
- " todo
- "   ser_CommandConsumerStatsLMgarI( is_message-consumerStatsResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 26
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandConsumerStatsLMgarI( is_message-consumerStatsResponse ) ).
 " optional CommandReachedEndOfTopic reachedEndOfTopic = 27;
- " todo
- "   ser_CommandReachedEndOfTopic( is_message-reachedEndOfTopic ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 27
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandReachedEndOfTopic( is_message-reachedEndOfTopic ) ).
 " optional CommandSeek seek = 28;
- " todo
- "   ser_CommandSeek( is_message-seek ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 28
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandSeek( is_message-seek ) ).
 " optional CommandGetLastMessageId getLastMessageId = 29;
- " todo
- "   ser_CommandGetLastMessageId( is_message-getLastMessageId ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 29
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandGetLastMessageId( is_message-getLastMessageId ) ).
 " optional CommandGetLastMessageIdResponse getLastMessageIdResponse = 30;
- " todo
- "   ser_CommandGetLastMessag2udLG8( is_message-getLastMessageIdResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 30
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandGetLastMessag2udLG8( is_message-getLastMessageIdResponse ) ).
 " optional CommandActiveConsumerChange active_consumer_change = 31;
- " todo
- "   ser_CommandActiveConsumetry0NX( is_message-active_consumer_change ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 31
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandActiveConsumetry0NX( is_message-active_consumer_change ) ).
 " optional CommandGetTopicsOfNamespace getTopicsOfNamespace = 32;
- " todo
- "   ser_CommandGetTopicsOfNaW5sMTo( is_message-getTopicsOfNamespace ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 32
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandGetTopicsOfNaW5sMTo( is_message-getTopicsOfNamespace ) ).
 " optional CommandGetTopicsOfNamespaceResponse getTopicsOfNamespaceResponse = 33;
- " todo
- "   ser_CommandGetTopicsOfNa2Zpv1F( is_message-getTopicsOfNamespaceslV2GI ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 33
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandGetTopicsOfNa2Zpv1F( is_message-getTopicsOfNamespaceslV2GI ) ).
 " optional CommandGetSchema getSchema = 34;
- " todo
- "   ser_CommandGetSchema( is_message-getSchema ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 34
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandGetSchema( is_message-getSchema ) ).
 " optional CommandGetSchemaResponse getSchemaResponse = 35;
- " todo
- "   ser_CommandGetSchemaResponse( is_message-getSchemaResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 35
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandGetSchemaResponse( is_message-getSchemaResponse ) ).
 " optional CommandAuthChallenge authChallenge = 36;
- " todo
- "   ser_CommandAuthChallenge( is_message-authChallenge ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 36
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandAuthChallenge( is_message-authChallenge ) ).
 " optional CommandAuthResponse authResponse = 37;
- " todo
- "   ser_CommandAuthResponse( is_message-authResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 37
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandAuthResponse( is_message-authResponse ) ).
 " optional CommandAckResponse ackResponse = 38;
- " todo
- "   ser_CommandAckResponse( is_message-ackResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 38
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandAckResponse( is_message-ackResponse ) ).
 " optional CommandGetOrCreateSchema getOrCreateSchema = 39;
- " todo
- "   ser_CommandGetOrCreateSchema( is_message-getOrCreateSchema ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 39
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandGetOrCreateSchema( is_message-getOrCreateSchema ) ).
 " optional CommandGetOrCreateSchemaResponse getOrCreateSchemaResponse = 40;
- " todo
- "   ser_CommandGetOrCreateScVKbTgH( is_message-getOrCreateSchemaResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 40
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandGetOrCreateScVKbTgH( is_message-getOrCreateSchemaResponse ) ).
 " optional CommandNewTxn newTxn = 50;
- " todo
- "   ser_CommandNewTxn( is_message-newTxn ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 50
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandNewTxn( is_message-newTxn ) ).
 " optional CommandNewTxnResponse newTxnResponse = 51;
- " todo
- "   ser_CommandNewTxnResponse( is_message-newTxnResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 51
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandNewTxnResponse( is_message-newTxnResponse ) ).
 " optional CommandAddPartitionToTxn addPartitionToTxn = 52;
- " todo
- "   ser_CommandAddPartitionToTxn( is_message-addPartitionToTxn ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 52
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandAddPartitionToTxn( is_message-addPartitionToTxn ) ).
 " optional CommandAddPartitionToTxnResponse addPartitionToTxnResponse = 53;
- " todo
- "   ser_CommandAddPartitionTafUHa4( is_message-addPartitionToTxnResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 53
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandAddPartitionTafUHa4( is_message-addPartitionToTxnResponse ) ).
 " optional CommandAddSubscriptionToTxn addSubscriptionToTxn = 54;
- " todo
- "   ser_CommandAddSubscriptisyuJS0( is_message-addSubscriptionToTxn ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 54
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandAddSubscriptisyuJS0( is_message-addSubscriptionToTxn ) ).
 " optional CommandAddSubscriptionToTxnResponse addSubscriptionToTxnResponse = 55;
- " todo
- "   ser_CommandAddSubscripti6CDt1m( is_message-addSubscriptionToTxnbeic5U ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 55
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandAddSubscripti6CDt1m( is_message-addSubscriptionToTxnbeic5U ) ).
 " optional CommandEndTxn endTxn = 56;
- " todo
- "   ser_CommandEndTxn( is_message-endTxn ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 56
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandEndTxn( is_message-endTxn ) ).
 " optional CommandEndTxnResponse endTxnResponse = 57;
- " todo
- "   ser_CommandEndTxnResponse( is_message-endTxnResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 57
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandEndTxnResponse( is_message-endTxnResponse ) ).
 " optional CommandEndTxnOnPartition endTxnOnPartition = 58;
- " todo
- "   ser_CommandEndTxnOnPartition( is_message-endTxnOnPartition ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 58
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandEndTxnOnPartition( is_message-endTxnOnPartition ) ).
 " optional CommandEndTxnOnPartitionResponse endTxnOnPartitionResponse = 59;
- " todo
- "   ser_CommandEndTxnOnPartiOOlMQv( is_message-endTxnOnPartitionResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 59
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandEndTxnOnPartiOOlMQv( is_message-endTxnOnPartitionResponse ) ).
 " optional CommandEndTxnOnSubscription endTxnOnSubscription = 60;
- " todo
- "   ser_CommandEndTxnOnSubscqx6OWu( is_message-endTxnOnSubscription ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 60
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandEndTxnOnSubscqx6OWu( is_message-endTxnOnSubscription ) ).
 " optional CommandEndTxnOnSubscriptionResponse endTxnOnSubscriptionResponse = 61;
- " todo
- "   ser_CommandEndTxnOnSubscVUpsoc( is_message-endTxnOnSubscriptionuOAlpH ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 61
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandEndTxnOnSubscVUpsoc( is_message-endTxnOnSubscriptionuOAlpH ) ).
 " optional CommandTcClientConnectRequest tcClientConnectRequest = 62;
- " todo
- "   ser_CommandTcClientConneWIoTIu( is_message-tcClientConnectRequest ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 62
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandTcClientConneWIoTIu( is_message-tcClientConnectRequest ) ).
 " optional CommandTcClientConnectResponse tcClientConnectResponse = 63;
- " todo
- "   ser_CommandTcClientConneTuQpSf( is_message-tcClientConnectResponse ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 63
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandTcClientConneTuQpSf( is_message-tcClientConnectResponse ) ).
 " optional CommandWatchTopicList watchTopicList = 64;
- " todo
- "   ser_CommandWatchTopicList( is_message-watchTopicList ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 64
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandWatchTopicList( is_message-watchTopicList ) ).
 " optional CommandWatchTopicListSuccess watchTopicListSuccess = 65;
- " todo
- "   ser_CommandWatchTopicLisUXqMY2( is_message-watchTopicListSuccess ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 65
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandWatchTopicLisUXqMY2( is_message-watchTopicListSuccess ) ).
 " optional CommandWatchTopicUpdate watchTopicUpdate = 66;
- " todo
- "   ser_CommandWatchTopicUpdate( is_message-watchTopicUpdate ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 66
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandWatchTopicUpdate( is_message-watchTopicUpdate ) ).
 " optional CommandWatchTopicListClose watchTopicListClose = 67;
- " todo
- "   ser_CommandWatchTopicListClose( is_message-watchTopicListClose ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 67
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandWatchTopicListClose( is_message-watchTopicListClose ) ).
 " optional CommandTopicMigrated topicMigrated = 68;
- " todo
- "   ser_CommandTopicMigrated( is_message-topicMigrated ).
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 68
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_CommandTopicMigrated( is_message-topicMigrated ) ).
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
