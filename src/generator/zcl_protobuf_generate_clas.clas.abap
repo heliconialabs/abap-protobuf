@@ -117,12 +117,45 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
     gv_impl = gv_impl && |  METHOD des_| && zcl_protobuf_generate=>abap_name( io_message->mv_name ) && |.\n|.
     gv_impl = gv_impl && |    DATA lo_stream TYPE REF TO zcl_protobuf_stream.\n|.
     gv_impl = gv_impl && |    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.\n|.
+    gv_impl = gv_impl && |    WHILE xstrlen( lo_stream->get( ) ) > 0.\n|.
+    gv_impl = gv_impl && |      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).\n|.
+    gv_impl = gv_impl && |      CASE ls_field_and_type-field_number.\n|.
     LOOP AT io_message->mt_artefacts INTO lo_artefact.
       CASE TYPE OF lo_artefact.
         WHEN TYPE zcl_protobuf2_field INTO lo_field.
+          gv_impl = gv_impl && |        WHEN { lo_field->mv_field_number }.\n|.
           gv_impl = gv_impl && |" { lo_field->zif_protobuf2_artefact~serialize( ) }\n|.
+          IF lo_field->mv_label = 'repeated'.
+            gv_impl = gv_impl && |" todo\n|.
+            gv_impl = gv_impl && |          CONTINUE.\n|.
+            CONTINUE.
+          ENDIF.
+          lv_name = |rs_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }|.
+          gv_impl = gv_impl && |          { lv_name } = |.
+          IF zcl_protobuf_generate=>is_builtin( lo_field->mv_type ) = abap_true.
+            CASE lo_field->mv_type.
+              WHEN 'bool'.
+                gv_impl = gv_impl && |lo_stream->decode_bool( ).\n|.
+              WHEN 'double' OR 'float'.
+                gv_impl = gv_impl && |lo_stream->decode_double( ).\n|.
+              WHEN 'string'.
+                gv_impl = gv_impl && |cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).\n|.
+              WHEN 'bytes'.
+                gv_impl = gv_impl && |lo_stream->decode_delimited( ).\n|.
+              WHEN 'int64' OR 'uint64' OR 'uint32' OR 'int32'.
+                gv_impl = gv_impl && |lo_stream->decode_varint( ).\n|.
+            ENDCASE.
+          ELSEIF io_message->is_enum( lo_field->mv_type ) OR go_file->is_enum( lo_field->mv_type ).
+            gv_impl = gv_impl && |lo_stream->decode_varint( ).\n|.
+          ELSE.
+            gv_impl = gv_impl && |des_{ zcl_protobuf_generate=>abap_name( lo_field->mv_type ) }( lo_stream->decode_delimited( ) ).\n|.
+          ENDIF.
       ENDCASE.
     ENDLOOP.
+    gv_impl = gv_impl && |        WHEN OTHERS.\n|.
+    gv_impl = gv_impl && |          ASSERT 1 = 'unknown field'.\n|.
+    gv_impl = gv_impl && |      ENDCASE.\n|.
+    gv_impl = gv_impl && |    ENDWHILE.\n|.
     gv_impl = gv_impl && |  ENDMETHOD.\n\n|.
 
   ENDMETHOD.

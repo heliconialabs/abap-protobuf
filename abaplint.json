@@ -197,7 +197,11 @@
     "remove_descriptions": true,
     "rfc_error_handling": true,
     "sequential_blank": true,
-    "short_case": true,
+    "short_case": {
+      "exclude": ["test/generated"],
+      "length": 1,
+      "allow": []
+    },
     "space_before_colon": true,
     "space_before_dot": true,
     "start_at_tab": true,

@@ -599,8 +599,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_KeyValue.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string key = 1;
+          rs_message-key = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " required string value = 2;
+          rs_message-value = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_Schema.
@@ -634,10 +645,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_Schema.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string name = 1;
+          rs_message-name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " required bytes schema_data = 3;
+          rs_message-schema_data = lo_stream->decode_delimited( ).
+        WHEN 4.
 " required Type type = 4;
+          rs_message-type = lo_stream->decode_varint( ).
+        WHEN 5.
 " repeated KeyValue properties = 5;
+" todo
+          CONTINUE.
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_MessageIdData.
@@ -681,12 +708,32 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_MessageIdData.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 ledgerId = 1;
+          rs_message-ledgerId = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 entryId = 2;
+          rs_message-entryId = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional int32 partition = 3 [default = -1];
+          rs_message-partition = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional int32 batch_index = 4 [default = -1];
+          rs_message-batch_index = lo_stream->decode_varint( ).
+        WHEN 5.
 " repeated int64 ack_set = 5;
+" todo
+          CONTINUE.
+        WHEN 6.
 " optional int32 batch_size = 6;
+          rs_message-batch_size = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_KeyLongValue.
@@ -708,8 +755,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_KeyLongValue.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string key = 1;
+          rs_message-key = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " required uint64 value = 2;
+          rs_message-value = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_IntRange.
@@ -731,8 +789,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_IntRange.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required int32 start = 1;
+          rs_message-start = lo_stream->decode_varint( ).
+        WHEN 2.
 " required int32 end = 2;
+          rs_message-end = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_EncryptionKeys.
@@ -761,9 +830,23 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_EncryptionKeys.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string key = 1;
+          rs_message-key = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " required bytes value = 2;
+          rs_message-value = lo_stream->decode_delimited( ).
+        WHEN 3.
 " repeated KeyValue metadata = 3;
+" todo
+          CONTINUE.
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_MessageMetadata.
@@ -921,34 +1004,100 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_MessageMetadata.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string producer_name = 1;
+          rs_message-producer_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " required uint64 sequence_id = 2;
+          rs_message-sequence_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " required uint64 publish_time = 3;
+          rs_message-publish_time = lo_stream->decode_varint( ).
+        WHEN 4.
 " repeated KeyValue properties = 4;
+" todo
+          CONTINUE.
+        WHEN 5.
 " optional string replicated_from = 5;
+          rs_message-replicated_from = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 6.
 " optional string partition_key = 6;
+          rs_message-partition_key = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 7.
 " repeated string replicate_to = 7;
+" todo
+          CONTINUE.
+        WHEN 8.
 " optional CompressionType compression = 8 [default = NONE];
+          rs_message-compression = lo_stream->decode_varint( ).
+        WHEN 9.
 " optional uint32 uncompressed_size = 9 [default = 0];
+          rs_message-uncompressed_size = lo_stream->decode_varint( ).
+        WHEN 11.
 " optional int32 num_messages_in_batch = 11 [default = 1];
+          rs_message-num_messages_in_batch = lo_stream->decode_varint( ).
+        WHEN 12.
 " optional uint64 event_time = 12 [default = 0];
+          rs_message-event_time = lo_stream->decode_varint( ).
+        WHEN 13.
 " repeated EncryptionKeys encryption_keys = 13;
+" todo
+          CONTINUE.
+        WHEN 14.
 " optional string encryption_algo = 14;
+          rs_message-encryption_algo = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 15.
 " optional bytes encryption_param = 15;
+          rs_message-encryption_param = lo_stream->decode_delimited( ).
+        WHEN 16.
 " optional bytes schema_version = 16;
+          rs_message-schema_version = lo_stream->decode_delimited( ).
+        WHEN 17.
 " optional bool partition_key_b64_encoded = 17 [ default = false ];
+          rs_message-partition_key_b64_encoded = lo_stream->decode_bool( ).
+        WHEN 18.
 " optional bytes ordering_key = 18;
+          rs_message-ordering_key = lo_stream->decode_delimited( ).
+        WHEN 19.
 " optional int64 deliver_at_time = 19;
+          rs_message-deliver_at_time = lo_stream->decode_varint( ).
+        WHEN 20.
 " optional int32 marker_type = 20;
+          rs_message-marker_type = lo_stream->decode_varint( ).
+        WHEN 22.
 " optional uint64 txnid_least_bits = 22;
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 23.
 " optional uint64 txnid_most_bits = 23;
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 24.
 " optional uint64 highest_sequence_id = 24 [default = 0];
+          rs_message-highest_sequence_id = lo_stream->decode_varint( ).
+        WHEN 25.
 " optional bool null_value = 25 [default = false];
+          rs_message-null_value = lo_stream->decode_bool( ).
+        WHEN 26.
 " optional string uuid = 26;
+          rs_message-uuid = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 27.
 " optional int32 num_chunks_from_msg = 27;
+          rs_message-num_chunks_from_msg = lo_stream->decode_varint( ).
+        WHEN 28.
 " optional int32 total_chunk_msg_size = 28;
+          rs_message-total_chunk_msg_size = lo_stream->decode_varint( ).
+        WHEN 29.
 " optional int32 chunk_id = 29;
+          rs_message-chunk_id = lo_stream->decode_varint( ).
+        WHEN 30.
 " optional bool null_partition_key = 30 [default = false];
+          rs_message-null_partition_key = lo_stream->decode_bool( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_SingleMessageMetadata.
@@ -1012,16 +1161,44 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_SingleMessageMetadata.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " repeated KeyValue properties = 1;
+" todo
+          CONTINUE.
+        WHEN 2.
 " optional string partition_key = 2;
+          rs_message-partition_key = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " required int32 payload_size = 3;
+          rs_message-payload_size = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional bool compacted_out = 4 [default = false];
+          rs_message-compacted_out = lo_stream->decode_bool( ).
+        WHEN 5.
 " optional uint64 event_time = 5 [default = 0];
+          rs_message-event_time = lo_stream->decode_varint( ).
+        WHEN 6.
 " optional bool partition_key_b64_encoded = 6 [ default = false ];
+          rs_message-partition_key_b64_encoded = lo_stream->decode_bool( ).
+        WHEN 7.
 " optional bytes ordering_key = 7;
+          rs_message-ordering_key = lo_stream->decode_delimited( ).
+        WHEN 8.
 " optional uint64 sequence_id = 8;
+          rs_message-sequence_id = lo_stream->decode_varint( ).
+        WHEN 9.
 " optional bool null_value = 9 [ default = false ];
+          rs_message-null_value = lo_stream->decode_bool( ).
+        WHEN 10.
 " optional bool null_partition_key = 10 [ default = false];
+          rs_message-null_partition_key = lo_stream->decode_bool( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_BrokerEntryMetadata.
@@ -1043,8 +1220,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_BrokerEntryMetadata.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " optional uint64 broker_timestamp = 1;
+          rs_message-broker_timestamp = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 index = 2;
+          rs_message-index = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_FeatureFlags.
@@ -1076,10 +1264,25 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_FeatureFlags.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " optional bool supports_auth_refresh = 1 [default = false];
+          rs_message-supports_auth_refresh = lo_stream->decode_bool( ).
+        WHEN 2.
 " optional bool supports_broker_entry_metadata = 2 [default = false];
+          rs_message-supports_broker_entrKEEJJg = lo_stream->decode_bool( ).
+        WHEN 3.
 " optional bool supports_partial_producer = 3 [default = false];
+          rs_message-supports_partial_producer = lo_stream->decode_bool( ).
+        WHEN 4.
 " optional bool supports_topic_watchers = 4 [default = false];
+          rs_message-supports_topic_watchers = lo_stream->decode_bool( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandConnect.
@@ -1146,17 +1349,46 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandConnect.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string client_version = 1;
+          rs_message-client_version = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " optional AuthMethod auth_method = 2;
+          rs_message-auth_method = lo_stream->decode_varint( ).
+        WHEN 5.
 " optional string auth_method_name = 5;
+          rs_message-auth_method_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " optional bytes auth_data = 3;
+          rs_message-auth_data = lo_stream->decode_delimited( ).
+        WHEN 4.
 " optional int32 protocol_version = 4 [default = 0];
+          rs_message-protocol_version = lo_stream->decode_varint( ).
+        WHEN 6.
 " optional string proxy_to_broker_url = 6;
+          rs_message-proxy_to_broker_url = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 7.
 " optional string original_principal = 7;
+          rs_message-original_principal = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 8.
 " optional string original_auth_data = 8;
+          rs_message-original_auth_data = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 9.
 " optional string original_auth_method = 9;
+          rs_message-original_auth_method = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 10.
 " optional FeatureFlags feature_flags = 10;
+          rs_message-feature_flags = des_FeatureFlags( lo_stream->decode_delimited( ) ).
+        WHEN 11.
 " optional string proxy_version = 11;
+          rs_message-proxy_version = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandConnected.
@@ -1188,10 +1420,25 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandConnected.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string server_version = 1;
+          rs_message-server_version = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " optional int32 protocol_version = 2 [default = 0];
+          rs_message-protocol_version = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional int32 max_message_size = 3;
+          rs_message-max_message_size = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional FeatureFlags feature_flags = 4;
+          rs_message-feature_flags = des_FeatureFlags( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_AuthData.
@@ -1213,8 +1460,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_AuthData.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " optional string auth_method_name = 1;
+          rs_message-auth_method_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " optional bytes auth_data = 2;
+          rs_message-auth_data = lo_stream->decode_delimited( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandAuthResponse.
@@ -1241,9 +1499,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandAuthResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " optional string client_version = 1;
+          rs_message-client_version = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " optional AuthData response = 2;
+          rs_message-response = des_AuthData( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " optional int32 protocol_version = 3 [default = 0];
+          rs_message-protocol_version = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandAuthChallenge.
@@ -1270,9 +1541,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandAuthChallenge.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " optional string server_version = 1;
+          rs_message-server_version = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " optional AuthData challenge = 2;
+          rs_message-challenge = des_AuthData( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " optional int32 protocol_version = 3 [default = 0];
+          rs_message-protocol_version = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_KeySharedMeta.
@@ -1301,9 +1585,23 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_KeySharedMeta.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required KeySharedMode keySharedMode = 1;
+          rs_message-keySharedMode = lo_stream->decode_varint( ).
+        WHEN 3.
 " repeated IntRange hashRanges = 3;
+" todo
+          CONTINUE.
+        WHEN 4.
 " optional bool allowOutOfOrderDelivery = 4 [default = false];
+          rs_message-allowOutOfOrderDelivery = lo_stream->decode_bool( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandSubscribe.
@@ -1414,25 +1712,72 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandSubscribe.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string topic = 1;
+          rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " required string subscription = 2;
+          rs_message-subscription = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " required SubType subType = 3;
+          rs_message-subType = lo_stream->decode_varint( ).
+        WHEN 4.
 " required uint64 consumer_id = 4;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN 5.
 " required uint64 request_id = 5;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 6.
 " optional string consumer_name = 6;
+          rs_message-consumer_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 7.
 " optional int32 priority_level = 7;
+          rs_message-priority_level = lo_stream->decode_varint( ).
+        WHEN 8.
 " optional bool durable = 8 [default = true];
+          rs_message-durable = lo_stream->decode_bool( ).
+        WHEN 9.
 " optional MessageIdData start_message_id = 9;
+          rs_message-start_message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
+        WHEN 10.
 " repeated KeyValue metadata = 10;
+" todo
+          CONTINUE.
+        WHEN 11.
 " optional bool read_compacted = 11;
+          rs_message-read_compacted = lo_stream->decode_bool( ).
+        WHEN 12.
 " optional Schema schema = 12;
+          rs_message-schema = des_Schema( lo_stream->decode_delimited( ) ).
+        WHEN 13.
 " optional InitialPosition initialPosition = 13 [default = Latest];
+          rs_message-initialPosition = lo_stream->decode_varint( ).
+        WHEN 14.
 " optional bool replicate_subscription_state = 14;
+          rs_message-replicate_subscriptiLS0h9F = lo_stream->decode_bool( ).
+        WHEN 15.
 " optional bool force_topic_creation = 15 [default = true];
+          rs_message-force_topic_creation = lo_stream->decode_bool( ).
+        WHEN 16.
 " optional uint64 start_message_rollback_duration_sec = 16 [default = 0];
+          rs_message-start_message_rollbaPthj0W = lo_stream->decode_varint( ).
+        WHEN 17.
 " optional KeySharedMeta keySharedMeta = 17;
+          rs_message-keySharedMeta = des_KeySharedMeta( lo_stream->decode_delimited( ) ).
+        WHEN 18.
 " repeated KeyValue subscription_properties = 18;
+" todo
+          CONTINUE.
+        WHEN 19.
 " optional uint64 consumer_epoch = 19;
+          rs_message-consumer_epoch = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandPartitionedTomVmlsw.
@@ -1469,11 +1814,28 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandPartitionedTomVmlsw.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string topic = 1;
+          rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " required uint64 request_id = 2;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional string original_principal = 3;
+          rs_message-original_principal = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 4.
 " optional string original_auth_data = 4;
+          rs_message-original_auth_data = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 5.
 " optional string original_auth_method = 5;
+          rs_message-original_auth_method = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandPartitionedToJik1cm.
@@ -1510,11 +1872,28 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandPartitionedToJik1cm.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " optional uint32 partitions = 1;
+          rs_message-partitions = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 request_id = 2;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional CLookupType response = 3;
+          rs_message-response = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional ServerError error = 4;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 5.
 " optional string message = 5;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandLookupTopic.
@@ -1561,13 +1940,34 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandLookupTopic.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string topic = 1;
+          rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " required uint64 request_id = 2;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional bool authoritative = 3 [default = false];
+          rs_message-authoritative = lo_stream->decode_bool( ).
+        WHEN 4.
 " optional string original_principal = 4;
+          rs_message-original_principal = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 5.
 " optional string original_auth_data = 5;
+          rs_message-original_auth_data = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 6.
 " optional string original_auth_method = 6;
+          rs_message-original_auth_method = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 7.
 " optional string advertised_listener_name = 7;
+          rs_message-advertised_listener_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandLookupTopicResponse.
@@ -1619,14 +2019,37 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandLookupTopicResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " optional string brokerServiceUrl = 1;
+          rs_message-brokerServiceUrl = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " optional string brokerServiceUrlTls = 2;
+          rs_message-brokerServiceUrlTls = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " optional LookupType response = 3;
+          rs_message-response = lo_stream->decode_varint( ).
+        WHEN 4.
 " required uint64 request_id = 4;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 5.
 " optional bool authoritative = 5 [default = false];
+          rs_message-authoritative = lo_stream->decode_bool( ).
+        WHEN 6.
 " optional ServerError error = 6;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 7.
 " optional string message = 7;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 8.
 " optional bool proxy_through_service_url = 8 [default = false];
+          rs_message-proxy_through_service_url = lo_stream->decode_bool( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandProducer.
@@ -1705,19 +2128,53 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandProducer.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string topic = 1;
+          rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " required uint64 producer_id = 2;
+          rs_message-producer_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " required uint64 request_id = 3;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional string producer_name = 4;
+          rs_message-producer_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 5.
 " optional bool encrypted = 5 [default = false];
+          rs_message-encrypted = lo_stream->decode_bool( ).
+        WHEN 6.
 " repeated KeyValue metadata = 6;
+" todo
+          CONTINUE.
+        WHEN 7.
 " optional Schema schema = 7;
+          rs_message-schema = des_Schema( lo_stream->decode_delimited( ) ).
+        WHEN 8.
 " optional uint64 epoch = 8 [default = 0];
+          rs_message-epoch = lo_stream->decode_varint( ).
+        WHEN 9.
 " optional bool user_provided_producer_name = 9 [default = true];
+          rs_message-user_provided_produccajvVT = lo_stream->decode_bool( ).
+        WHEN 10.
 " optional ProducerAccessMode producer_access_mode = 10 [default = Shared];
+          rs_message-producer_access_mode = lo_stream->decode_varint( ).
+        WHEN 11.
 " optional uint64 topic_epoch = 11;
+          rs_message-topic_epoch = lo_stream->decode_varint( ).
+        WHEN 12.
 " optional bool txn_enabled = 12 [default = false];
+          rs_message-txn_enabled = lo_stream->decode_bool( ).
+        WHEN 13.
 " optional string initial_subscription_name = 13;
+          rs_message-initial_subscription_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandSend.
@@ -1774,15 +2231,40 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandSend.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 producer_id = 1;
+          rs_message-producer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 sequence_id = 2;
+          rs_message-sequence_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional int32 num_messages = 3 [default = 1];
+          rs_message-num_messages = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional uint64 txnid_least_bits = 4 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 5.
 " optional uint64 txnid_most_bits = 5 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 6.
 " optional uint64 highest_sequence_id = 6 [default = 0];
+          rs_message-highest_sequence_id = lo_stream->decode_varint( ).
+        WHEN 7.
 " optional bool is_chunk = 7 [default = false];
+          rs_message-is_chunk = lo_stream->decode_bool( ).
+        WHEN 8.
 " optional bool marker = 8 [default = false];
+          rs_message-marker = lo_stream->decode_bool( ).
+        WHEN 9.
 " optional MessageIdData message_id = 9;
+          rs_message-message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandSendReceipt.
@@ -1814,10 +2296,25 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandSendReceipt.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 producer_id = 1;
+          rs_message-producer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 sequence_id = 2;
+          rs_message-sequence_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional MessageIdData message_id = 3;
+          rs_message-message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
+        WHEN 4.
 " optional uint64 highest_sequence_id = 4 [default = 0];
+          rs_message-highest_sequence_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandSendError.
@@ -1849,10 +2346,25 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandSendError.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 producer_id = 1;
+          rs_message-producer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 sequence_id = 2;
+          rs_message-sequence_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " required ServerError error = 3;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 4.
 " required string message = 4;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandMessage.
@@ -1891,11 +2403,29 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandMessage.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 consumer_id = 1;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required MessageIdData message_id = 2;
+          rs_message-message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " optional uint32 redelivery_count = 3 [default = 0];
+          rs_message-redelivery_count = lo_stream->decode_varint( ).
+        WHEN 4.
 " repeated int64 ack_set = 4;
+" todo
+          CONTINUE.
+        WHEN 5.
 " optional uint64 consumer_epoch = 5;
+          rs_message-consumer_epoch = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandAck.
@@ -1951,14 +2481,39 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandAck.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 consumer_id = 1;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required AckType ack_type = 2;
+          rs_message-ack_type = lo_stream->decode_varint( ).
+        WHEN 3.
 " repeated MessageIdData message_id = 3;
+" todo
+          CONTINUE.
+        WHEN 4.
 " optional ValidationError validation_error = 4;
+          rs_message-validation_error = lo_stream->decode_varint( ).
+        WHEN 5.
 " repeated KeyLongValue properties = 5;
+" todo
+          CONTINUE.
+        WHEN 6.
 " optional uint64 txnid_least_bits = 6 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 7.
 " optional uint64 txnid_most_bits = 7 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 8.
 " optional uint64 request_id = 8;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandAckResponse.
@@ -2000,12 +2555,31 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandAckResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 consumer_id = 1;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional ServerError error = 4;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 5.
 " optional string message = 5;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 6.
 " optional uint64 request_id = 6;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandActiveConsumetry0NX.
@@ -2027,8 +2601,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandActiveConsumetry0NX.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 consumer_id = 1;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional bool is_active = 2 [default = false];
+          rs_message-is_active = lo_stream->decode_bool( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandFlow.
@@ -2050,8 +2635,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandFlow.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 consumer_id = 1;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint32 messagePermits = 2;
+          rs_message-messagePermits = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandUnsubscribe.
@@ -2073,8 +2669,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandUnsubscribe.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 consumer_id = 1;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 request_id = 2;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandSeek.
@@ -2106,10 +2713,25 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandSeek.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 consumer_id = 1;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 request_id = 2;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional MessageIdData message_id = 3;
+          rs_message-message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
+        WHEN 4.
 " optional uint64 message_publish_time = 4;
+          rs_message-message_publish_time = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandReachedEndOfTopic.
@@ -2126,7 +2748,16 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandReachedEndOfTopic.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 consumer_id = 1;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandTopicMigrated.
@@ -2158,10 +2789,25 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandTopicMigrated.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 resource_id = 1;
+          rs_message-resource_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required ResourceType resource_type = 2;
+          rs_message-resource_type = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional string brokerServiceUrl = 3;
+          rs_message-brokerServiceUrl = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 4.
 " optional string brokerServiceUrlTls = 4;
+          rs_message-brokerServiceUrlTls = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandCloseProducer.
@@ -2183,8 +2829,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandCloseProducer.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 producer_id = 1;
+          rs_message-producer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 request_id = 2;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandCloseConsumer.
@@ -2206,8 +2863,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandCloseConsumer.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 consumer_id = 1;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 request_id = 2;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandRedeliverUnacONw3qa.
@@ -2236,9 +2904,23 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandRedeliverUnacONw3qa.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 consumer_id = 1;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " repeated MessageIdData message_ids = 2;
+" todo
+          CONTINUE.
+        WHEN 3.
 " optional uint64 consumer_epoch = 3;
+          rs_message-consumer_epoch = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandSuccess.
@@ -2260,8 +2942,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandSuccess.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional Schema schema = 2;
+          rs_message-schema = des_Schema( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandProducerSuccess.
@@ -2303,12 +2996,31 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandProducerSuccess.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required string producer_name = 2;
+          rs_message-producer_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " optional int64 last_sequence_id = 3 [default = -1];
+          rs_message-last_sequence_id = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional bytes schema_version = 4;
+          rs_message-schema_version = lo_stream->decode_delimited( ).
+        WHEN 5.
 " optional uint64 topic_epoch = 5;
+          rs_message-topic_epoch = lo_stream->decode_varint( ).
+        WHEN 6.
 " optional bool producer_ready = 6 [default = true];
+          rs_message-producer_ready = lo_stream->decode_bool( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandError.
@@ -2335,9 +3047,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandError.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required ServerError error = 2;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 3.
 " required string message = 3;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandPing.
@@ -2349,6 +3074,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandPing.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandPong.
@@ -2360,6 +3092,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandPong.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandConsumerStats.
@@ -2381,8 +3120,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandConsumerStats.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 4.
 " required uint64 consumer_id = 4;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandConsumerStatsLMgarI.
@@ -2474,22 +3224,61 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandConsumerStatsLMgarI.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional ServerError error_code = 2;
+          rs_message-error_code = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional string error_message = 3;
+          rs_message-error_message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 4.
 " optional double msgRateOut = 4;
+          rs_message-msgRateOut = lo_stream->decode_double( ).
+        WHEN 5.
 " optional double msgThroughputOut = 5;
+          rs_message-msgThroughputOut = lo_stream->decode_double( ).
+        WHEN 6.
 " optional double msgRateRedeliver = 6;
+          rs_message-msgRateRedeliver = lo_stream->decode_double( ).
+        WHEN 7.
 " optional string consumerName = 7;
+          rs_message-consumerName = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 8.
 " optional uint64 availablePermits = 8;
+          rs_message-availablePermits = lo_stream->decode_varint( ).
+        WHEN 9.
 " optional uint64 unackedMessages = 9;
+          rs_message-unackedMessages = lo_stream->decode_varint( ).
+        WHEN 10.
 " optional bool blockedConsumerOnUnackedMsgs = 10;
+          rs_message-blockedConsumerOnUnazyMHzQ = lo_stream->decode_bool( ).
+        WHEN 11.
 " optional string address = 11;
+          rs_message-address = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 12.
 " optional string connectedSince = 12;
+          rs_message-connectedSince = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 13.
 " optional string type = 13;
+          rs_message-type = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 14.
 " optional double msgRateExpired = 14;
+          rs_message-msgRateExpired = lo_stream->decode_double( ).
+        WHEN 15.
 " optional uint64 msgBacklog = 15;
+          rs_message-msgBacklog = lo_stream->decode_varint( ).
+        WHEN 16.
 " optional double messageAckRate = 16;
+          rs_message-messageAckRate = lo_stream->decode_double( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandGetLastMessageId.
@@ -2511,8 +3300,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandGetLastMessageId.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 consumer_id = 1;
+          rs_message-consumer_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 request_id = 2;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandGetLastMessag2udLG8.
@@ -2539,9 +3339,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandGetLastMessag2udLG8.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required MessageIdData last_message_id = 1;
+          rs_message-last_message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " required uint64 request_id = 2;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional MessageIdData consumer_mark_delete_position = 3;
+          rs_message-consumer_mark_delete7o38Uz = des_MessageIdData( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandGetTopicsOfNaW5sMTo.
@@ -2578,11 +3391,28 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandGetTopicsOfNaW5sMTo.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required string namespace = 2;
+          rs_message-namespace = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " optional Mode mode = 3 [default = PERSISTENT];
+          rs_message-mode = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional string topics_pattern = 4;
+          rs_message-topics_pattern = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 5.
 " optional string topics_hash = 5;
+          rs_message-topics_hash = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandGetTopicsOfNa2Zpv1F.
@@ -2621,11 +3451,29 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandGetTopicsOfNa2Zpv1F.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " repeated string topics = 2;
+" todo
+          CONTINUE.
+        WHEN 3.
 " optional bool filtered = 3 [default = false];
+          rs_message-filtered = lo_stream->decode_bool( ).
+        WHEN 4.
 " optional string topics_hash = 4;
+          rs_message-topics_hash = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 5.
 " optional bool changed = 5 [default = true];
+          rs_message-changed = lo_stream->decode_bool( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandWatchTopicList.
@@ -2662,11 +3510,28 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandWatchTopicList.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 watcher_id = 2;
+          rs_message-watcher_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " required string namespace = 3;
+          rs_message-namespace = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 4.
 " required string topics_pattern = 4;
+          rs_message-topics_pattern = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 5.
 " optional string topics_hash = 5;
+          rs_message-topics_hash = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandWatchTopicLisUXqMY2.
@@ -2700,10 +3565,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandWatchTopicLisUXqMY2.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 watcher_id = 2;
+          rs_message-watcher_id = lo_stream->decode_varint( ).
+        WHEN 3.
 " repeated string topic = 3;
+" todo
+          CONTINUE.
+        WHEN 4.
 " required string topics_hash = 4;
+          rs_message-topics_hash = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandWatchTopicUpdate.
@@ -2739,10 +3620,27 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandWatchTopicUpdate.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 watcher_id = 1;
+          rs_message-watcher_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " repeated string new_topics = 2;
+" todo
+          CONTINUE.
+        WHEN 3.
 " repeated string deleted_topics = 3;
+" todo
+          CONTINUE.
+        WHEN 4.
 " required string topics_hash = 4;
+          rs_message-topics_hash = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandWatchTopicListClose.
@@ -2764,8 +3662,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandWatchTopicListClose.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 watcher_id = 2;
+          rs_message-watcher_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandGetSchema.
@@ -2792,9 +3701,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandGetSchema.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required string topic = 2;
+          rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " optional bytes schema_version = 3;
+          rs_message-schema_version = lo_stream->decode_delimited( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandGetSchemaResponse.
@@ -2831,11 +3753,28 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandGetSchemaResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional ServerError error_code = 2;
+          rs_message-error_code = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional string error_message = 3;
+          rs_message-error_message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 4.
 " optional Schema schema = 4;
+          rs_message-schema = des_Schema( lo_stream->decode_delimited( ) ).
+        WHEN 5.
 " optional bytes schema_version = 5;
+          rs_message-schema_version = lo_stream->decode_delimited( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandGetOrCreateSchema.
@@ -2862,9 +3801,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandGetOrCreateSchema.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required string topic = 2;
+          rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " required Schema schema = 3;
+          rs_message-schema = des_Schema( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandGetOrCreateScVKbTgH.
@@ -2896,10 +3848,25 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandGetOrCreateScVKbTgH.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional ServerError error_code = 2;
+          rs_message-error_code = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional string error_message = 3;
+          rs_message-error_message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 4.
 " optional bytes schema_version = 4;
+          rs_message-schema_version = lo_stream->decode_delimited( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandTcClientConneWIoTIu.
@@ -2921,8 +3888,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandTcClientConneWIoTIu.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " required uint64 tc_id = 2 [default = 0];
+          rs_message-tc_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandTcClientConneTuQpSf.
@@ -2949,9 +3927,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandTcClientConneTuQpSf.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional ServerError error = 2;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional string message = 3;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandNewTxn.
@@ -2978,9 +3969,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandNewTxn.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txn_ttl_seconds = 2 [default = 0];
+          rs_message-txn_ttl_seconds = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 tc_id = 3 [default = 0];
+          rs_message-tc_id = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandNewTxnResponse.
@@ -3017,11 +4021,28 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandNewTxnResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional ServerError error = 4;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 5.
 " optional string message = 5;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandAddPartitionToTxn.
@@ -3055,10 +4076,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandAddPartitionToTxn.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " repeated string partitions = 4;
+" todo
+          CONTINUE.
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandAddPartitionTafUHa4.
@@ -3095,11 +4132,28 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandAddPartitionTafUHa4.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional ServerError error = 4;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 5.
 " optional string message = 5;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_Subscription.
@@ -3121,8 +4175,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_Subscription.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required string topic = 1;
+          rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
 " required string subscription = 2;
+          rs_message-subscription = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandAddSubscriptisyuJS0.
@@ -3156,10 +4221,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandAddSubscriptisyuJS0.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " repeated Subscription subscription = 4;
+" todo
+          CONTINUE.
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandAddSubscripti6CDt1m.
@@ -3196,11 +4277,28 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandAddSubscripti6CDt1m.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional ServerError error = 4;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 5.
 " optional string message = 5;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandEndTxn.
@@ -3232,10 +4330,25 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandEndTxn.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional TxnAction txn_action = 4;
+          rs_message-txn_action = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandEndTxnResponse.
@@ -3272,11 +4385,28 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandEndTxnResponse.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional ServerError error = 4;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 5.
 " optional string message = 5;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandEndTxnOnPartition.
@@ -3318,12 +4448,31 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandEndTxnOnPartition.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional string topic = 4;
+          rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 5.
 " optional TxnAction txn_action = 5;
+          rs_message-txn_action = lo_stream->decode_varint( ).
+        WHEN 6.
 " optional uint64 txnid_least_bits_of_low_watermark = 6;
+          rs_message-txnid_least_bits_of_Zcp7JX = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandEndTxnOnPartiOOlMQv.
@@ -3360,11 +4509,28 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandEndTxnOnPartiOOlMQv.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional ServerError error = 4;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 5.
 " optional string message = 5;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandEndTxnOnSubscqx6OWu.
@@ -3406,12 +4572,31 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandEndTxnOnSubscqx6OWu.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional Subscription subscription = 4;
+          rs_message-subscription = des_Subscription( lo_stream->decode_delimited( ) ).
+        WHEN 5.
 " optional TxnAction txn_action = 5;
+          rs_message-txn_action = lo_stream->decode_varint( ).
+        WHEN 6.
 " optional uint64 txnid_least_bits_of_low_watermark = 6;
+          rs_message-txnid_least_bits_of_Zcp7JX = lo_stream->decode_varint( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_CommandEndTxnOnSubscVUpsoc.
@@ -3448,11 +4633,28 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_CommandEndTxnOnSubscVUpsoc.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required uint64 request_id = 1;
+          rs_message-request_id = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
+          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+        WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+        WHEN 4.
 " optional ServerError error = 4;
+          rs_message-error = lo_stream->decode_varint( ).
+        WHEN 5.
 " optional string message = 5;
+          rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
   METHOD ser_BaseCommand.
@@ -3759,65 +4961,190 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD des_BaseCommand.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
 " required BaseCommandType type = 1;
+          rs_message-type = lo_stream->decode_varint( ).
+        WHEN 2.
 " optional CommandConnect connect = 2;
+          rs_message-connect = des_CommandConnect( lo_stream->decode_delimited( ) ).
+        WHEN 3.
 " optional CommandConnected connected = 3;
+          rs_message-connected = des_CommandConnected( lo_stream->decode_delimited( ) ).
+        WHEN 4.
 " optional CommandSubscribe subscribe = 4;
+          rs_message-subscribe = des_CommandSubscribe( lo_stream->decode_delimited( ) ).
+        WHEN 5.
 " optional CommandProducer producer = 5;
+          rs_message-producer = des_CommandProducer( lo_stream->decode_delimited( ) ).
+        WHEN 6.
 " optional CommandSend send = 6;
+          rs_message-send = des_CommandSend( lo_stream->decode_delimited( ) ).
+        WHEN 7.
 " optional CommandSendReceipt send_receipt = 7;
+          rs_message-send_receipt = des_CommandSendReceipt( lo_stream->decode_delimited( ) ).
+        WHEN 8.
 " optional CommandSendError send_error = 8;
+          rs_message-send_error = des_CommandSendError( lo_stream->decode_delimited( ) ).
+        WHEN 9.
 " optional CommandMessage message = 9;
+          rs_message-message = des_CommandMessage( lo_stream->decode_delimited( ) ).
+        WHEN 10.
 " optional CommandAck ack = 10;
+          rs_message-ack = des_CommandAck( lo_stream->decode_delimited( ) ).
+        WHEN 11.
 " optional CommandFlow flow = 11;
+          rs_message-flow = des_CommandFlow( lo_stream->decode_delimited( ) ).
+        WHEN 12.
 " optional CommandUnsubscribe unsubscribe = 12;
+          rs_message-unsubscribe = des_CommandUnsubscribe( lo_stream->decode_delimited( ) ).
+        WHEN 13.
 " optional CommandSuccess success = 13;
+          rs_message-success = des_CommandSuccess( lo_stream->decode_delimited( ) ).
+        WHEN 14.
 " optional CommandError error = 14;
+          rs_message-error = des_CommandError( lo_stream->decode_delimited( ) ).
+        WHEN 15.
 " optional CommandCloseProducer close_producer = 15;
+          rs_message-close_producer = des_CommandCloseProducer( lo_stream->decode_delimited( ) ).
+        WHEN 16.
 " optional CommandCloseConsumer close_consumer = 16;
+          rs_message-close_consumer = des_CommandCloseConsumer( lo_stream->decode_delimited( ) ).
+        WHEN 17.
 " optional CommandProducerSuccess producer_success = 17;
+          rs_message-producer_success = des_CommandProducerSuccess( lo_stream->decode_delimited( ) ).
+        WHEN 18.
 " optional CommandPing ping = 18;
+          rs_message-ping = des_CommandPing( lo_stream->decode_delimited( ) ).
+        WHEN 19.
 " optional CommandPong pong = 19;
+          rs_message-pong = des_CommandPong( lo_stream->decode_delimited( ) ).
+        WHEN 20.
 " optional CommandRedeliverUnacknowledgedMessages redeliverUnacknowledgedMessages = 20;
+          rs_message-redeliverUnacknowledK1b75e = des_CommandRedeliverUnacONw3qa( lo_stream->decode_delimited( ) ).
+        WHEN 21.
 " optional CommandPartitionedTopicMetadata partitionMetadata = 21;
+          rs_message-partitionMetadata = des_CommandPartitionedTomVmlsw( lo_stream->decode_delimited( ) ).
+        WHEN 22.
 " optional CommandPartitionedTopicMetadataResponse partitionMetadataResponse = 22;
+          rs_message-partitionMetadataResponse = des_CommandPartitionedToJik1cm( lo_stream->decode_delimited( ) ).
+        WHEN 23.
 " optional CommandLookupTopic lookupTopic = 23;
+          rs_message-lookupTopic = des_CommandLookupTopic( lo_stream->decode_delimited( ) ).
+        WHEN 24.
 " optional CommandLookupTopicResponse lookupTopicResponse = 24;
+          rs_message-lookupTopicResponse = des_CommandLookupTopicResponse( lo_stream->decode_delimited( ) ).
+        WHEN 25.
 " optional CommandConsumerStats consumerStats = 25;
+          rs_message-consumerStats = des_CommandConsumerStats( lo_stream->decode_delimited( ) ).
+        WHEN 26.
 " optional CommandConsumerStatsResponse consumerStatsResponse = 26;
+          rs_message-consumerStatsResponse = des_CommandConsumerStatsLMgarI( lo_stream->decode_delimited( ) ).
+        WHEN 27.
 " optional CommandReachedEndOfTopic reachedEndOfTopic = 27;
+          rs_message-reachedEndOfTopic = des_CommandReachedEndOfTopic( lo_stream->decode_delimited( ) ).
+        WHEN 28.
 " optional CommandSeek seek = 28;
+          rs_message-seek = des_CommandSeek( lo_stream->decode_delimited( ) ).
+        WHEN 29.
 " optional CommandGetLastMessageId getLastMessageId = 29;
+          rs_message-getLastMessageId = des_CommandGetLastMessageId( lo_stream->decode_delimited( ) ).
+        WHEN 30.
 " optional CommandGetLastMessageIdResponse getLastMessageIdResponse = 30;
+          rs_message-getLastMessageIdResponse = des_CommandGetLastMessag2udLG8( lo_stream->decode_delimited( ) ).
+        WHEN 31.
 " optional CommandActiveConsumerChange active_consumer_change = 31;
+          rs_message-active_consumer_change = des_CommandActiveConsumetry0NX( lo_stream->decode_delimited( ) ).
+        WHEN 32.
 " optional CommandGetTopicsOfNamespace getTopicsOfNamespace = 32;
+          rs_message-getTopicsOfNamespace = des_CommandGetTopicsOfNaW5sMTo( lo_stream->decode_delimited( ) ).
+        WHEN 33.
 " optional CommandGetTopicsOfNamespaceResponse getTopicsOfNamespaceResponse = 33;
+          rs_message-getTopicsOfNamespaceslV2GI = des_CommandGetTopicsOfNa2Zpv1F( lo_stream->decode_delimited( ) ).
+        WHEN 34.
 " optional CommandGetSchema getSchema = 34;
+          rs_message-getSchema = des_CommandGetSchema( lo_stream->decode_delimited( ) ).
+        WHEN 35.
 " optional CommandGetSchemaResponse getSchemaResponse = 35;
+          rs_message-getSchemaResponse = des_CommandGetSchemaResponse( lo_stream->decode_delimited( ) ).
+        WHEN 36.
 " optional CommandAuthChallenge authChallenge = 36;
+          rs_message-authChallenge = des_CommandAuthChallenge( lo_stream->decode_delimited( ) ).
+        WHEN 37.
 " optional CommandAuthResponse authResponse = 37;
+          rs_message-authResponse = des_CommandAuthResponse( lo_stream->decode_delimited( ) ).
+        WHEN 38.
 " optional CommandAckResponse ackResponse = 38;
+          rs_message-ackResponse = des_CommandAckResponse( lo_stream->decode_delimited( ) ).
+        WHEN 39.
 " optional CommandGetOrCreateSchema getOrCreateSchema = 39;
+          rs_message-getOrCreateSchema = des_CommandGetOrCreateSchema( lo_stream->decode_delimited( ) ).
+        WHEN 40.
 " optional CommandGetOrCreateSchemaResponse getOrCreateSchemaResponse = 40;
+          rs_message-getOrCreateSchemaResponse = des_CommandGetOrCreateScVKbTgH( lo_stream->decode_delimited( ) ).
+        WHEN 50.
 " optional CommandNewTxn newTxn = 50;
+          rs_message-newTxn = des_CommandNewTxn( lo_stream->decode_delimited( ) ).
+        WHEN 51.
 " optional CommandNewTxnResponse newTxnResponse = 51;
+          rs_message-newTxnResponse = des_CommandNewTxnResponse( lo_stream->decode_delimited( ) ).
+        WHEN 52.
 " optional CommandAddPartitionToTxn addPartitionToTxn = 52;
+          rs_message-addPartitionToTxn = des_CommandAddPartitionToTxn( lo_stream->decode_delimited( ) ).
+        WHEN 53.
 " optional CommandAddPartitionToTxnResponse addPartitionToTxnResponse = 53;
+          rs_message-addPartitionToTxnResponse = des_CommandAddPartitionTafUHa4( lo_stream->decode_delimited( ) ).
+        WHEN 54.
 " optional CommandAddSubscriptionToTxn addSubscriptionToTxn = 54;
+          rs_message-addSubscriptionToTxn = des_CommandAddSubscriptisyuJS0( lo_stream->decode_delimited( ) ).
+        WHEN 55.
 " optional CommandAddSubscriptionToTxnResponse addSubscriptionToTxnResponse = 55;
+          rs_message-addSubscriptionToTxnbeic5U = des_CommandAddSubscripti6CDt1m( lo_stream->decode_delimited( ) ).
+        WHEN 56.
 " optional CommandEndTxn endTxn = 56;
+          rs_message-endTxn = des_CommandEndTxn( lo_stream->decode_delimited( ) ).
+        WHEN 57.
 " optional CommandEndTxnResponse endTxnResponse = 57;
+          rs_message-endTxnResponse = des_CommandEndTxnResponse( lo_stream->decode_delimited( ) ).
+        WHEN 58.
 " optional CommandEndTxnOnPartition endTxnOnPartition = 58;
+          rs_message-endTxnOnPartition = des_CommandEndTxnOnPartition( lo_stream->decode_delimited( ) ).
+        WHEN 59.
 " optional CommandEndTxnOnPartitionResponse endTxnOnPartitionResponse = 59;
+          rs_message-endTxnOnPartitionResponse = des_CommandEndTxnOnPartiOOlMQv( lo_stream->decode_delimited( ) ).
+        WHEN 60.
 " optional CommandEndTxnOnSubscription endTxnOnSubscription = 60;
+          rs_message-endTxnOnSubscription = des_CommandEndTxnOnSubscqx6OWu( lo_stream->decode_delimited( ) ).
+        WHEN 61.
 " optional CommandEndTxnOnSubscriptionResponse endTxnOnSubscriptionResponse = 61;
+          rs_message-endTxnOnSubscriptionuOAlpH = des_CommandEndTxnOnSubscVUpsoc( lo_stream->decode_delimited( ) ).
+        WHEN 62.
 " optional CommandTcClientConnectRequest tcClientConnectRequest = 62;
+          rs_message-tcClientConnectRequest = des_CommandTcClientConneWIoTIu( lo_stream->decode_delimited( ) ).
+        WHEN 63.
 " optional CommandTcClientConnectResponse tcClientConnectResponse = 63;
+          rs_message-tcClientConnectResponse = des_CommandTcClientConneTuQpSf( lo_stream->decode_delimited( ) ).
+        WHEN 64.
 " optional CommandWatchTopicList watchTopicList = 64;
+          rs_message-watchTopicList = des_CommandWatchTopicList( lo_stream->decode_delimited( ) ).
+        WHEN 65.
 " optional CommandWatchTopicListSuccess watchTopicListSuccess = 65;
+          rs_message-watchTopicListSuccess = des_CommandWatchTopicLisUXqMY2( lo_stream->decode_delimited( ) ).
+        WHEN 66.
 " optional CommandWatchTopicUpdate watchTopicUpdate = 66;
+          rs_message-watchTopicUpdate = des_CommandWatchTopicUpdate( lo_stream->decode_delimited( ) ).
+        WHEN 67.
 " optional CommandWatchTopicListClose watchTopicListClose = 67;
+          rs_message-watchTopicListClose = des_CommandWatchTopicListClose( lo_stream->decode_delimited( ) ).
+        WHEN 68.
 " optional CommandTopicMigrated topicMigrated = 68;
+          rs_message-topicMigrated = des_CommandTopicMigrated( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
   ENDMETHOD.
 
 ENDCLASS.

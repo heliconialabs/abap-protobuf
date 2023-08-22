@@ -36,6 +36,12 @@ CLASS zcl_protobuf_stream DEFINITION
     METHODS decode_varint
       RETURNING
         VALUE(rv_int) TYPE i .
+    METHODS decode_bool
+      RETURNING
+        VALUE(rv_bool) TYPE abap_bool .
+    METHODS decode_double
+      RETURNING
+        VALUE(rv_double) TYPE f.
 
     METHODS encode_delimited
       IMPORTING
@@ -96,16 +102,23 @@ ENDCLASS.
 
 CLASS zcl_protobuf_stream IMPLEMENTATION.
 
+  METHOD constructor.
+    mv_hex = iv_hex.
+  ENDMETHOD.
 
   METHOD append.
     CONCATENATE mv_hex iv_hex INTO mv_hex IN BYTE MODE.
   ENDMETHOD.
 
-
-  METHOD constructor.
-    mv_hex = iv_hex.
+  METHOD decode_bool.
+    DATA(lv_int) = decode_varint( ).
+    rv_bool = xsdbool( lv_int = 1 ).
   ENDMETHOD.
 
+  METHOD decode_double.
+    CLEAR rv_double.
+    ASSERT 1 = 'todo'.
+  ENDMETHOD.
 
   METHOD encode_bool.
     IF iv_bool = abap_true.
