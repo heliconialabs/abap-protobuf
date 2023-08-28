@@ -680,15 +680,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-entryId ).
 " optional int32 partition = 3 [default = -1];
+    IF is_message-partition IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-partition ).
+    ENDIF.
 " optional int32 batch_index = 4 [default = -1];
+    IF is_message-batch_index IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-batch_index ).
+    ENDIF.
 " repeated int64 ack_set = 5;
     LOOP AT is_message-ack_set INTO DATA(lv_ack_set).
     lo_stream->encode_field_and_type2(
@@ -697,10 +701,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_varint( lv_ack_set ).
     ENDLOOP.
 " optional int32 batch_size = 6;
+    IF is_message-batch_size IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-batch_size ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -724,7 +730,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-batch_index = lo_stream->decode_varint( ).
         WHEN 5.
 " repeated int64 ack_set = 5;
-          INSERT lo_stream->decode_varint( ) INTO TABLE rs_message-ack_set.
+          ASSERT 1 = 'todo'.
         WHEN 6.
 " optional int32 batch_size = 6;
           rs_message-batch_size = lo_stream->decode_varint( ).
@@ -872,15 +878,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( ser_KeyValue( lv_properties ) ).
     ENDLOOP.
 " optional string replicated_from = 5;
+    IF is_message-replicated_from IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-replicated_from ) ).
+    ENDIF.
 " optional string partition_key = 6;
+    IF is_message-partition_key IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-partition_key ) ).
+    ENDIF.
 " repeated string replicate_to = 7;
     LOOP AT is_message-replicate_to INTO DATA(lv_replicate_to).
     lo_stream->encode_field_and_type2(
@@ -889,25 +899,33 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( lv_replicate_to ) ).
     ENDLOOP.
 " optional CompressionType compression = 8 [default = NONE];
+    IF is_message-compression IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-compression ).
+    ENDIF.
 " optional uint32 uncompressed_size = 9 [default = 0];
+    IF is_message-uncompressed_size IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-uncompressed_size ).
+    ENDIF.
 " optional int32 num_messages_in_batch = 11 [default = 1];
+    IF is_message-num_messages_in_batch IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-num_messages_in_batch ).
+    ENDIF.
 " optional uint64 event_time = 12 [default = 0];
+    IF is_message-event_time IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 12
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-event_time ).
+    ENDIF.
 " repeated EncryptionKeys encryption_keys = 13;
     LOOP AT is_message-encryption_keys INTO DATA(lv_encryption_keys).
     lo_stream->encode_field_and_type2(
@@ -916,85 +934,117 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( ser_EncryptionKeys( lv_encryption_keys ) ).
     ENDLOOP.
 " optional string encryption_algo = 14;
+    IF is_message-encryption_algo IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 14
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-encryption_algo ) ).
+    ENDIF.
 " optional bytes encryption_param = 15;
+    IF is_message-encryption_param IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 15
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( is_message-encryption_param ).
+    ENDIF.
 " optional bytes schema_version = 16;
+    IF is_message-schema_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 16
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( is_message-schema_version ).
+    ENDIF.
 " optional bool partition_key_b64_encoded = 17 [ default = false ];
+    IF is_message-partition_key_b64_encoded IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 17
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-partition_key_b64_encoded ).
+    ENDIF.
 " optional bytes ordering_key = 18;
+    IF is_message-ordering_key IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 18
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( is_message-ordering_key ).
+    ENDIF.
 " optional int64 deliver_at_time = 19;
+    IF is_message-deliver_at_time IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 19
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-deliver_at_time ).
+    ENDIF.
 " optional int32 marker_type = 20;
+    IF is_message-marker_type IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 20
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-marker_type ).
+    ENDIF.
 " optional uint64 txnid_least_bits = 22;
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 22
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 23;
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 23
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional uint64 highest_sequence_id = 24 [default = 0];
+    IF is_message-highest_sequence_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 24
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-highest_sequence_id ).
+    ENDIF.
 " optional bool null_value = 25 [default = false];
+    IF is_message-null_value IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 25
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-null_value ).
+    ENDIF.
 " optional string uuid = 26;
+    IF is_message-uuid IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 26
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-uuid ) ).
+    ENDIF.
 " optional int32 num_chunks_from_msg = 27;
+    IF is_message-num_chunks_from_msg IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 27
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-num_chunks_from_msg ).
+    ENDIF.
 " optional int32 total_chunk_msg_size = 28;
+    IF is_message-total_chunk_msg_size IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 28
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-total_chunk_msg_size ).
+    ENDIF.
 " optional int32 chunk_id = 29;
+    IF is_message-chunk_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 29
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-chunk_id ).
+    ENDIF.
 " optional bool null_partition_key = 30 [default = false];
+    IF is_message-null_partition_key IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 30
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-null_partition_key ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1105,50 +1155,66 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( ser_KeyValue( lv_properties ) ).
     ENDLOOP.
 " optional string partition_key = 2;
+    IF is_message-partition_key IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-partition_key ) ).
+    ENDIF.
 " required int32 payload_size = 3;
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-payload_size ).
 " optional bool compacted_out = 4 [default = false];
+    IF is_message-compacted_out IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-compacted_out ).
+    ENDIF.
 " optional uint64 event_time = 5 [default = 0];
+    IF is_message-event_time IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-event_time ).
+    ENDIF.
 " optional bool partition_key_b64_encoded = 6 [ default = false ];
+    IF is_message-partition_key_b64_encoded IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-partition_key_b64_encoded ).
+    ENDIF.
 " optional bytes ordering_key = 7;
+    IF is_message-ordering_key IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( is_message-ordering_key ).
+    ENDIF.
 " optional uint64 sequence_id = 8;
+    IF is_message-sequence_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-sequence_id ).
+    ENDIF.
 " optional bool null_value = 9 [ default = false ];
+    IF is_message-null_value IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-null_value ).
+    ENDIF.
 " optional bool null_partition_key = 10 [ default = false];
+    IF is_message-null_partition_key IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 10
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-null_partition_key ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1198,15 +1264,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " optional uint64 broker_timestamp = 1;
+    IF is_message-broker_timestamp IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-broker_timestamp ).
+    ENDIF.
 " optional uint64 index = 2;
+    IF is_message-index IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-index ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1232,25 +1302,33 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " optional bool supports_auth_refresh = 1 [default = false];
+    IF is_message-supports_auth_refresh IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-supports_auth_refresh ).
+    ENDIF.
 " optional bool supports_broker_entry_metadata = 2 [default = false];
+    IF is_message-supports_broker_entrKEEJJg IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-supports_broker_entrKEEJJg ).
+    ENDIF.
 " optional bool supports_partial_producer = 3 [default = false];
+    IF is_message-supports_partial_producer IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-supports_partial_producer ).
+    ENDIF.
 " optional bool supports_topic_watchers = 4 [default = false];
+    IF is_message-supports_topic_watchers IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-supports_topic_watchers ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1287,55 +1365,75 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-client_version ) ).
 " optional AuthMethod auth_method = 2;
+    IF is_message-auth_method IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-auth_method ).
+    ENDIF.
 " optional string auth_method_name = 5;
+    IF is_message-auth_method_name IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-auth_method_name ) ).
+    ENDIF.
 " optional bytes auth_data = 3;
+    IF is_message-auth_data IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( is_message-auth_data ).
+    ENDIF.
 " optional int32 protocol_version = 4 [default = 0];
+    IF is_message-protocol_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-protocol_version ).
+    ENDIF.
 " optional string proxy_to_broker_url = 6;
+    IF is_message-proxy_to_broker_url IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-proxy_to_broker_url ) ).
+    ENDIF.
 " optional string original_principal = 7;
+    IF is_message-original_principal IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-original_principal ) ).
+    ENDIF.
 " optional string original_auth_data = 8;
+    IF is_message-original_auth_data IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-original_auth_data ) ).
+    ENDIF.
 " optional string original_auth_method = 9;
+    IF is_message-original_auth_method IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-original_auth_method ) ).
+    ENDIF.
 " optional FeatureFlags feature_flags = 10;
+    IF is_message-feature_flags IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 10
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_FeatureFlags( is_message-feature_flags ) ).
+    ENDIF.
 " optional string proxy_version = 11;
+    IF is_message-proxy_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-proxy_version ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1393,20 +1491,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-server_version ) ).
 " optional int32 protocol_version = 2 [default = 0];
+    IF is_message-protocol_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-protocol_version ).
+    ENDIF.
 " optional int32 max_message_size = 3;
+    IF is_message-max_message_size IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-max_message_size ).
+    ENDIF.
 " optional FeatureFlags feature_flags = 4;
+    IF is_message-feature_flags IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_FeatureFlags( is_message-feature_flags ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1438,15 +1542,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " optional string auth_method_name = 1;
+    IF is_message-auth_method_name IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-auth_method_name ) ).
+    ENDIF.
 " optional bytes auth_data = 2;
+    IF is_message-auth_data IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( is_message-auth_data ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1472,20 +1580,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " optional string client_version = 1;
+    IF is_message-client_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-client_version ) ).
+    ENDIF.
 " optional AuthData response = 2;
+    IF is_message-response IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_AuthData( is_message-response ) ).
+    ENDIF.
 " optional int32 protocol_version = 3 [default = 0];
+    IF is_message-protocol_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-protocol_version ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1514,20 +1628,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " optional string server_version = 1;
+    IF is_message-server_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-server_version ) ).
+    ENDIF.
 " optional AuthData challenge = 2;
+    IF is_message-challenge IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_AuthData( is_message-challenge ) ).
+    ENDIF.
 " optional int32 protocol_version = 3 [default = 0];
+    IF is_message-protocol_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-protocol_version ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1568,10 +1688,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( ser_IntRange( lv_hashRanges ) ).
     ENDLOOP.
 " optional bool allowOutOfOrderDelivery = 4 [default = false];
+    IF is_message-allowOutOfOrderDelivery IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-allowOutOfOrderDelivery ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1625,25 +1747,33 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional string consumer_name = 6;
+    IF is_message-consumer_name IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-consumer_name ) ).
+    ENDIF.
 " optional int32 priority_level = 7;
+    IF is_message-priority_level IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-priority_level ).
+    ENDIF.
 " optional bool durable = 8 [default = true];
+    IF is_message-durable IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-durable ).
+    ENDIF.
 " optional MessageIdData start_message_id = 9;
+    IF is_message-start_message_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_MessageIdData( is_message-start_message_id ) ).
+    ENDIF.
 " repeated KeyValue metadata = 10;
     LOOP AT is_message-metadata INTO DATA(lv_metadata).
     lo_stream->encode_field_and_type2(
@@ -1652,40 +1782,54 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( ser_KeyValue( lv_metadata ) ).
     ENDLOOP.
 " optional bool read_compacted = 11;
+    IF is_message-read_compacted IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-read_compacted ).
+    ENDIF.
 " optional Schema schema = 12;
+    IF is_message-schema IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 12
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_Schema( is_message-schema ) ).
+    ENDIF.
 " optional InitialPosition initialPosition = 13 [default = Latest];
+    IF is_message-initialPosition IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 13
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-initialPosition ).
+    ENDIF.
 " optional bool replicate_subscription_state = 14;
+    IF is_message-replicate_subscriptiLS0h9F IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 14
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-replicate_subscriptiLS0h9F ).
+    ENDIF.
 " optional bool force_topic_creation = 15 [default = true];
+    IF is_message-force_topic_creation IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 15
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-force_topic_creation ).
+    ENDIF.
 " optional uint64 start_message_rollback_duration_sec = 16 [default = 0];
+    IF is_message-start_message_rollbaPthj0W IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 16
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-start_message_rollbaPthj0W ).
+    ENDIF.
 " optional KeySharedMeta keySharedMeta = 17;
+    IF is_message-keySharedMeta IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 17
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_KeySharedMeta( is_message-keySharedMeta ) ).
+    ENDIF.
 " repeated KeyValue subscription_properties = 18;
     LOOP AT is_message-subscription_properties INTO DATA(lv_subscription_properties).
     lo_stream->encode_field_and_type2(
@@ -1694,10 +1838,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( ser_KeyValue( lv_subscription_properties ) ).
     ENDLOOP.
 " optional uint64 consumer_epoch = 19;
+    IF is_message-consumer_epoch IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 19
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-consumer_epoch ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1784,20 +1930,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional string original_principal = 3;
+    IF is_message-original_principal IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-original_principal ) ).
+    ENDIF.
 " optional string original_auth_data = 4;
+    IF is_message-original_auth_data IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-original_auth_data ) ).
+    ENDIF.
 " optional string original_auth_method = 5;
+    IF is_message-original_auth_method IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-original_auth_method ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1832,30 +1984,38 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " optional uint32 partitions = 1;
+    IF is_message-partitions IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-partitions ).
+    ENDIF.
 " required uint64 request_id = 2;
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional CLookupType response = 3;
+    IF is_message-response IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-response ).
+    ENDIF.
 " optional ServerError error = 4;
+    IF is_message-error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error ).
+    ENDIF.
 " optional string message = 5;
+    IF is_message-message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-message ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1900,30 +2060,40 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional bool authoritative = 3 [default = false];
+    IF is_message-authoritative IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-authoritative ).
+    ENDIF.
 " optional string original_principal = 4;
+    IF is_message-original_principal IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-original_principal ) ).
+    ENDIF.
 " optional string original_auth_data = 5;
+    IF is_message-original_auth_data IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-original_auth_data ) ).
+    ENDIF.
 " optional string original_auth_method = 6;
+    IF is_message-original_auth_method IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-original_auth_method ) ).
+    ENDIF.
 " optional string advertised_listener_name = 7;
+    IF is_message-advertised_listener_name IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-advertised_listener_name ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1964,45 +2134,59 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
 " optional string brokerServiceUrl = 1;
+    IF is_message-brokerServiceUrl IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-brokerServiceUrl ) ).
+    ENDIF.
 " optional string brokerServiceUrlTls = 2;
+    IF is_message-brokerServiceUrlTls IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-brokerServiceUrlTls ) ).
+    ENDIF.
 " optional LookupType response = 3;
+    IF is_message-response IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-response ).
+    ENDIF.
 " required uint64 request_id = 4;
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional bool authoritative = 5 [default = false];
+    IF is_message-authoritative IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-authoritative ).
+    ENDIF.
 " optional ServerError error = 6;
+    IF is_message-error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error ).
+    ENDIF.
 " optional string message = 7;
+    IF is_message-message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-message ) ).
+    ENDIF.
 " optional bool proxy_through_service_url = 8 [default = false];
+    IF is_message-proxy_through_service_url IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-proxy_through_service_url ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2061,15 +2245,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional string producer_name = 4;
+    IF is_message-producer_name IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-producer_name ) ).
+    ENDIF.
 " optional bool encrypted = 5 [default = false];
+    IF is_message-encrypted IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-encrypted ).
+    ENDIF.
 " repeated KeyValue metadata = 6;
     LOOP AT is_message-metadata INTO DATA(lv_metadata).
     lo_stream->encode_field_and_type2(
@@ -2078,40 +2266,54 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( ser_KeyValue( lv_metadata ) ).
     ENDLOOP.
 " optional Schema schema = 7;
+    IF is_message-schema IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_Schema( is_message-schema ) ).
+    ENDIF.
 " optional uint64 epoch = 8 [default = 0];
+    IF is_message-epoch IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-epoch ).
+    ENDIF.
 " optional bool user_provided_producer_name = 9 [default = true];
+    IF is_message-user_provided_produccajvVT IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-user_provided_produccajvVT ).
+    ENDIF.
 " optional ProducerAccessMode producer_access_mode = 10 [default = Shared];
+    IF is_message-producer_access_mode IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 10
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-producer_access_mode ).
+    ENDIF.
 " optional uint64 topic_epoch = 11;
+    IF is_message-topic_epoch IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-topic_epoch ).
+    ENDIF.
 " optional bool txn_enabled = 12 [default = false];
+    IF is_message-txn_enabled IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 12
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-txn_enabled ).
+    ENDIF.
 " optional string initial_subscription_name = 13;
+    IF is_message-initial_subscription_name IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 13
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-initial_subscription_name ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2180,40 +2382,54 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-sequence_id ).
 " optional int32 num_messages = 3 [default = 1];
+    IF is_message-num_messages IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-num_messages ).
+    ENDIF.
 " optional uint64 txnid_least_bits = 4 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 5 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional uint64 highest_sequence_id = 6 [default = 0];
+    IF is_message-highest_sequence_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-highest_sequence_id ).
+    ENDIF.
 " optional bool is_chunk = 7 [default = false];
+    IF is_message-is_chunk IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-is_chunk ).
+    ENDIF.
 " optional bool marker = 8 [default = false];
+    IF is_message-marker IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-marker ).
+    ENDIF.
 " optional MessageIdData message_id = 9;
+    IF is_message-message_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_MessageIdData( is_message-message_id ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2270,15 +2486,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-sequence_id ).
 " optional MessageIdData message_id = 3;
+    IF is_message-message_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_MessageIdData( is_message-message_id ) ).
+    ENDIF.
 " optional uint64 highest_sequence_id = 4 [default = 0];
+    IF is_message-highest_sequence_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-highest_sequence_id ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2370,10 +2590,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_MessageIdData( is_message-message_id ) ).
 " optional uint32 redelivery_count = 3 [default = 0];
+    IF is_message-redelivery_count IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-redelivery_count ).
+    ENDIF.
 " repeated int64 ack_set = 4;
     LOOP AT is_message-ack_set INTO DATA(lv_ack_set).
     lo_stream->encode_field_and_type2(
@@ -2382,10 +2604,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_varint( lv_ack_set ).
     ENDLOOP.
 " optional uint64 consumer_epoch = 5;
+    IF is_message-consumer_epoch IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-consumer_epoch ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2406,7 +2630,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-redelivery_count = lo_stream->decode_varint( ).
         WHEN 4.
 " repeated int64 ack_set = 4;
-          INSERT lo_stream->decode_varint( ) INTO TABLE rs_message-ack_set.
+          ASSERT 1 = 'todo'.
         WHEN 5.
 " optional uint64 consumer_epoch = 5;
           rs_message-consumer_epoch = lo_stream->decode_varint( ).
@@ -2437,10 +2661,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( ser_MessageIdData( lv_message_id ) ).
     ENDLOOP.
 " optional ValidationError validation_error = 4;
+    IF is_message-validation_error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-validation_error ).
+    ENDIF.
 " repeated KeyLongValue properties = 5;
     LOOP AT is_message-properties INTO DATA(lv_properties).
     lo_stream->encode_field_and_type2(
@@ -2449,20 +2675,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( ser_KeyLongValue( lv_properties ) ).
     ENDLOOP.
 " optional uint64 txnid_least_bits = 6 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 7 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional uint64 request_id = 8;
+    IF is_message-request_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2511,30 +2743,40 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-consumer_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional ServerError error = 4;
+    IF is_message-error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error ).
+    ENDIF.
 " optional string message = 5;
+    IF is_message-message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-message ) ).
+    ENDIF.
 " optional uint64 request_id = 6;
+    IF is_message-request_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2577,10 +2819,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-consumer_id ).
 " optional bool is_active = 2 [default = false];
+    IF is_message-is_active IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-is_active ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2684,15 +2928,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional MessageIdData message_id = 3;
+    IF is_message-message_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_MessageIdData( is_message-message_id ) ).
+    ENDIF.
 " optional uint64 message_publish_time = 4;
+    IF is_message-message_publish_time IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-message_publish_time ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2760,15 +3008,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-resource_type ).
 " optional string brokerServiceUrl = 3;
+    IF is_message-brokerServiceUrl IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-brokerServiceUrl ) ).
+    ENDIF.
 " optional string brokerServiceUrlTls = 4;
+    IF is_message-brokerServiceUrlTls IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-brokerServiceUrlTls ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2880,10 +3132,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( ser_MessageIdData( lv_message_ids ) ).
     ENDLOOP.
 " optional uint64 consumer_epoch = 3;
+    IF is_message-consumer_epoch IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-consumer_epoch ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2917,10 +3171,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional Schema schema = 2;
+    IF is_message-schema IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_Schema( is_message-schema ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2956,25 +3212,33 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-producer_name ) ).
 " optional int64 last_sequence_id = 3 [default = -1];
+    IF is_message-last_sequence_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-last_sequence_id ).
+    ENDIF.
 " optional bytes schema_version = 4;
+    IF is_message-schema_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( is_message-schema_version ).
+    ENDIF.
 " optional uint64 topic_epoch = 5;
+    IF is_message-topic_epoch IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-topic_epoch ).
+    ENDIF.
 " optional bool producer_ready = 6 [default = true];
+    IF is_message-producer_ready IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-producer_ready ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3129,80 +3393,110 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional ServerError error_code = 2;
+    IF is_message-error_code IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error_code ).
+    ENDIF.
 " optional string error_message = 3;
+    IF is_message-error_message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-error_message ) ).
+    ENDIF.
 " optional double msgRateOut = 4;
+    IF is_message-msgRateOut IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-bit64 ).
     lo_stream->encode_double( is_message-msgRateOut ).
+    ENDIF.
 " optional double msgThroughputOut = 5;
+    IF is_message-msgThroughputOut IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-bit64 ).
     lo_stream->encode_double( is_message-msgThroughputOut ).
+    ENDIF.
 " optional double msgRateRedeliver = 6;
+    IF is_message-msgRateRedeliver IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-bit64 ).
     lo_stream->encode_double( is_message-msgRateRedeliver ).
+    ENDIF.
 " optional string consumerName = 7;
+    IF is_message-consumerName IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-consumerName ) ).
+    ENDIF.
 " optional uint64 availablePermits = 8;
+    IF is_message-availablePermits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-availablePermits ).
+    ENDIF.
 " optional uint64 unackedMessages = 9;
+    IF is_message-unackedMessages IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-unackedMessages ).
+    ENDIF.
 " optional bool blockedConsumerOnUnackedMsgs = 10;
+    IF is_message-blockedConsumerOnUnazyMHzQ IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 10
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-blockedConsumerOnUnazyMHzQ ).
+    ENDIF.
 " optional string address = 11;
+    IF is_message-address IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-address ) ).
+    ENDIF.
 " optional string connectedSince = 12;
+    IF is_message-connectedSince IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 12
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-connectedSince ) ).
+    ENDIF.
 " optional string type = 13;
+    IF is_message-type IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 13
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-type ) ).
+    ENDIF.
 " optional double msgRateExpired = 14;
+    IF is_message-msgRateExpired IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 14
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-bit64 ).
     lo_stream->encode_double( is_message-msgRateExpired ).
+    ENDIF.
 " optional uint64 msgBacklog = 15;
+    IF is_message-msgBacklog IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 15
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-msgBacklog ).
+    ENDIF.
 " optional double messageAckRate = 16;
+    IF is_message-messageAckRate IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 16
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-bit64 ).
     lo_stream->encode_double( is_message-messageAckRate ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3314,10 +3608,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional MessageIdData consumer_mark_delete_position = 3;
+    IF is_message-consumer_mark_delete7o38Uz IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_MessageIdData( is_message-consumer_mark_delete7o38Uz ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3356,20 +3652,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-namespace ) ).
 " optional Mode mode = 3 [default = PERSISTENT];
+    IF is_message-mode IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-mode ).
+    ENDIF.
 " optional string topics_pattern = 4;
+    IF is_message-topics_pattern IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-topics_pattern ) ).
+    ENDIF.
 " optional string topics_hash = 5;
+    IF is_message-topics_hash IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-topics_hash ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3416,20 +3718,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( lv_topics ) ).
     ENDLOOP.
 " optional bool filtered = 3 [default = false];
+    IF is_message-filtered IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-filtered ).
+    ENDIF.
 " optional string topics_hash = 4;
+    IF is_message-topics_hash IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-topics_hash ) ).
+    ENDIF.
 " optional bool changed = 5 [default = true];
+    IF is_message-changed IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-changed ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3484,10 +3792,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-topics_pattern ) ).
 " optional string topics_hash = 5;
+    IF is_message-topics_hash IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-topics_hash ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3672,10 +3982,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-topic ) ).
 " optional bytes schema_version = 3;
+    IF is_message-schema_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( is_message-schema_version ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3709,25 +4021,33 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional ServerError error_code = 2;
+    IF is_message-error_code IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error_code ).
+    ENDIF.
 " optional string error_message = 3;
+    IF is_message-error_message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-error_message ) ).
+    ENDIF.
 " optional Schema schema = 4;
+    IF is_message-schema IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_Schema( is_message-schema ) ).
+    ENDIF.
 " optional bytes schema_version = 5;
+    IF is_message-schema_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( is_message-schema_version ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3809,20 +4129,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional ServerError error_code = 2;
+    IF is_message-error_code IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error_code ).
+    ENDIF.
 " optional string error_message = 3;
+    IF is_message-error_message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-error_message ) ).
+    ENDIF.
 " optional bytes schema_version = 4;
+    IF is_message-schema_version IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( is_message-schema_version ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3893,15 +4219,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional ServerError error = 2;
+    IF is_message-error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error ).
+    ENDIF.
 " optional string message = 3;
+    IF is_message-message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-message ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3935,15 +4265,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txn_ttl_seconds = 2 [default = 0];
+    IF is_message-txn_ttl_seconds IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txn_ttl_seconds ).
+    ENDIF.
 " optional uint64 tc_id = 3 [default = 0];
+    IF is_message-tc_id IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-tc_id ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3977,25 +4311,33 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional ServerError error = 4;
+    IF is_message-error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error ).
+    ENDIF.
 " optional string message = 5;
+    IF is_message-message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-message ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -4035,15 +4377,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " repeated string partitions = 4;
     LOOP AT is_message-partitions INTO DATA(lv_partitions).
     lo_stream->encode_field_and_type2(
@@ -4087,25 +4433,33 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional ServerError error = 4;
+    IF is_message-error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error ).
+    ENDIF.
 " optional string message = 5;
+    IF is_message-message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-message ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -4179,15 +4533,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " repeated Subscription subscription = 4;
     LOOP AT is_message-subscription INTO DATA(lv_subscription).
     lo_stream->encode_field_and_type2(
@@ -4231,25 +4589,33 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional ServerError error = 4;
+    IF is_message-error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error ).
+    ENDIF.
 " optional string message = 5;
+    IF is_message-message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-message ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -4289,20 +4655,26 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional TxnAction txn_action = 4;
+    IF is_message-txn_action IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txn_action ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -4339,25 +4711,33 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional ServerError error = 4;
+    IF is_message-error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error ).
+    ENDIF.
 " optional string message = 5;
+    IF is_message-message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-message ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -4397,30 +4777,40 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional string topic = 4;
+    IF is_message-topic IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-topic ) ).
+    ENDIF.
 " optional TxnAction txn_action = 5;
+    IF is_message-txn_action IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txn_action ).
+    ENDIF.
 " optional uint64 txnid_least_bits_of_low_watermark = 6;
+    IF is_message-txnid_least_bits_of_Zcp7JX IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits_of_Zcp7JX ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -4463,25 +4853,33 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional ServerError error = 4;
+    IF is_message-error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error ).
+    ENDIF.
 " optional string message = 5;
+    IF is_message-message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-message ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -4521,30 +4919,40 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional Subscription subscription = 4;
+    IF is_message-subscription IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_Subscription( is_message-subscription ) ).
+    ENDIF.
 " optional TxnAction txn_action = 5;
+    IF is_message-txn_action IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txn_action ).
+    ENDIF.
 " optional uint64 txnid_least_bits_of_low_watermark = 6;
+    IF is_message-txnid_least_bits_of_Zcp7JX IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits_of_Zcp7JX ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -4587,25 +4995,33 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-request_id ).
 " optional uint64 txnid_least_bits = 2 [default = 0];
+    IF is_message-txnid_least_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_least_bits ).
+    ENDIF.
 " optional uint64 txnid_most_bits = 3 [default = 0];
+    IF is_message-txnid_most_bits IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-txnid_most_bits ).
+    ENDIF.
 " optional ServerError error = 4;
+    IF is_message-error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-error ).
+    ENDIF.
 " optional string message = 5;
+    IF is_message-message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-message ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -4645,295 +5061,411 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_varint( is_message-type ).
 " optional CommandConnect connect = 2;
+    IF is_message-connect IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandConnect( is_message-connect ) ).
+    ENDIF.
 " optional CommandConnected connected = 3;
+    IF is_message-connected IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandConnected( is_message-connected ) ).
+    ENDIF.
 " optional CommandSubscribe subscribe = 4;
+    IF is_message-subscribe IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 4
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandSubscribe( is_message-subscribe ) ).
+    ENDIF.
 " optional CommandProducer producer = 5;
+    IF is_message-producer IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 5
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandProducer( is_message-producer ) ).
+    ENDIF.
 " optional CommandSend send = 6;
+    IF is_message-send IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 6
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandSend( is_message-send ) ).
+    ENDIF.
 " optional CommandSendReceipt send_receipt = 7;
+    IF is_message-send_receipt IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 7
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandSendReceipt( is_message-send_receipt ) ).
+    ENDIF.
 " optional CommandSendError send_error = 8;
+    IF is_message-send_error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 8
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandSendError( is_message-send_error ) ).
+    ENDIF.
 " optional CommandMessage message = 9;
+    IF is_message-message IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 9
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandMessage( is_message-message ) ).
+    ENDIF.
 " optional CommandAck ack = 10;
+    IF is_message-ack IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 10
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandAck( is_message-ack ) ).
+    ENDIF.
 " optional CommandFlow flow = 11;
+    IF is_message-flow IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 11
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandFlow( is_message-flow ) ).
+    ENDIF.
 " optional CommandUnsubscribe unsubscribe = 12;
+    IF is_message-unsubscribe IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 12
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandUnsubscribe( is_message-unsubscribe ) ).
+    ENDIF.
 " optional CommandSuccess success = 13;
+    IF is_message-success IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 13
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandSuccess( is_message-success ) ).
+    ENDIF.
 " optional CommandError error = 14;
+    IF is_message-error IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 14
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandError( is_message-error ) ).
+    ENDIF.
 " optional CommandCloseProducer close_producer = 15;
+    IF is_message-close_producer IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 15
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandCloseProducer( is_message-close_producer ) ).
+    ENDIF.
 " optional CommandCloseConsumer close_consumer = 16;
+    IF is_message-close_consumer IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 16
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandCloseConsumer( is_message-close_consumer ) ).
+    ENDIF.
 " optional CommandProducerSuccess producer_success = 17;
+    IF is_message-producer_success IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 17
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandProducerSuccess( is_message-producer_success ) ).
+    ENDIF.
 " optional CommandPing ping = 18;
+    IF is_message-ping IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 18
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandPing( is_message-ping ) ).
+    ENDIF.
 " optional CommandPong pong = 19;
+    IF is_message-pong IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 19
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandPong( is_message-pong ) ).
+    ENDIF.
 " optional CommandRedeliverUnacknowledgedMessages redeliverUnacknowledgedMessages = 20;
+    IF is_message-redeliverUnacknowledK1b75e IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 20
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandRedeliverUnacONw3qa( is_message-redeliverUnacknowledK1b75e ) ).
+    ENDIF.
 " optional CommandPartitionedTopicMetadata partitionMetadata = 21;
+    IF is_message-partitionMetadata IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 21
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandPartitionedTomVmlsw( is_message-partitionMetadata ) ).
+    ENDIF.
 " optional CommandPartitionedTopicMetadataResponse partitionMetadataResponse = 22;
+    IF is_message-partitionMetadataResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 22
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandPartitionedToJik1cm( is_message-partitionMetadataResponse ) ).
+    ENDIF.
 " optional CommandLookupTopic lookupTopic = 23;
+    IF is_message-lookupTopic IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 23
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandLookupTopic( is_message-lookupTopic ) ).
+    ENDIF.
 " optional CommandLookupTopicResponse lookupTopicResponse = 24;
+    IF is_message-lookupTopicResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 24
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandLookupTopicResponse( is_message-lookupTopicResponse ) ).
+    ENDIF.
 " optional CommandConsumerStats consumerStats = 25;
+    IF is_message-consumerStats IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 25
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandConsumerStats( is_message-consumerStats ) ).
+    ENDIF.
 " optional CommandConsumerStatsResponse consumerStatsResponse = 26;
+    IF is_message-consumerStatsResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 26
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandConsumerStatsLMgarI( is_message-consumerStatsResponse ) ).
+    ENDIF.
 " optional CommandReachedEndOfTopic reachedEndOfTopic = 27;
+    IF is_message-reachedEndOfTopic IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 27
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandReachedEndOfTopic( is_message-reachedEndOfTopic ) ).
+    ENDIF.
 " optional CommandSeek seek = 28;
+    IF is_message-seek IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 28
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandSeek( is_message-seek ) ).
+    ENDIF.
 " optional CommandGetLastMessageId getLastMessageId = 29;
+    IF is_message-getLastMessageId IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 29
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandGetLastMessageId( is_message-getLastMessageId ) ).
+    ENDIF.
 " optional CommandGetLastMessageIdResponse getLastMessageIdResponse = 30;
+    IF is_message-getLastMessageIdResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 30
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandGetLastMessag2udLG8( is_message-getLastMessageIdResponse ) ).
+    ENDIF.
 " optional CommandActiveConsumerChange active_consumer_change = 31;
+    IF is_message-active_consumer_change IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 31
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandActiveConsumetry0NX( is_message-active_consumer_change ) ).
+    ENDIF.
 " optional CommandGetTopicsOfNamespace getTopicsOfNamespace = 32;
+    IF is_message-getTopicsOfNamespace IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 32
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandGetTopicsOfNaW5sMTo( is_message-getTopicsOfNamespace ) ).
+    ENDIF.
 " optional CommandGetTopicsOfNamespaceResponse getTopicsOfNamespaceResponse = 33;
+    IF is_message-getTopicsOfNamespaceslV2GI IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 33
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandGetTopicsOfNa2Zpv1F( is_message-getTopicsOfNamespaceslV2GI ) ).
+    ENDIF.
 " optional CommandGetSchema getSchema = 34;
+    IF is_message-getSchema IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 34
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandGetSchema( is_message-getSchema ) ).
+    ENDIF.
 " optional CommandGetSchemaResponse getSchemaResponse = 35;
+    IF is_message-getSchemaResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 35
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandGetSchemaResponse( is_message-getSchemaResponse ) ).
+    ENDIF.
 " optional CommandAuthChallenge authChallenge = 36;
+    IF is_message-authChallenge IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 36
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandAuthChallenge( is_message-authChallenge ) ).
+    ENDIF.
 " optional CommandAuthResponse authResponse = 37;
+    IF is_message-authResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 37
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandAuthResponse( is_message-authResponse ) ).
+    ENDIF.
 " optional CommandAckResponse ackResponse = 38;
+    IF is_message-ackResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 38
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandAckResponse( is_message-ackResponse ) ).
+    ENDIF.
 " optional CommandGetOrCreateSchema getOrCreateSchema = 39;
+    IF is_message-getOrCreateSchema IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 39
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandGetOrCreateSchema( is_message-getOrCreateSchema ) ).
+    ENDIF.
 " optional CommandGetOrCreateSchemaResponse getOrCreateSchemaResponse = 40;
+    IF is_message-getOrCreateSchemaResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 40
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandGetOrCreateScVKbTgH( is_message-getOrCreateSchemaResponse ) ).
+    ENDIF.
 " optional CommandNewTxn newTxn = 50;
+    IF is_message-newTxn IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 50
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandNewTxn( is_message-newTxn ) ).
+    ENDIF.
 " optional CommandNewTxnResponse newTxnResponse = 51;
+    IF is_message-newTxnResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 51
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandNewTxnResponse( is_message-newTxnResponse ) ).
+    ENDIF.
 " optional CommandAddPartitionToTxn addPartitionToTxn = 52;
+    IF is_message-addPartitionToTxn IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 52
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandAddPartitionToTxn( is_message-addPartitionToTxn ) ).
+    ENDIF.
 " optional CommandAddPartitionToTxnResponse addPartitionToTxnResponse = 53;
+    IF is_message-addPartitionToTxnResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 53
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandAddPartitionTafUHa4( is_message-addPartitionToTxnResponse ) ).
+    ENDIF.
 " optional CommandAddSubscriptionToTxn addSubscriptionToTxn = 54;
+    IF is_message-addSubscriptionToTxn IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 54
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandAddSubscriptisyuJS0( is_message-addSubscriptionToTxn ) ).
+    ENDIF.
 " optional CommandAddSubscriptionToTxnResponse addSubscriptionToTxnResponse = 55;
+    IF is_message-addSubscriptionToTxnbeic5U IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 55
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandAddSubscripti6CDt1m( is_message-addSubscriptionToTxnbeic5U ) ).
+    ENDIF.
 " optional CommandEndTxn endTxn = 56;
+    IF is_message-endTxn IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 56
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandEndTxn( is_message-endTxn ) ).
+    ENDIF.
 " optional CommandEndTxnResponse endTxnResponse = 57;
+    IF is_message-endTxnResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 57
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandEndTxnResponse( is_message-endTxnResponse ) ).
+    ENDIF.
 " optional CommandEndTxnOnPartition endTxnOnPartition = 58;
+    IF is_message-endTxnOnPartition IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 58
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandEndTxnOnPartition( is_message-endTxnOnPartition ) ).
+    ENDIF.
 " optional CommandEndTxnOnPartitionResponse endTxnOnPartitionResponse = 59;
+    IF is_message-endTxnOnPartitionResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 59
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandEndTxnOnPartiOOlMQv( is_message-endTxnOnPartitionResponse ) ).
+    ENDIF.
 " optional CommandEndTxnOnSubscription endTxnOnSubscription = 60;
+    IF is_message-endTxnOnSubscription IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 60
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandEndTxnOnSubscqx6OWu( is_message-endTxnOnSubscription ) ).
+    ENDIF.
 " optional CommandEndTxnOnSubscriptionResponse endTxnOnSubscriptionResponse = 61;
+    IF is_message-endTxnOnSubscriptionuOAlpH IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 61
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandEndTxnOnSubscVUpsoc( is_message-endTxnOnSubscriptionuOAlpH ) ).
+    ENDIF.
 " optional CommandTcClientConnectRequest tcClientConnectRequest = 62;
+    IF is_message-tcClientConnectRequest IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 62
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandTcClientConneWIoTIu( is_message-tcClientConnectRequest ) ).
+    ENDIF.
 " optional CommandTcClientConnectResponse tcClientConnectResponse = 63;
+    IF is_message-tcClientConnectResponse IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 63
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandTcClientConneTuQpSf( is_message-tcClientConnectResponse ) ).
+    ENDIF.
 " optional CommandWatchTopicList watchTopicList = 64;
+    IF is_message-watchTopicList IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 64
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandWatchTopicList( is_message-watchTopicList ) ).
+    ENDIF.
 " optional CommandWatchTopicListSuccess watchTopicListSuccess = 65;
+    IF is_message-watchTopicListSuccess IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 65
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandWatchTopicLisUXqMY2( is_message-watchTopicListSuccess ) ).
+    ENDIF.
 " optional CommandWatchTopicUpdate watchTopicUpdate = 66;
+    IF is_message-watchTopicUpdate IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 66
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandWatchTopicUpdate( is_message-watchTopicUpdate ) ).
+    ENDIF.
 " optional CommandWatchTopicListClose watchTopicListClose = 67;
+    IF is_message-watchTopicListClose IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 67
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandWatchTopicListClose( is_message-watchTopicListClose ) ).
+    ENDIF.
 " optional CommandTopicMigrated topicMigrated = 68;
+    IF is_message-topicMigrated IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 68
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( ser_CommandTopicMigrated( is_message-topicMigrated ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 

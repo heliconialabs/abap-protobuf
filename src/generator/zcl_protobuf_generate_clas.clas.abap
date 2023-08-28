@@ -70,10 +70,13 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
         WHEN TYPE zcl_protobuf2_field INTO DATA(lo_field).
           lv_name = |is_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }|.
           gv_impl = gv_impl && |" { lo_field->zif_protobuf2_artefact~serialize( ) }\n|.
-          IF lo_field->mv_label = 'repeated'.
-            gv_impl = gv_impl && |    LOOP AT { lv_name } INTO DATA(lv_{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }).\n|.
-            lv_name = |lv_{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }|.
-          ENDIF.
+          CASE lo_field->mv_label.
+            WHEN 'repeated'.
+              gv_impl = gv_impl && |    LOOP AT { lv_name } INTO DATA(lv_{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }).\n|.
+              lv_name = |lv_{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }|.
+            WHEN 'optional'.
+              gv_impl = gv_impl && |    IF { lv_name } IS NOT INITIAL.\n|.
+          ENDCASE.
 
           IF zcl_protobuf_generate=>is_builtin( lo_field->mv_type ) = abap_true.
             gv_impl = gv_impl && |    lo_stream->encode_field_and_type2(\n|.
@@ -105,9 +108,12 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
             gv_impl = gv_impl && |    lo_stream->encode_delimited( ser_{ zcl_protobuf_generate=>abap_name( lo_field->mv_type ) }( { lv_name } ) ).\n|.
           ENDIF.
 
-          IF lo_field->mv_label = 'repeated'.
-            gv_impl = gv_impl && |    ENDLOOP.\n|.
-          ENDIF.
+          CASE lo_field->mv_label.
+            WHEN 'repeated'.
+              gv_impl = gv_impl && |    ENDLOOP.\n|.
+            WHEN 'optional'.
+              gv_impl = gv_impl && |    ENDIF.\n|.
+          ENDCASE.
       ENDCASE.
     ENDLOOP.
 
@@ -146,7 +152,11 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
           ENDIF.
           gv_impl = gv_impl && |          |.
           IF lo_field->mv_label = 'repeated'.
-            gv_impl = gv_impl && |INSERT { lv_name } INTO TABLE rs_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }.\n|.
+            IF lo_field->mv_type = 'int64'.
+              gv_impl = gv_impl && |ASSERT 1 = 'todo'.\n|.
+            ELSE.
+              gv_impl = gv_impl && |INSERT { lv_name } INTO TABLE rs_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }.\n|.
+            ENDIF.
           ELSE.
             gv_impl = gv_impl && |rs_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } = { lv_name }.\n|.
           ENDIF.
