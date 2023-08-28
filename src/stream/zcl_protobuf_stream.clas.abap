@@ -36,6 +36,13 @@ CLASS zcl_protobuf_stream DEFINITION
     METHODS decode_varint
       RETURNING
         VALUE(rv_int) TYPE i .
+    METHODS decode_bool
+      RETURNING
+        VALUE(rv_bool) TYPE abap_bool .
+    METHODS decode_double
+      RETURNING
+        VALUE(rv_double) TYPE f.
+
     METHODS encode_delimited
       IMPORTING
         !iv_hex       TYPE xstring
@@ -44,6 +51,12 @@ CLASS zcl_protobuf_stream DEFINITION
     METHODS encode_field_and_type
       IMPORTING
         !is_field_and_type TYPE ty_field_and_type
+      RETURNING
+        VALUE(ro_ref)      TYPE REF TO zcl_protobuf_stream .
+    METHODS encode_field_and_type2
+      IMPORTING
+        iv_field_number TYPE i
+        iv_wire_type    TYPE ty_wire_type
       RETURNING
         VALUE(ro_ref)      TYPE REF TO zcl_protobuf_stream .
     METHODS encode_fixed64
@@ -58,9 +71,15 @@ CLASS zcl_protobuf_stream DEFINITION
         VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
     METHODS encode_varint
       IMPORTING
-        !iv_int       TYPE i
+        !iv_int       TYPE numeric
       RETURNING
         VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
+    METHODS encode_bool
+      IMPORTING
+        !iv_bool      TYPE abap_bool
+      RETURNING
+        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
+
     METHODS get
       RETURNING
         VALUE(rv_hex) TYPE xstring .
@@ -81,18 +100,34 @@ ENDCLASS.
 
 
 
-CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
-
-
-  METHOD append.
-    CONCATENATE mv_hex iv_hex INTO mv_hex IN BYTE MODE.
-  ENDMETHOD.
-
+CLASS zcl_protobuf_stream IMPLEMENTATION.
 
   METHOD constructor.
     mv_hex = iv_hex.
   ENDMETHOD.
 
+  METHOD append.
+    CONCATENATE mv_hex iv_hex INTO mv_hex IN BYTE MODE.
+  ENDMETHOD.
+
+  METHOD decode_bool.
+    DATA(lv_int) = decode_varint( ).
+    rv_bool = xsdbool( lv_int = 1 ).
+  ENDMETHOD.
+
+  METHOD decode_double.
+    CLEAR rv_double.
+    ASSERT 1 = 'todo'.
+  ENDMETHOD.
+
+  METHOD encode_bool.
+    IF iv_bool = abap_true.
+      encode_varint( 1 ).
+    ELSE.
+      encode_varint( 0 ).
+    ENDIF.
+    ro_ref = me.
+  ENDMETHOD.
 
   METHOD decode_delimited.
     DATA(lv_length) = decode_varint( ).
@@ -177,7 +212,6 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD encode_field_and_type.
     DATA lv_hex TYPE x LENGTH 1.
     lv_hex = is_field_and_type-field_number * 8 + is_field_and_type-wire_type.
@@ -185,6 +219,13 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
     ro_ref = me.
   ENDMETHOD.
 
+  METHOD encode_field_and_type2.
+    DATA ls_structure TYPE ty_field_and_type.
+    ls_structure-field_number = iv_field_number.
+    ls_structure-wire_type = iv_wire_type.
+    encode_field_and_type( ls_structure ).
+    ro_ref = me.
+  ENDMETHOD.
 
   METHOD encode_fixed64.
 * always 8 bytes, little-endian
@@ -206,10 +247,11 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
 * https://en.wikipedia.org/wiki/Variable-length_quantity
     DATA lv_lower TYPE x LENGTH 1.
     DATA lv_encoded TYPE xstring.
+    DATA lv_int TYPE int8.
 
     ASSERT iv_int >= 0. " todo
 
-    DATA(lv_int) = iv_int.
+    lv_int = iv_int.
     WHILE lv_int > 0.
       lv_lower = lv_int MOD 128.
       lv_int = lv_int DIV 128.

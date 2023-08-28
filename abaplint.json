@@ -98,7 +98,9 @@
     "sql_escape_host_variables": true,
     "try_without_catch": true,
     "unknown_types": true,
-    "unused_variables": true,
+    "unused_variables": {
+      "exclude": ["test/generated"]
+    },
     "xml_consistency": true,
     "begin_single_include": true,
     "check_comments": false,
@@ -145,7 +147,11 @@
     "identical_form_names": true,
     "if_in_if": true,
     "implement_methods": true,
-    "in_statement_indentation": true,
+    "in_statement_indentation": {
+      "exclude": ["test/generated"],
+      "blockStatements": 2,
+      "ignoreExceptions": true
+    },
     "indentation": {
       "exclude": ["test/generated"],
       "ignoreExceptions": true,
@@ -167,14 +173,14 @@
       "ignoreKeywords": [],
       "ignoreGlobalClassBoundaries": false
     },
-    "line_length": true,
+    "line_length": false,
     "line_only_punc": true,
     "local_class_naming": true,
     "local_variable_names": true,
     "main_file_contents": true,
     "max_one_statement": true,
     "message_exists": true,
-    "method_length": true,
+    "method_length": false,
     "method_parameter_names": true,
     "mix_returning": true,
     "msag_consistency": true,
@@ -191,7 +197,11 @@
     "remove_descriptions": true,
     "rfc_error_handling": true,
     "sequential_blank": true,
-    "short_case": true,
+    "short_case": {
+      "exclude": ["test/generated"],
+      "length": 1,
+      "allow": []
+    },
     "space_before_colon": true,
     "space_before_dot": true,
     "start_at_tab": true,
@@ -199,7 +209,9 @@
     "tabl_enhancement_category": true,
     "type_form_parameters": true,
     "unreachable_code": true,
-    "use_new": true,
+    "use_new": {
+      "exclude": ["test/generated"]
+    },
     "when_others_last": true,
     "whitespace_end": true
   }

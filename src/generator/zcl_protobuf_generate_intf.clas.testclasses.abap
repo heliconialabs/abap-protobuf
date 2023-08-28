@@ -28,7 +28,7 @@ CLASS ltcl_test IMPLEMENTATION.
       |  repeated Person people = 1;\n| &&
       |\}|.
 
-    DATA(lv_abap) = zcl_protobuf_generator=>generate( zcl_protobuf2_parser=>parse( lv_proto ) ).
+    DATA(lv_abap) = zcl_protobuf_generate_intf=>generate( zcl_protobuf2_parser=>parse( lv_proto ) ).
 
     cl_abap_unit_assert=>assert_not_initial( lv_abap ).
 
