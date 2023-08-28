@@ -92,11 +92,11 @@ CLASS zcl_protobuf_generate_intf IMPLEMENTATION.
 * targeting 750, so cannot use ENUM,
     rv_abap = rv_abap && |* Enum "| && io_enum->mv_name && |",\n|.
     rv_abap = rv_abap && |  TYPES { zcl_protobuf_generate=>abap_name( io_enum->mv_name ) } TYPE i.\n|.
-    rv_abap = rv_abap && |  CONSTANTS: BEGIN OF { zcl_protobuf_generate=>abap_name( io_enum->mv_name ) },\n|.
+    rv_abap = rv_abap && |  CONSTANTS: BEGIN OF { zcl_protobuf_generate=>abap_name( 'const_' && io_enum->mv_name ) },\n|.
     LOOP AT io_enum->mt_fields INTO DATA(ls_field).
       rv_abap = rv_abap && |               { zcl_protobuf_generate=>abap_name( ls_field-name ) } TYPE { zcl_protobuf_generate=>abap_name( io_enum->mv_name ) } VALUE { ls_field-value },\n|.
     ENDLOOP.
-    rv_abap = rv_abap && |             END OF { zcl_protobuf_generate=>abap_name( io_enum->mv_name ) }.\n|.
+    rv_abap = rv_abap && |             END OF { zcl_protobuf_generate=>abap_name( 'const_' && io_enum->mv_name ) }.\n|.
 
   ENDMETHOD.
 

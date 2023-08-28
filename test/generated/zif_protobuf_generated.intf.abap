@@ -15,7 +15,7 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF KeyValue.
 * Enum "Type",
   TYPES Type TYPE i.
-  CONSTANTS: BEGIN OF Type,
+  CONSTANTS: BEGIN OF const_Type,
                None TYPE Type VALUE 0,
                String TYPE Type VALUE 1,
                Json TYPE Type VALUE 2,
@@ -38,7 +38,7 @@ INTERFACE zif_protobuf_generated PUBLIC.
                LocalDateTime TYPE Type VALUE 19,
                ProtobufNative TYPE Type VALUE 20,
                AutoConsume TYPE Type VALUE 21,
-             END OF Type.
+             END OF const_Type.
 * Message "Schema",
   TYPES: BEGIN OF Schema,
            name TYPE string, " name
@@ -73,21 +73,21 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF EncryptionKeys.
 * Enum "CompressionType",
   TYPES CompressionType TYPE i.
-  CONSTANTS: BEGIN OF CompressionType,
+  CONSTANTS: BEGIN OF const_CompressionType,
                NONE TYPE CompressionType VALUE 0,
                LZ4 TYPE CompressionType VALUE 1,
                ZLIB TYPE CompressionType VALUE 2,
                ZSTD TYPE CompressionType VALUE 3,
                SNAPPY TYPE CompressionType VALUE 4,
-             END OF CompressionType.
+             END OF const_CompressionType.
 * Enum "ProducerAccessMode",
   TYPES ProducerAccessMode TYPE i.
-  CONSTANTS: BEGIN OF ProducerAccessMode,
+  CONSTANTS: BEGIN OF const_ProducerAccessMode,
                Shared TYPE ProducerAccessMode VALUE 0,
                Exclusive TYPE ProducerAccessMode VALUE 1,
                WaitForExclusive TYPE ProducerAccessMode VALUE 2,
                ExclusiveWithFencing TYPE ProducerAccessMode VALUE 3,
-             END OF ProducerAccessMode.
+             END OF const_ProducerAccessMode.
 * Message "MessageMetadata",
   TYPES: BEGIN OF MessageMetadata,
            producer_name TYPE string, " producer_name
@@ -139,7 +139,7 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF BrokerEntryMetadata.
 * Enum "ServerError",
   TYPES ServerError TYPE i.
-  CONSTANTS: BEGIN OF ServerError,
+  CONSTANTS: BEGIN OF const_ServerError,
                UnknownError TYPE ServerError VALUE 0,
                MetadataError TYPE ServerError VALUE 1,
                PersistenceError TYPE ServerError VALUE 2,
@@ -166,17 +166,17 @@ INTERFACE zif_protobuf_generated PUBLIC.
                TransactionConflict TYPE ServerError VALUE 23,
                TransactionNotFound TYPE ServerError VALUE 24,
                ProducerFenced TYPE ServerError VALUE 25,
-             END OF ServerError.
+             END OF const_ServerError.
 * Enum "AuthMethod",
   TYPES AuthMethod TYPE i.
-  CONSTANTS: BEGIN OF AuthMethod,
+  CONSTANTS: BEGIN OF const_AuthMethod,
                AuthMethodNone TYPE AuthMethod VALUE 0,
                AuthMethodYcaV1 TYPE AuthMethod VALUE 1,
                AuthMethodAthens TYPE AuthMethod VALUE 2,
-             END OF AuthMethod.
+             END OF const_AuthMethod.
 * Enum "ProtocolVersion",
   TYPES ProtocolVersion TYPE i.
-  CONSTANTS: BEGIN OF ProtocolVersion,
+  CONSTANTS: BEGIN OF const_ProtocolVersion,
                v0 TYPE ProtocolVersion VALUE 0,
                v1 TYPE ProtocolVersion VALUE 1,
                v2 TYPE ProtocolVersion VALUE 2,
@@ -199,7 +199,7 @@ INTERFACE zif_protobuf_generated PUBLIC.
                v19 TYPE ProtocolVersion VALUE 19,
                v20 TYPE ProtocolVersion VALUE 20,
                v21 TYPE ProtocolVersion VALUE 21,
-             END OF ProtocolVersion.
+             END OF const_ProtocolVersion.
 * Message "FeatureFlags",
   TYPES: BEGIN OF FeatureFlags,
            supports_auth_refresh TYPE bool, " supports_auth_refresh
@@ -247,10 +247,10 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF CommandAuthChallenge.
 * Enum "KeySharedMode",
   TYPES KeySharedMode TYPE i.
-  CONSTANTS: BEGIN OF KeySharedMode,
+  CONSTANTS: BEGIN OF const_KeySharedMode,
                AUTO_SPLIT TYPE KeySharedMode VALUE 0,
                STICKY TYPE KeySharedMode VALUE 1,
-             END OF KeySharedMode.
+             END OF const_KeySharedMode.
 * Message "KeySharedMeta",
   TYPES: BEGIN OF KeySharedMeta,
            keySharedMode TYPE KeySharedMode, " keySharedMode
@@ -259,18 +259,18 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF KeySharedMeta.
 * Enum "SubType",
   TYPES SubType TYPE i.
-  CONSTANTS: BEGIN OF SubType,
+  CONSTANTS: BEGIN OF const_SubType,
                Exclusive TYPE SubType VALUE 0,
                Shared TYPE SubType VALUE 1,
                Failover TYPE SubType VALUE 2,
                Key_Shared TYPE SubType VALUE 3,
-             END OF SubType.
+             END OF const_SubType.
 * Enum "InitialPosition",
   TYPES InitialPosition TYPE i.
-  CONSTANTS: BEGIN OF InitialPosition,
+  CONSTANTS: BEGIN OF const_InitialPosition,
                Latest TYPE InitialPosition VALUE 0,
                Earliest TYPE InitialPosition VALUE 1,
-             END OF InitialPosition.
+             END OF const_InitialPosition.
 * Message "CommandSubscribe",
   TYPES: BEGIN OF CommandSubscribe,
            topic TYPE string, " topic
@@ -303,10 +303,10 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF CommandPartitionedTomVmlsw.
 * Enum "CLookupType",
   TYPES CLookupType TYPE i.
-  CONSTANTS: BEGIN OF CLookupType,
+  CONSTANTS: BEGIN OF const_CLookupType,
                Success TYPE CLookupType VALUE 0,
                Failed TYPE CLookupType VALUE 1,
-             END OF CLookupType.
+             END OF const_CLookupType.
 * Message "CommandPartitionedTopicMetadataResponse",
   TYPES: BEGIN OF CommandPartitionedToJik1cm,
            partitions TYPE uint32, " partitions
@@ -327,11 +327,11 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF CommandLookupTopic.
 * Enum "LookupType",
   TYPES LookupType TYPE i.
-  CONSTANTS: BEGIN OF LookupType,
+  CONSTANTS: BEGIN OF const_LookupType,
                Redirect TYPE LookupType VALUE 0,
                Connect TYPE LookupType VALUE 1,
                Failed TYPE LookupType VALUE 2,
-             END OF LookupType.
+             END OF const_LookupType.
 * Message "CommandLookupTopicResponse",
   TYPES: BEGIN OF CommandLookupTopicResponse,
            brokerServiceUrl TYPE string, " brokerServiceUrl
@@ -395,19 +395,19 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF CommandMessage.
 * Enum "AckType",
   TYPES AckType TYPE i.
-  CONSTANTS: BEGIN OF AckType,
+  CONSTANTS: BEGIN OF const_AckType,
                Individual TYPE AckType VALUE 0,
                Cumulative TYPE AckType VALUE 1,
-             END OF AckType.
+             END OF const_AckType.
 * Enum "ValidationError",
   TYPES ValidationError TYPE i.
-  CONSTANTS: BEGIN OF ValidationError,
+  CONSTANTS: BEGIN OF const_ValidationError,
                UncompressedSizeCorruption TYPE ValidationError VALUE 0,
                DecompressionError TYPE ValidationError VALUE 1,
                ChecksumMismatch TYPE ValidationError VALUE 2,
                BatchDeSerializeError TYPE ValidationError VALUE 3,
                DecryptionError TYPE ValidationError VALUE 4,
-             END OF ValidationError.
+             END OF const_ValidationError.
 * Message "CommandAck",
   TYPES: BEGIN OF CommandAck,
            consumer_id TYPE uint64, " consumer_id
@@ -456,10 +456,10 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF CommandReachedEndOfTopic.
 * Enum "ResourceType",
   TYPES ResourceType TYPE i.
-  CONSTANTS: BEGIN OF ResourceType,
+  CONSTANTS: BEGIN OF const_ResourceType,
                Producer TYPE ResourceType VALUE 0,
                Consumer TYPE ResourceType VALUE 1,
-             END OF ResourceType.
+             END OF const_ResourceType.
 * Message "CommandTopicMigrated",
   TYPES: BEGIN OF CommandTopicMigrated,
            resource_id TYPE uint64, " resource_id
@@ -548,11 +548,11 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF CommandGetLastMessag2udLG8.
 * Enum "Mode",
   TYPES Mode TYPE i.
-  CONSTANTS: BEGIN OF Mode,
+  CONSTANTS: BEGIN OF const_Mode,
                PERSISTENT TYPE Mode VALUE 0,
                NON_PERSISTENT TYPE Mode VALUE 1,
                ALL TYPE Mode VALUE 2,
-             END OF Mode.
+             END OF const_Mode.
 * Message "CommandGetTopicsOfNamespace",
   TYPES: BEGIN OF CommandGetTopicsOfNaW5sMTo,
            request_id TYPE uint64, " request_id
@@ -625,10 +625,10 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF CommandGetOrCreateScVKbTgH.
 * Enum "TxnAction",
   TYPES TxnAction TYPE i.
-  CONSTANTS: BEGIN OF TxnAction,
+  CONSTANTS: BEGIN OF const_TxnAction,
                COMMIT TYPE TxnAction VALUE 0,
                ABORT TYPE TxnAction VALUE 1,
-             END OF TxnAction.
+             END OF const_TxnAction.
 * Message "CommandTcClientConnectRequest",
   TYPES: BEGIN OF CommandTcClientConneWIoTIu,
            request_id TYPE uint64, " request_id
@@ -740,7 +740,7 @@ INTERFACE zif_protobuf_generated PUBLIC.
          END OF CommandEndTxnOnSubscVUpsoc.
 * Enum "BaseCommandType",
   TYPES BaseCommandType TYPE i.
-  CONSTANTS: BEGIN OF BaseCommandType,
+  CONSTANTS: BEGIN OF const_BaseCommandType,
                CONNECT TYPE BaseCommandType VALUE 2,
                CONNECTED TYPE BaseCommandType VALUE 3,
                SUBSCRIBE TYPE BaseCommandType VALUE 4,
@@ -799,7 +799,7 @@ INTERFACE zif_protobuf_generated PUBLIC.
                WATCH_TOPIC_UPDATE TYPE BaseCommandType VALUE 66,
                WATCH_TOPIC_LIST_CLOSE TYPE BaseCommandType VALUE 67,
                TOPIC_MIGRATED TYPE BaseCommandType VALUE 68,
-             END OF BaseCommandType.
+             END OF const_BaseCommandType.
 * Message "BaseCommand",
   TYPES: BEGIN OF BaseCommand,
            type TYPE BaseCommandType, " type
