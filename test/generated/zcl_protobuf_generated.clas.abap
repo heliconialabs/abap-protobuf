@@ -724,7 +724,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-batch_index = lo_stream->decode_varint( ).
         WHEN 5.
 " repeated int64 ack_set = 5;
-          INSERT lo_stream->decode_varint( ) INTO TABLE rs_message-ack_set.
+          ASSERT 1 = 'todo'.
         WHEN 6.
 " optional int32 batch_size = 6;
           rs_message-batch_size = lo_stream->decode_varint( ).
@@ -2406,7 +2406,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-redelivery_count = lo_stream->decode_varint( ).
         WHEN 4.
 " repeated int64 ack_set = 4;
-          INSERT lo_stream->decode_varint( ) INTO TABLE rs_message-ack_set.
+          ASSERT 1 = 'todo'.
         WHEN 5.
 " optional uint64 consumer_epoch = 5;
           rs_message-consumer_epoch = lo_stream->decode_varint( ).

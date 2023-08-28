@@ -146,7 +146,11 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
           ENDIF.
           gv_impl = gv_impl && |          |.
           IF lo_field->mv_label = 'repeated'.
-            gv_impl = gv_impl && |INSERT { lv_name } INTO TABLE rs_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }.\n|.
+            IF lo_field->mv_type = 'int64'.
+              gv_impl = gv_impl && |ASSERT 1 = 'todo'.\n|.
+            ELSE.
+              gv_impl = gv_impl && |INSERT { lv_name } INTO TABLE rs_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) }.\n|.
+            ENDIF.
           ELSE.
             gv_impl = gv_impl && |rs_message-{ zcl_protobuf_generate=>abap_name( lo_field->mv_field_name ) } = { lv_name }.\n|.
           ENDIF.
