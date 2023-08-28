@@ -49,7 +49,10 @@
     "prefer_pragmas": true,
     "no_chained_assignment": true,
     "check_subrc": true,
-    "cyclomatic_complexity": true,
+    "cyclomatic_complexity": {
+      "exclude": ["test/generated"],
+      "max": 20
+    },
     "dangerous_statement": true,
     "db_operation_in_loop": true,
     "select_add_order_by": true,
