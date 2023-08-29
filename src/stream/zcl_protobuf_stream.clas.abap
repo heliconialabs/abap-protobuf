@@ -36,6 +36,9 @@ CLASS zcl_protobuf_stream DEFINITION
     METHODS decode_varint
       RETURNING
         VALUE(rv_int) TYPE i .
+    METHODS decode_varint_int8
+      RETURNING
+        VALUE(rv_int) TYPE int8 .
     METHODS decode_bool
       RETURNING
         VALUE(rv_bool) TYPE abap_bool .
@@ -167,8 +170,28 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
   METHOD decode_varint.
 
     DATA lv_topbit TYPE i.
-    DATA lv_lower TYPE i.
-    DATA lv_shift TYPE i VALUE 1.
+    DATA lv_lower  TYPE i.
+    DATA lv_shift  TYPE i VALUE 1.
+
+    DO.
+      lv_topbit = mv_hex(1) DIV 128.
+      lv_lower = mv_hex(1) MOD 128.
+      lv_lower = lv_lower * lv_shift.
+      rv_int = rv_int + lv_lower.
+      lv_shift = lv_shift * 128.
+      eat( 1 ).
+      IF lv_topbit = 0.
+        EXIT.
+      ENDIF.
+    ENDDO.
+
+  ENDMETHOD.
+
+  METHOD decode_varint_int8.
+
+    DATA lv_topbit TYPE i.
+    DATA lv_lower  TYPE int8.
+    DATA lv_shift  TYPE i VALUE 1.
 
     DO.
       lv_topbit = mv_hex(1) DIV 128.

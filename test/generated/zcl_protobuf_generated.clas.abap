@@ -718,10 +718,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 ledgerId = 1;
-          rs_message-ledgerId = lo_stream->decode_varint( ).
+          rs_message-ledgerId = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 entryId = 2;
-          rs_message-entryId = lo_stream->decode_varint( ).
+          rs_message-entryId = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional int32 partition = 3 [default = -1];
           rs_message-partition = lo_stream->decode_varint( ).
@@ -767,7 +767,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-key = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN 2.
 " required uint64 value = 2;
-          rs_message-value = lo_stream->decode_varint( ).
+          rs_message-value = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -1059,10 +1059,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-producer_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN 2.
 " required uint64 sequence_id = 2;
-          rs_message-sequence_id = lo_stream->decode_varint( ).
+          rs_message-sequence_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " required uint64 publish_time = 3;
-          rs_message-publish_time = lo_stream->decode_varint( ).
+          rs_message-publish_time = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " repeated KeyValue properties = 4;
           INSERT des_KeyValue( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-properties.
@@ -1080,13 +1080,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-compression = lo_stream->decode_varint( ).
         WHEN 9.
 " optional uint32 uncompressed_size = 9 [default = 0];
-          rs_message-uncompressed_size = lo_stream->decode_varint( ).
+          rs_message-uncompressed_size = lo_stream->decode_varint_int8( ).
         WHEN 11.
 " optional int32 num_messages_in_batch = 11 [default = 1];
           rs_message-num_messages_in_batch = lo_stream->decode_varint( ).
         WHEN 12.
 " optional uint64 event_time = 12 [default = 0];
-          rs_message-event_time = lo_stream->decode_varint( ).
+          rs_message-event_time = lo_stream->decode_varint_int8( ).
         WHEN 13.
 " repeated EncryptionKeys encryption_keys = 13;
           INSERT des_EncryptionKeys( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-encryption_keys.
@@ -1107,19 +1107,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-ordering_key = lo_stream->decode_delimited( ).
         WHEN 19.
 " optional int64 deliver_at_time = 19;
-          rs_message-deliver_at_time = lo_stream->decode_varint( ).
+          rs_message-deliver_at_time = lo_stream->decode_varint_int8( ).
         WHEN 20.
 " optional int32 marker_type = 20;
           rs_message-marker_type = lo_stream->decode_varint( ).
         WHEN 22.
 " optional uint64 txnid_least_bits = 22;
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 23.
 " optional uint64 txnid_most_bits = 23;
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 24.
 " optional uint64 highest_sequence_id = 24 [default = 0];
-          rs_message-highest_sequence_id = lo_stream->decode_varint( ).
+          rs_message-highest_sequence_id = lo_stream->decode_varint_int8( ).
         WHEN 25.
 " optional bool null_value = 25 [default = false];
           rs_message-null_value = lo_stream->decode_bool( ).
@@ -1238,7 +1238,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-compacted_out = lo_stream->decode_bool( ).
         WHEN 5.
 " optional uint64 event_time = 5 [default = 0];
-          rs_message-event_time = lo_stream->decode_varint( ).
+          rs_message-event_time = lo_stream->decode_varint_int8( ).
         WHEN 6.
 " optional bool partition_key_b64_encoded = 6 [ default = false ];
           rs_message-partition_key_b64_encoded = lo_stream->decode_bool( ).
@@ -1247,7 +1247,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-ordering_key = lo_stream->decode_delimited( ).
         WHEN 8.
 " optional uint64 sequence_id = 8;
-          rs_message-sequence_id = lo_stream->decode_varint( ).
+          rs_message-sequence_id = lo_stream->decode_varint_int8( ).
         WHEN 9.
 " optional bool null_value = 9 [ default = false ];
           rs_message-null_value = lo_stream->decode_bool( ).
@@ -1288,10 +1288,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " optional uint64 broker_timestamp = 1;
-          rs_message-broker_timestamp = lo_stream->decode_varint( ).
+          rs_message-broker_timestamp = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 index = 2;
-          rs_message-index = lo_stream->decode_varint( ).
+          rs_message-index = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -1864,10 +1864,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-subType = lo_stream->decode_varint( ).
         WHEN 4.
 " required uint64 consumer_id = 4;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN 5.
 " required uint64 request_id = 5;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 6.
 " optional string consumer_name = 6;
           rs_message-consumer_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -1900,7 +1900,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-force_topic_creation = lo_stream->decode_bool( ).
         WHEN 16.
 " optional uint64 start_message_rollback_duration_sec = 16 [default = 0];
-          rs_message-start_message_rollbaPthj0W = lo_stream->decode_varint( ).
+          rs_message-start_message_rollbaPthj0W = lo_stream->decode_varint_int8( ).
         WHEN 17.
 " optional KeySharedMeta keySharedMeta = 17;
           rs_message-keySharedMeta = des_KeySharedMeta( lo_stream->decode_delimited( ) ).
@@ -1909,7 +1909,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           INSERT des_KeyValue( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-subscription_properties.
         WHEN 19.
 " optional uint64 consumer_epoch = 19;
-          rs_message-consumer_epoch = lo_stream->decode_varint( ).
+          rs_message-consumer_epoch = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -1964,7 +1964,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN 2.
 " required uint64 request_id = 2;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional string original_principal = 3;
           rs_message-original_principal = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -2027,10 +2027,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " optional uint32 partitions = 1;
-          rs_message-partitions = lo_stream->decode_varint( ).
+          rs_message-partitions = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 request_id = 2;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional CLookupType response = 3;
           rs_message-response = lo_stream->decode_varint( ).
@@ -2108,7 +2108,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN 2.
 " required uint64 request_id = 2;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional bool authoritative = 3 [default = false];
           rs_message-authoritative = lo_stream->decode_bool( ).
@@ -2207,7 +2207,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-response = lo_stream->decode_varint( ).
         WHEN 4.
 " required uint64 request_id = 4;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 5.
 " optional bool authoritative = 5 [default = false];
           rs_message-authoritative = lo_stream->decode_bool( ).
@@ -2328,10 +2328,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN 2.
 " required uint64 producer_id = 2;
-          rs_message-producer_id = lo_stream->decode_varint( ).
+          rs_message-producer_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " required uint64 request_id = 3;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional string producer_name = 4;
           rs_message-producer_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -2346,7 +2346,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-schema = des_Schema( lo_stream->decode_delimited( ) ).
         WHEN 8.
 " optional uint64 epoch = 8 [default = 0];
-          rs_message-epoch = lo_stream->decode_varint( ).
+          rs_message-epoch = lo_stream->decode_varint_int8( ).
         WHEN 9.
 " optional bool user_provided_producer_name = 9 [default = true];
           rs_message-user_provided_produccajvVT = lo_stream->decode_bool( ).
@@ -2355,7 +2355,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-producer_access_mode = lo_stream->decode_varint( ).
         WHEN 11.
 " optional uint64 topic_epoch = 11;
-          rs_message-topic_epoch = lo_stream->decode_varint( ).
+          rs_message-topic_epoch = lo_stream->decode_varint_int8( ).
         WHEN 12.
 " optional bool txn_enabled = 12 [default = false];
           rs_message-txn_enabled = lo_stream->decode_bool( ).
@@ -2441,22 +2441,22 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 producer_id = 1;
-          rs_message-producer_id = lo_stream->decode_varint( ).
+          rs_message-producer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 sequence_id = 2;
-          rs_message-sequence_id = lo_stream->decode_varint( ).
+          rs_message-sequence_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional int32 num_messages = 3 [default = 1];
           rs_message-num_messages = lo_stream->decode_varint( ).
         WHEN 4.
 " optional uint64 txnid_least_bits = 4 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 5.
 " optional uint64 txnid_most_bits = 5 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 6.
 " optional uint64 highest_sequence_id = 6 [default = 0];
-          rs_message-highest_sequence_id = lo_stream->decode_varint( ).
+          rs_message-highest_sequence_id = lo_stream->decode_varint_int8( ).
         WHEN 7.
 " optional bool is_chunk = 7 [default = false];
           rs_message-is_chunk = lo_stream->decode_bool( ).
@@ -2510,16 +2510,16 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 producer_id = 1;
-          rs_message-producer_id = lo_stream->decode_varint( ).
+          rs_message-producer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 sequence_id = 2;
-          rs_message-sequence_id = lo_stream->decode_varint( ).
+          rs_message-sequence_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional MessageIdData message_id = 3;
           rs_message-message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
         WHEN 4.
 " optional uint64 highest_sequence_id = 4 [default = 0];
-          rs_message-highest_sequence_id = lo_stream->decode_varint( ).
+          rs_message-highest_sequence_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -2560,10 +2560,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 producer_id = 1;
-          rs_message-producer_id = lo_stream->decode_varint( ).
+          rs_message-producer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 sequence_id = 2;
-          rs_message-sequence_id = lo_stream->decode_varint( ).
+          rs_message-sequence_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " required ServerError error = 3;
           rs_message-error = lo_stream->decode_varint( ).
@@ -2621,19 +2621,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 consumer_id = 1;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required MessageIdData message_id = 2;
           rs_message-message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
         WHEN 3.
 " optional uint32 redelivery_count = 3 [default = 0];
-          rs_message-redelivery_count = lo_stream->decode_varint( ).
+          rs_message-redelivery_count = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " repeated int64 ack_set = 4;
           ASSERT 1 = 'todo'.
         WHEN 5.
 " optional uint64 consumer_epoch = 5;
-          rs_message-consumer_epoch = lo_stream->decode_varint( ).
+          rs_message-consumer_epoch = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -2706,7 +2706,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 consumer_id = 1;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required AckType ack_type = 2;
           rs_message-ack_type = lo_stream->decode_varint( ).
@@ -2721,13 +2721,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           INSERT des_KeyLongValue( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-properties.
         WHEN 6.
 " optional uint64 txnid_least_bits = 6 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 7.
 " optional uint64 txnid_most_bits = 7 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 8.
 " optional uint64 request_id = 8;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -2788,13 +2788,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 consumer_id = 1;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional ServerError error = 4;
           rs_message-error = lo_stream->decode_varint( ).
@@ -2803,7 +2803,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-message = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN 6.
 " optional uint64 request_id = 6;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -2836,7 +2836,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 consumer_id = 1;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional bool is_active = 2 [default = false];
           rs_message-is_active = lo_stream->decode_bool( ).
@@ -2870,10 +2870,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 consumer_id = 1;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint32 messagePermits = 2;
-          rs_message-messagePermits = lo_stream->decode_varint( ).
+          rs_message-messagePermits = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -2904,10 +2904,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 consumer_id = 1;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 request_id = 2;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -2952,16 +2952,16 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 consumer_id = 1;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 request_id = 2;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional MessageIdData message_id = 3;
           rs_message-message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
         WHEN 4.
 " optional uint64 message_publish_time = 4;
-          rs_message-message_publish_time = lo_stream->decode_varint( ).
+          rs_message-message_publish_time = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -2987,7 +2987,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 consumer_id = 1;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -3032,7 +3032,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 resource_id = 1;
-          rs_message-resource_id = lo_stream->decode_varint( ).
+          rs_message-resource_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required ResourceType resource_type = 2;
           rs_message-resource_type = lo_stream->decode_varint( ).
@@ -3072,10 +3072,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 producer_id = 1;
-          rs_message-producer_id = lo_stream->decode_varint( ).
+          rs_message-producer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 request_id = 2;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -3106,10 +3106,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 consumer_id = 1;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 request_id = 2;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -3149,13 +3149,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 consumer_id = 1;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " repeated MessageIdData message_ids = 2;
           INSERT des_MessageIdData( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-message_ids.
         WHEN 3.
 " optional uint64 consumer_epoch = 3;
-          rs_message-consumer_epoch = lo_stream->decode_varint( ).
+          rs_message-consumer_epoch = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -3188,7 +3188,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional Schema schema = 2;
           rs_message-schema = des_Schema( lo_stream->decode_delimited( ) ).
@@ -3250,19 +3250,19 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required string producer_name = 2;
           rs_message-producer_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN 3.
 " optional int64 last_sequence_id = 3 [default = -1];
-          rs_message-last_sequence_id = lo_stream->decode_varint( ).
+          rs_message-last_sequence_id = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional bytes schema_version = 4;
           rs_message-schema_version = lo_stream->decode_delimited( ).
         WHEN 5.
 " optional uint64 topic_epoch = 5;
-          rs_message-topic_epoch = lo_stream->decode_varint( ).
+          rs_message-topic_epoch = lo_stream->decode_varint_int8( ).
         WHEN 6.
 " optional bool producer_ready = 6 [default = true];
           rs_message-producer_ready = lo_stream->decode_bool( ).
@@ -3301,7 +3301,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required ServerError error = 2;
           rs_message-error = lo_stream->decode_varint( ).
@@ -3374,10 +3374,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " required uint64 consumer_id = 4;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -3508,7 +3508,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional ServerError error_code = 2;
           rs_message-error_code = lo_stream->decode_varint( ).
@@ -3529,10 +3529,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-consumerName = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN 8.
 " optional uint64 availablePermits = 8;
-          rs_message-availablePermits = lo_stream->decode_varint( ).
+          rs_message-availablePermits = lo_stream->decode_varint_int8( ).
         WHEN 9.
 " optional uint64 unackedMessages = 9;
-          rs_message-unackedMessages = lo_stream->decode_varint( ).
+          rs_message-unackedMessages = lo_stream->decode_varint_int8( ).
         WHEN 10.
 " optional bool blockedConsumerOnUnackedMsgs = 10;
           rs_message-blockedConsumerOnUnazyMHzQ = lo_stream->decode_bool( ).
@@ -3550,7 +3550,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-msgRateExpired = lo_stream->decode_double( ).
         WHEN 15.
 " optional uint64 msgBacklog = 15;
-          rs_message-msgBacklog = lo_stream->decode_varint( ).
+          rs_message-msgBacklog = lo_stream->decode_varint_int8( ).
         WHEN 16.
 " optional double messageAckRate = 16;
           rs_message-messageAckRate = lo_stream->decode_double( ).
@@ -3584,10 +3584,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 consumer_id = 1;
-          rs_message-consumer_id = lo_stream->decode_varint( ).
+          rs_message-consumer_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 request_id = 2;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -3628,7 +3628,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-last_message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
         WHEN 2.
 " required uint64 request_id = 2;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional MessageIdData consumer_mark_delete_position = 3;
           rs_message-consumer_mark_delete7o38Uz = des_MessageIdData( lo_stream->decode_delimited( ) ).
@@ -3683,7 +3683,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required string namespace = 2;
           rs_message-namespace = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -3749,7 +3749,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " repeated string topics = 2;
           INSERT cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-topics.
@@ -3809,10 +3809,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 watcher_id = 2;
-          rs_message-watcher_id = lo_stream->decode_varint( ).
+          rs_message-watcher_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " required string namespace = 3;
           rs_message-namespace = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -3864,10 +3864,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 watcher_id = 2;
-          rs_message-watcher_id = lo_stream->decode_varint( ).
+          rs_message-watcher_id = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " repeated string topic = 3;
           INSERT cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-topic.
@@ -3918,7 +3918,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 watcher_id = 1;
-          rs_message-watcher_id = lo_stream->decode_varint( ).
+          rs_message-watcher_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " repeated string new_topics = 2;
           INSERT cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-new_topics.
@@ -3958,10 +3958,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 watcher_id = 2;
-          rs_message-watcher_id = lo_stream->decode_varint( ).
+          rs_message-watcher_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -3999,7 +3999,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required string topic = 2;
           rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -4059,7 +4059,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional ServerError error_code = 2;
           rs_message-error_code = lo_stream->decode_varint( ).
@@ -4107,7 +4107,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required string topic = 2;
           rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -4160,7 +4160,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional ServerError error_code = 2;
           rs_message-error_code = lo_stream->decode_varint( ).
@@ -4200,10 +4200,10 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " required uint64 tc_id = 2 [default = 0];
-          rs_message-tc_id = lo_stream->decode_varint( ).
+          rs_message-tc_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -4243,7 +4243,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional ServerError error = 2;
           rs_message-error = lo_stream->decode_varint( ).
@@ -4289,13 +4289,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txn_ttl_seconds = 2 [default = 0];
-          rs_message-txn_ttl_seconds = lo_stream->decode_varint( ).
+          rs_message-txn_ttl_seconds = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 tc_id = 3 [default = 0];
-          rs_message-tc_id = lo_stream->decode_varint( ).
+          rs_message-tc_id = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -4349,13 +4349,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional ServerError error = 4;
           rs_message-error = lo_stream->decode_varint( ).
@@ -4408,13 +4408,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " repeated string partitions = 4;
           INSERT cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-partitions.
@@ -4471,13 +4471,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional ServerError error = 4;
           rs_message-error = lo_stream->decode_varint( ).
@@ -4564,13 +4564,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " repeated Subscription subscription = 4;
           INSERT des_Subscription( lo_stream->decode_delimited( ) ) INTO TABLE rs_message-subscription.
@@ -4627,13 +4627,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional ServerError error = 4;
           rs_message-error = lo_stream->decode_varint( ).
@@ -4686,13 +4686,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional TxnAction txn_action = 4;
           rs_message-txn_action = lo_stream->decode_varint( ).
@@ -4749,13 +4749,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional ServerError error = 4;
           rs_message-error = lo_stream->decode_varint( ).
@@ -4822,13 +4822,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional string topic = 4;
           rs_message-topic = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
@@ -4837,7 +4837,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-txn_action = lo_stream->decode_varint( ).
         WHEN 6.
 " optional uint64 txnid_least_bits_of_low_watermark = 6;
-          rs_message-txnid_least_bits_of_Zcp7JX = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits_of_Zcp7JX = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -4891,13 +4891,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional ServerError error = 4;
           rs_message-error = lo_stream->decode_varint( ).
@@ -4964,13 +4964,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional Subscription subscription = 4;
           rs_message-subscription = des_Subscription( lo_stream->decode_delimited( ) ).
@@ -4979,7 +4979,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
           rs_message-txn_action = lo_stream->decode_varint( ).
         WHEN 6.
 " optional uint64 txnid_least_bits_of_low_watermark = 6;
-          rs_message-txnid_least_bits_of_Zcp7JX = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits_of_Zcp7JX = lo_stream->decode_varint_int8( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -5033,13 +5033,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       CASE ls_field_and_type-field_number.
         WHEN 1.
 " required uint64 request_id = 1;
-          rs_message-request_id = lo_stream->decode_varint( ).
+          rs_message-request_id = lo_stream->decode_varint_int8( ).
         WHEN 2.
 " optional uint64 txnid_least_bits = 2 [default = 0];
-          rs_message-txnid_least_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_least_bits = lo_stream->decode_varint_int8( ).
         WHEN 3.
 " optional uint64 txnid_most_bits = 3 [default = 0];
-          rs_message-txnid_most_bits = lo_stream->decode_varint( ).
+          rs_message-txnid_most_bits = lo_stream->decode_varint_int8( ).
         WHEN 4.
 " optional ServerError error = 4;
           rs_message-error = lo_stream->decode_varint( ).
