@@ -191,7 +191,7 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
 
     DATA lv_topbit TYPE i.
     DATA lv_lower  TYPE int8.
-    DATA lv_shift  TYPE i VALUE 1.
+    DATA lv_shift  TYPE int8 VALUE 1.
 
     DO.
       lv_topbit = mv_hex(1) DIV 128.
