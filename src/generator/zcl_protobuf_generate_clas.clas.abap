@@ -144,8 +144,10 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
                 lv_name = |lo_stream->decode_delimited( )|.
               WHEN 'int32'.
                 lv_name = |lo_stream->decode_varint( )|.
-              WHEN 'int64' OR 'uint64' OR 'uint32'.
+              WHEN 'int64' OR 'uint32'.
                 lv_name = |lo_stream->decode_varint_int8( )|.
+              WHEN 'uint64'.
+                lv_name = |lo_stream->decode_uint64( )|.
             ENDCASE.
           ELSEIF io_message->is_enum( lo_field->mv_type ) OR go_file->is_enum( lo_field->mv_type ).
             lv_name = |lo_stream->decode_varint( )|.

@@ -52,8 +52,8 @@ CLASS zcl_protobuf_generate IMPLEMENTATION.
 " 'string' cannot be redefined
     rv_abap = rv_abap && |  TYPES int32  TYPE i.\n|.
     rv_abap = rv_abap && |  TYPES uint32 TYPE int8.\n|.
-    rv_abap = rv_abap && |  TYPES uint64 TYPE int8.\n|. " hmm
     rv_abap = rv_abap && |  TYPES int64  TYPE int8.\n|.
+    rv_abap = rv_abap && |  TYPES uint64 TYPE p LENGTH 11.\n|.
     rv_abap = rv_abap && |  TYPES bool   TYPE abap_bool.\n|.
     rv_abap = rv_abap && |  TYPES bytes  TYPE xstring.\n|.
     rv_abap = rv_abap && |  TYPES double TYPE f.\n|.
