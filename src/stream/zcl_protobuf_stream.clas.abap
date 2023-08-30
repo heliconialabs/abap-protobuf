@@ -21,7 +21,7 @@ CLASS zcl_protobuf_stream DEFINITION
         bit32            TYPE ty_wire_type VALUE 5,
       END OF gc_wire_type .
 
-    TYPES ty_uint64 TYPE p LENGTH 11.
+    TYPES ty_uint64 TYPE p LENGTH 11 DECIMALS 0.
 
     METHODS constructor
       IMPORTING
