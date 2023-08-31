@@ -145,11 +145,11 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
 
 
   METHOD decode_field_and_type.
-    DATA lv_hex TYPE x LENGTH 1.
-    lv_hex = eat( 1 ).
+    DATA lv_int TYPE i.
+    lv_int = decode_varint( ).
 
-    rs_field_and_type-field_number = lv_hex DIV 8.
-    rs_field_and_type-wire_type = lv_hex MOD 8.
+    rs_field_and_type-field_number = lv_int DIV 8.
+    rs_field_and_type-wire_type = lv_int MOD 8.
   ENDMETHOD.
 
 
@@ -258,9 +258,9 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD encode_field_and_type.
-    DATA lv_hex TYPE x LENGTH 1.
-    lv_hex = is_field_and_type-field_number * 8 + is_field_and_type-wire_type.
-    append( lv_hex ).
+    DATA lv_int TYPE i.
+    lv_int = is_field_and_type-field_number * 8 + is_field_and_type-wire_type.
+    encode_varint( lv_int ).
     ro_ref = me.
   ENDMETHOD.
 
