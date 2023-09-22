@@ -21,6 +21,8 @@ CLASS zcl_protobuf_stream DEFINITION
         bit32            TYPE ty_wire_type VALUE 5,
       END OF gc_wire_type .
 
+    TYPES ty_uint64 TYPE p LENGTH 11 DECIMALS 0.
+
     METHODS constructor
       IMPORTING
         !iv_hex TYPE xstring OPTIONAL .
@@ -39,6 +41,9 @@ CLASS zcl_protobuf_stream DEFINITION
     METHODS decode_varint_int8
       RETURNING
         VALUE(rv_int) TYPE int8 .
+    METHODS decode_uint64
+      RETURNING
+        VALUE(rv_int) TYPE ty_uint64 .
     METHODS decode_bool
       RETURNING
         VALUE(rv_bool) TYPE abap_bool .
@@ -140,11 +145,11 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
 
 
   METHOD decode_field_and_type.
-    DATA lv_hex TYPE x LENGTH 1.
-    lv_hex = eat( 1 ).
+    DATA lv_int TYPE i.
+    lv_int = decode_varint( ).
 
-    rs_field_and_type-field_number = lv_hex DIV 8.
-    rs_field_and_type-wire_type = lv_hex MOD 8.
+    rs_field_and_type-field_number = lv_int DIV 8.
+    rs_field_and_type-wire_type = lv_int MOD 8.
   ENDMETHOD.
 
 
@@ -191,22 +196,39 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
 
     DATA lv_topbit TYPE i.
     DATA lv_lower  TYPE int8.
-    DATA lv_shift  TYPE i VALUE 1.
+    DATA lv_shift  TYPE int8 VALUE 1.
 
     DO.
       lv_topbit = mv_hex(1) DIV 128.
       lv_lower = mv_hex(1) MOD 128.
       lv_lower = lv_lower * lv_shift.
       rv_int = rv_int + lv_lower.
-      lv_shift = lv_shift * 128.
       eat( 1 ).
       IF lv_topbit = 0.
         EXIT.
       ENDIF.
+      lv_shift = lv_shift * 128.
     ENDDO.
 
   ENDMETHOD.
 
+  METHOD decode_uint64.
+    DATA lv_topbit TYPE i.
+    DATA lv_lower  TYPE ty_uint64.
+    DATA lv_shift  TYPE ty_uint64 VALUE 1.
+
+    DO.
+      lv_topbit = mv_hex(1) DIV 128.
+      lv_lower = mv_hex(1) MOD 128.
+      lv_lower = lv_lower * lv_shift.
+      rv_int = rv_int + lv_lower.
+      eat( 1 ).
+      IF lv_topbit = 0.
+        EXIT.
+      ENDIF.
+      lv_shift = lv_shift * 128.
+    ENDDO.
+  ENDMETHOD.
 
   METHOD eat.
     ASSERT xstrlen( mv_hex ) >= iv_length.
@@ -236,9 +258,9 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD encode_field_and_type.
-    DATA lv_hex TYPE x LENGTH 1.
-    lv_hex = is_field_and_type-field_number * 8 + is_field_and_type-wire_type.
-    append( lv_hex ).
+    DATA lv_int TYPE i.
+    lv_int = is_field_and_type-field_number * 8 + is_field_and_type-wire_type.
+    encode_varint( lv_int ).
     ro_ref = me.
   ENDMETHOD.
 

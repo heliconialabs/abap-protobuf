@@ -2,8 +2,8 @@ INTERFACE zif_protobuf_generated PUBLIC.
 * https://github.com/apache/pulsar/blob/master/pulsar-common/src/main/proto/PulsarApi.proto
   TYPES int32  TYPE i.
   TYPES uint32 TYPE int8.
-  TYPES uint64 TYPE int8.
   TYPES int64  TYPE int8.
+  TYPES uint64 TYPE p LENGTH 11 DECIMALS 0.
   TYPES bool   TYPE abap_bool.
   TYPES bytes  TYPE xstring.
   TYPES double TYPE f.
