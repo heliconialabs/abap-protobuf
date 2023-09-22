@@ -203,11 +203,11 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
       lv_lower = mv_hex(1) MOD 128.
       lv_lower = lv_lower * lv_shift.
       rv_int = rv_int + lv_lower.
-      lv_shift = lv_shift * 128.
       eat( 1 ).
       IF lv_topbit = 0.
         EXIT.
       ENDIF.
+      lv_shift = lv_shift * 128.
     ENDDO.
 
   ENDMETHOD.
