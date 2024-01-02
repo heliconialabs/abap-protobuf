@@ -126,7 +126,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
+CLASS zcl_protobuf_stream IMPLEMENTATION.
 
 
   METHOD append.
@@ -402,9 +402,21 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
 
   METHOD encode_int64.
 
+    DATA lv_bits TYPE string.
+
     IF iv_int > 0.
       ro_ref = encode_varint( iv_int ).
     ELSE.
+      DATA(lv_int) = abs( iv_int + 1 ).
+
+      WHILE lv_int > 0.
+        DATA(lv_bit) = lv_int MOD 2.
+        CONCATENATE lv_bit lv_bits INTO lv_bits.
+        lv_int = lv_int DIV 2.
+      ENDWHILE.
+
+      WRITE / lv_bits.
+
       ASSERT 1 = 'todo'.
     ENDIF.
 
