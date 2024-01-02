@@ -9,6 +9,8 @@ CLASS ltcl_test DEFINITION FOR TESTING DURATION SHORT RISK LEVEL HARMLESS FINAL.
     METHODS encode_double FOR TESTING RAISING cx_static_check.
     METHODS field_and_type FOR TESTING RAISING cx_static_check.
     METHODS fixed64 FOR TESTING RAISING cx_static_check.
+    METHODS varint_zero FOR TESTING RAISING cx_static_check.
+    METHODS varint_one FOR TESTING RAISING cx_static_check.
 ENDCLASS.
 
 CLASS ltcl_test IMPLEMENTATION.
@@ -96,6 +98,22 @@ CLASS ltcl_test IMPLEMENTATION.
     cl_abap_unit_assert=>assert_equals(
       exp = 'AC02'
       act = lv_encoded ).
+  ENDMETHOD.
+
+  METHOD varint_zero.
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = 0
+      act = mo_cut->encode_varint( 0 )->decode_varint( ) ).
+
+  ENDMETHOD.
+
+  METHOD varint_one.
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = 1
+      act = mo_cut->encode_varint( 1 )->decode_varint( ) ).
+
   ENDMETHOD.
 
 ENDCLASS.
