@@ -377,7 +377,64 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
   METHOD decode_int64.
 * signed two complement, always 10 bytes if negative
 
-    ASSERT 1 = 'todo'.
+    DATA lv_bits  TYPE string.
+    DATA lv_hex   TYPE x LENGTH 1.
+    DATA lv_top   TYPE c LENGTH 1.
+    DATA lv_bit   TYPE c LENGTH 1.
+    DATA lv_shift TYPE int8 VALUE 1.
+
+    DO.
+      lv_hex = eat( 1 ).
+
+      GET BIT 1 OF lv_hex INTO lv_top.
+
+      DO 7 TIMES.
+        DATA(lv_index) = 9 - sy-index.
+        GET BIT lv_index OF lv_hex INTO lv_bit.
+        CONCATENATE lv_bits lv_bit INTO lv_bits.
+      ENDDO.
+
+      IF lv_top = '0'.
+        EXIT.
+      ENDIF.
+    ENDDO.
+
+    IF strlen( lv_bits ) = 70.
+* discard overflowing bits
+      lv_bits = lv_bits(64).
+    ENDIF.
+
+    " WRITE / lv_bits.
+
+    IF strlen( lv_bits ) = 64 AND lv_bits+63(1) = '1'.
+* negative value, negate bits
+      REPLACE ALL OCCURRENCES OF '1' IN lv_bits WITH 'A'.
+      REPLACE ALL OCCURRENCES OF '0' IN lv_bits WITH '1'.
+      REPLACE ALL OCCURRENCES OF 'A' IN lv_bits WITH '0'.
+
+      " WRITE / lv_bits.
+
+      WHILE strlen( lv_bits ) > 0.
+        IF lv_bits(1) = '1'.
+          rv_int = rv_int + lv_shift.
+        ENDIF.
+        lv_shift = lv_shift * 2.
+        lv_bits = lv_bits+1.
+      ENDWHILE.
+
+* add one and make negative
+      rv_int = -1 * ( rv_int + 1 ).
+    ELSE.
+
+      WHILE strlen( lv_bits ) > 0.
+        IF lv_bits(1) = '1'.
+          rv_int = rv_int + lv_shift.
+        ENDIF.
+        lv_shift = lv_shift * 2.
+        lv_bits = lv_bits+1.
+      ENDWHILE.
+
+    ENDIF.
 
   ENDMETHOD.
 
