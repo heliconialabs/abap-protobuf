@@ -108,39 +108,35 @@ ENDCLASS.
 
 
 
-CLASS zcl_protobuf_stream IMPLEMENTATION.
+CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
+
+
+  METHOD append.
+    CONCATENATE mv_hex iv_hex INTO mv_hex IN BYTE MODE.
+  ENDMETHOD.
+
 
   METHOD constructor.
     mv_hex = iv_hex.
   ENDMETHOD.
 
-  METHOD append.
-    CONCATENATE mv_hex iv_hex INTO mv_hex IN BYTE MODE.
-  ENDMETHOD.
 
   METHOD decode_bool.
     DATA(lv_int) = decode_varint( ).
     rv_bool = xsdbool( lv_int = 1 ).
   ENDMETHOD.
 
-  METHOD decode_double.
-    CLEAR rv_double.
-    ASSERT 1 = 'todo'.
-  ENDMETHOD.
-
-  METHOD encode_bool.
-    IF iv_bool = abap_true.
-      encode_varint( 1 ).
-    ELSE.
-      encode_varint( 0 ).
-    ENDIF.
-    ro_ref = me.
-  ENDMETHOD.
 
   METHOD decode_delimited.
     DATA(lv_length) = decode_varint( ).
     rv_hex = mv_hex(lv_length).
     eat( lv_length ).
+  ENDMETHOD.
+
+
+  METHOD decode_double.
+    CLEAR rv_double.
+    ASSERT 1 = 'todo'.
   ENDMETHOD.
 
 
@@ -172,6 +168,25 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD decode_uint64.
+    DATA lv_topbit TYPE i.
+    DATA lv_lower  TYPE ty_uint64.
+    DATA lv_shift  TYPE ty_uint64 VALUE 1.
+
+    DO.
+      lv_topbit = mv_hex(1) DIV 128.
+      lv_lower = mv_hex(1) MOD 128.
+      lv_lower = lv_lower * lv_shift.
+      rv_int = rv_int + lv_lower.
+      eat( 1 ).
+      IF lv_topbit = 0.
+        EXIT.
+      ENDIF.
+      lv_shift = lv_shift * 128.
+    ENDDO.
+  ENDMETHOD.
+
+
   METHOD decode_varint.
 
     DATA lv_topbit TYPE i.
@@ -191,6 +206,7 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
     ENDDO.
 
   ENDMETHOD.
+
 
   METHOD decode_varint_int8.
 
@@ -212,28 +228,21 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD decode_uint64.
-    DATA lv_topbit TYPE i.
-    DATA lv_lower  TYPE ty_uint64.
-    DATA lv_shift  TYPE ty_uint64 VALUE 1.
-
-    DO.
-      lv_topbit = mv_hex(1) DIV 128.
-      lv_lower = mv_hex(1) MOD 128.
-      lv_lower = lv_lower * lv_shift.
-      rv_int = rv_int + lv_lower.
-      eat( 1 ).
-      IF lv_topbit = 0.
-        EXIT.
-      ENDIF.
-      lv_shift = lv_shift * 128.
-    ENDDO.
-  ENDMETHOD.
 
   METHOD eat.
     ASSERT xstrlen( mv_hex ) >= iv_length.
     rv_hex = mv_hex(iv_length).
     mv_hex = mv_hex+iv_length.
+  ENDMETHOD.
+
+
+  METHOD encode_bool.
+    IF iv_bool = abap_true.
+      encode_varint( 1 ).
+    ELSE.
+      encode_varint( 0 ).
+    ENDIF.
+    ro_ref = me.
   ENDMETHOD.
 
 
@@ -257,12 +266,14 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD encode_field_and_type.
     DATA lv_int TYPE i.
     lv_int = is_field_and_type-field_number * 8 + is_field_and_type-wire_type.
     encode_varint( lv_int ).
     ro_ref = me.
   ENDMETHOD.
+
 
   METHOD encode_field_and_type2.
     DATA ls_structure TYPE ty_field_and_type.
@@ -271,6 +282,7 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
     encode_field_and_type( ls_structure ).
     ro_ref = me.
   ENDMETHOD.
+
 
   METHOD encode_fixed64.
 * always 8 bytes, little-endian
@@ -295,6 +307,10 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
     DATA lv_int TYPE int8.
 
     ASSERT iv_int >= 0. " todo
+
+    IF iv_int = 0.
+      lv_encoded = '00'.
+    ENDIF.
 
     lv_int = iv_int.
     WHILE lv_int > 0.
