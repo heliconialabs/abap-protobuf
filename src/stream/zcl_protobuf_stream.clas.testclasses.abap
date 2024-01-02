@@ -15,6 +15,8 @@ CLASS ltcl_test DEFINITION FOR TESTING DURATION SHORT RISK LEVEL HARMLESS FINAL.
     METHODS decode_int32_negative_two FOR TESTING RAISING cx_static_check.
     METHODS decode_int32_negative_six FOR TESTING RAISING cx_static_check.
     METHODS decode_int32_positive_one FOR TESTING RAISING cx_static_check.
+    METHODS encode_int32_negative_six FOR TESTING RAISING cx_static_check.
+    METHODS encode_int32_negative_thousand FOR TESTING RAISING cx_static_check.
 ENDCLASS.
 
 CLASS ltcl_test IMPLEMENTATION.
@@ -157,6 +159,26 @@ CLASS ltcl_test IMPLEMENTATION.
     cl_abap_unit_assert=>assert_equals(
       exp = 1
       act = mo_cut->decode_int32( ) ).
+
+  ENDMETHOD.
+
+  METHOD encode_int32_negative_six.
+
+    mo_cut->encode_int32( -6 ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = 'FAFFFFFFFFFFFFFFFF01'
+      act = mo_cut->get( ) ).
+
+  ENDMETHOD.
+
+  METHOD encode_int32_negative_thousand.
+
+    mo_cut->encode_int32( -1000 ).
+
+    cl_abap_unit_assert=>assert_equals(
+      exp = '98F8FFFFFFFFFFFFFF01'
+      act = mo_cut->get( ) ).
 
   ENDMETHOD.
 

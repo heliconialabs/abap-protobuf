@@ -126,7 +126,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
+CLASS zcl_protobuf_stream IMPLEMENTATION.
 
 
   METHOD append.
@@ -402,10 +402,57 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
 
   METHOD encode_int64.
 
-    IF iv_int > 0.
+    DATA lv_bits   TYPE string.
+    DATA lv_bit    TYPE c LENGTH 1.
+    DATA lv_hex    TYPE x LENGTH 1.
+    DATA lv_index  TYPE i.
+    DATA lv_offset TYPE i.
+    DATA lv_byteno TYPE i.
+    DATA lv_int    TYPE int8.
+
+    IF iv_int >= 0.
       ro_ref = encode_varint( iv_int ).
     ELSE.
-      ASSERT 1 = 'todo'.
+      " WRITE / iv_int.
+      lv_int = -1 * ( iv_int + 1 ).
+
+      WHILE lv_int > 0.
+        " WRITE / lv_int.
+        lv_bit = lv_int MOD 2.
+        CONCATENATE lv_bit lv_bits INTO lv_bits.
+        lv_int = lv_int DIV 2.
+      ENDWHILE.
+
+      WHILE strlen( lv_bits ) < 64.
+        CONCATENATE '0' lv_bits INTO lv_bits.
+      ENDWHILE.
+
+      " WRITE / lv_bits.
+      TRANSLATE lv_bits USING '0110'.
+* extra bits to fill the last byte
+      CONCATENATE '000000' lv_bits INTO lv_bits.
+      " WRITE / lv_bits.
+
+      lv_offset = 70 - 7.
+* 10 bytes to encode 64 bits
+      DO 10 TIMES.
+        lv_byteno = sy-index.
+        CLEAR lv_hex.
+* add continuation bits, 1 for every 7 bits
+        IF lv_byteno <> 10.
+          SET BIT 1 OF lv_hex TO 1.
+        ENDIF.
+
+        DO 7 TIMES.
+          lv_index = sy-index + 1.
+          SET BIT lv_index OF lv_hex TO lv_bits+lv_offset(1).
+          lv_offset = lv_offset + 1.
+        ENDDO.
+        " WRITE / lv_hex.
+        append( lv_hex ).
+        lv_offset = lv_offset - 14.
+      ENDDO.
+
     ENDIF.
 
   ENDMETHOD.
