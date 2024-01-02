@@ -354,19 +354,23 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
 * https://github.com/protocolbuffers/protobuf/issues/10521
 * https://ngtzeyang94.medium.com/go-with-examples-protobuf-encoding-mechanics-54ceff48ebaa
 
-    encode_int64( CONV #( iv_int ) ).
+    ro_ref = encode_int64( CONV #( iv_int ) ).
 
   ENDMETHOD.
 
   METHOD decode_int32.
 
-    decode_int64( ).
+    rv_int = decode_int64( ).
 
   ENDMETHOD.
 
   METHOD encode_int64.
 
-    ASSERT 1 = 'todo'.
+    IF iv_int > 0.
+      ro_ref = encode_varint( iv_int ).
+    ELSE.
+      ASSERT 1 = 'todo'.
+    ENDIF.
 
   ENDMETHOD.
 
