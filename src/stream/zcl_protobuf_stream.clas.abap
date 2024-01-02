@@ -88,6 +88,24 @@ CLASS zcl_protobuf_stream DEFINITION
       RETURNING
         VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
 
+    METHODS encode_int32
+      IMPORTING
+        iv_int       TYPE i
+      RETURNING
+        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream.
+    METHODS decode_int32
+      RETURNING
+        VALUE(rv_int) TYPE i.
+
+    METHODS encode_int64
+      IMPORTING
+        iv_int       TYPE int8
+      RETURNING
+        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream.
+    METHODS decode_int64
+      RETURNING
+        VALUE(rv_int) TYPE int8.
+
     METHODS get
       RETURNING
         VALUE(rv_hex) TYPE xstring .
@@ -108,7 +126,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
+CLASS zcl_protobuf_stream IMPLEMENTATION.
 
 
   METHOD append.
@@ -306,7 +324,8 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
     DATA lv_encoded TYPE xstring.
     DATA lv_int TYPE int8.
 
-    ASSERT iv_int >= 0. " todo
+* varints are always unsigned, https://protobuf.dev/programming-guides/encoding/#varints
+    ASSERT iv_int >= 0.
 
     IF iv_int = 0.
       lv_encoded = '00'.
@@ -329,4 +348,33 @@ CLASS ZCL_PROTOBUF_STREAM IMPLEMENTATION.
   METHOD get.
     rv_hex = mv_hex.
   ENDMETHOD.
+
+  METHOD encode_int32.
+* signed two complement, always 10 bytes if negative, ie. same as int64
+* https://github.com/protocolbuffers/protobuf/issues/10521
+* https://ngtzeyang94.medium.com/go-with-examples-protobuf-encoding-mechanics-54ceff48ebaa
+
+    encode_int64( CONV #( iv_int ) ).
+
+  ENDMETHOD.
+
+  METHOD decode_int32.
+
+    decode_int64( ).
+
+  ENDMETHOD.
+
+  METHOD encode_int64.
+
+    ASSERT 1 = 'todo'.
+
+  ENDMETHOD.
+
+  METHOD decode_int64.
+* signed two complement, always 10 bytes if negative
+
+    ASSERT 1 = 'todo'.
+
+  ENDMETHOD.
+
 ENDCLASS.
