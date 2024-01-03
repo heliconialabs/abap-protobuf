@@ -38,7 +38,7 @@ CLASS zcl_protobuf_stream DEFINITION
     METHODS decode_varint
       RETURNING
         VALUE(rv_int) TYPE i .
-    METHODS decode_varint_int8
+    METHODS decode_uint32
       RETURNING
         VALUE(rv_int) TYPE int8 .
     METHODS decode_uint64
@@ -48,6 +48,9 @@ CLASS zcl_protobuf_stream DEFINITION
       RETURNING
         VALUE(rv_bool) TYPE abap_bool .
     METHODS decode_double
+      RETURNING
+        VALUE(rv_double) TYPE f.
+    METHODS decode_float
       RETURNING
         VALUE(rv_double) TYPE f.
 
@@ -75,6 +78,21 @@ CLASS zcl_protobuf_stream DEFINITION
     METHODS encode_double
       IMPORTING
         !iv_double    TYPE f
+      RETURNING
+        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
+    METHODS encode_float
+      IMPORTING
+        !iv_float    TYPE f
+      RETURNING
+        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
+    METHODS encode_uint64
+      IMPORTING
+        !iv_val    TYPE int8
+      RETURNING
+        VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
+    METHODS encode_uint32
+      IMPORTING
+        !iv_val    TYPE int8
       RETURNING
         VALUE(ro_ref) TYPE REF TO zcl_protobuf_stream .
     METHODS encode_varint
@@ -166,6 +184,13 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
     rs_field_and_type-wire_type = lv_int MOD 8.
   ENDMETHOD.
 
+  METHOD encode_uint64.
+    ro_ref = encode_varint( iv_val ).
+  ENDMETHOD.
+
+  METHOD encode_uint32.
+    ro_ref = encode_varint( iv_val ).
+  ENDMETHOD.
 
   METHOD decode_fixed64.
 * always 8 bytes
@@ -187,11 +212,16 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
 
 
   METHOD decode_int32.
-
     rv_int = decode_int64( ).
-
   ENDMETHOD.
 
+  METHOD encode_float.
+    ro_ref = encode_double( iv_float ).
+  ENDMETHOD.
+
+  METHOD decode_float.
+    rv_double = decode_double( ).
+  ENDMETHOD.
 
   METHOD decode_int64.
 * signed two complement, always 10 bytes if negative
@@ -298,7 +328,7 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD decode_varint_int8.
+  METHOD decode_uint32.
 
     DATA lv_topbit TYPE i.
     DATA lv_lower  TYPE int8.
