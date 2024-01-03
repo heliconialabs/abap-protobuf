@@ -85,14 +85,22 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
             CASE lo_field->mv_type.
               WHEN 'bool'.
                 gv_impl = gv_impl && |    lo_stream->encode_bool( { lv_name } ).\n|.
-              WHEN 'double' OR 'float'.
+              WHEN 'double'.
                 gv_impl = gv_impl && |    lo_stream->encode_double( { lv_name } ).\n|.
+              WHEN 'float'.
+                gv_impl = gv_impl && |    lo_stream->encode_float( { lv_name } ).\n|.
               WHEN 'string'.
                 gv_impl = gv_impl && |    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( { lv_name } ) ).\n|.
               WHEN 'bytes'.
                 gv_impl = gv_impl && |    lo_stream->encode_delimited( { lv_name } ).\n|.
-              WHEN 'int64' OR 'uint64' OR 'uint32' OR 'int32'.
-                gv_impl = gv_impl && |    lo_stream->encode_varint( { lv_name } ).\n|.
+              WHEN 'int64'.
+                gv_impl = gv_impl && |    lo_stream->encode_int64( { lv_name } ).\n|.
+              WHEN 'uint64'.
+                gv_impl = gv_impl && |    lo_stream->encode_uint64( { lv_name } ).\n|.
+              WHEN 'uint32'.
+                gv_impl = gv_impl && |    lo_stream->encode_uint32( { lv_name } ).\n|.
+              WHEN 'int32'.
+                gv_impl = gv_impl && |    lo_stream->encode_int32( { lv_name } ).\n|.
               WHEN OTHERS.
                 gv_impl = gv_impl && |" todo, encoding\n|.
             ENDCASE.
@@ -136,16 +144,20 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
             CASE lo_field->mv_type.
               WHEN 'bool'.
                 lv_name = |lo_stream->decode_bool( )|.
-              WHEN 'double' OR 'float'.
+              WHEN 'double'.
                 lv_name = |lo_stream->decode_double( )|.
+              WHEN 'float'.
+                lv_name = |lo_stream->decode_float( )|.
               WHEN 'string'.
                 lv_name = |cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) )|.
               WHEN 'bytes'.
                 lv_name = |lo_stream->decode_delimited( )|.
               WHEN 'int32'.
-                lv_name = |lo_stream->decode_varint( )|.
-              WHEN 'int64' OR 'uint32'.
-                lv_name = |lo_stream->decode_varint_int8( )|.
+                lv_name = |lo_stream->decode_int32( )|.
+              WHEN 'int64'.
+                lv_name = |lo_stream->decode_int64( )|.
+              WHEN 'uint32'.
+                lv_name = |lo_stream->decode_uint32( )|.
               WHEN 'uint64'.
                 lv_name = |lo_stream->decode_uint64( )|.
             ENDCASE.
