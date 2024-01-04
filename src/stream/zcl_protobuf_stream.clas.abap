@@ -171,8 +171,12 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
 
 
   METHOD decode_double.
+
+* encoded as 8-byte little-endian, memcpy of the equivalent C types
+
     CLEAR rv_double.
     ASSERT 1 = 'todo'.
+
   ENDMETHOD.
 
 
