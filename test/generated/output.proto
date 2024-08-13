@@ -1,8 +1,4 @@
 syntax = "proto2";
-message KeyValue {
-  required string key = 1;
-  required string value = 2;
-}
 message Schema {
   enum Type {
     None = 0;
@@ -40,6 +36,11 @@ message MessageIdData {
   optional int32 batch_index = 4 [default = -1];
   repeated int64 ack_set = 5;
   optional int32 batch_size = 6;
+  optional MessageIdData first_chunk_message_id = 7;
+}
+message KeyValue {
+  required string key = 1;
+  required string value = 2;
 }
 message KeyLongValue {
   required string key = 1;
@@ -170,12 +171,6 @@ enum ProtocolVersion {
   v20 = 20;
   v21 = 21;
 }
-message FeatureFlags {
-  optional bool supports_auth_refresh = 1 [default = false];
-  optional bool supports_broker_entry_metadata = 2 [default = false];
-  optional bool supports_partial_producer = 3 [default = false];
-  optional bool supports_topic_watchers = 4 [default = false];
-}
 message CommandConnect {
   required string client_version = 1;
   optional AuthMethod auth_method = 2;
@@ -189,15 +184,18 @@ message CommandConnect {
   optional FeatureFlags feature_flags = 10;
   optional string proxy_version = 11;
 }
+message FeatureFlags {
+  optional bool supports_auth_refresh = 1 [default = false];
+  optional bool supports_broker_entry_metadata = 2 [default = false];
+  optional bool supports_partial_producer = 3 [default = false];
+  optional bool supports_topic_watchers = 4 [default = false];
+  optional bool supports_get_partitioned_metadata_without_auto_creation = 5 [default = false];
+}
 message CommandConnected {
   required string server_version = 1;
   optional int32 protocol_version = 2 [default = 0];
   optional int32 max_message_size = 3;
   optional FeatureFlags feature_flags = 4;
-}
-message AuthData {
-  optional string auth_method_name = 1;
-  optional bytes auth_data = 2;
 }
 message CommandAuthResponse {
   optional string client_version = 1;
@@ -208,6 +206,10 @@ message CommandAuthChallenge {
   optional string server_version = 1;
   optional AuthData challenge = 2;
   optional int32 protocol_version = 3 [default = 0];
+}
+message AuthData {
+  optional string auth_method_name = 1;
+  optional bytes auth_data = 2;
 }
 enum KeySharedMode {
   AUTO_SPLIT = 0;
@@ -255,15 +257,16 @@ message CommandPartitionedTopicMetadata {
   optional string original_principal = 3;
   optional string original_auth_data = 4;
   optional string original_auth_method = 5;
+  optional bool metadata_auto_creation_enabled = 6 [default = true];
 }
 message CommandPartitionedTopicMetadataResponse {
-  enum CLookupType {
+  enum LookupType {
     Success = 0;
     Failed = 1;
   }
   optional uint32 partitions = 1;
   required uint64 request_id = 2;
-  optional CLookupType response = 3;
+  optional LookupType response = 3;
   optional ServerError error = 4;
   optional string message = 5;
 }
@@ -376,6 +379,7 @@ message CommandFlow {
 message CommandUnsubscribe {
   required uint64 consumer_id = 1;
   required uint64 request_id = 2;
+  optional bool force = 3 [default = false];
 }
 message CommandSeek {
   required uint64 consumer_id = 1;
@@ -399,10 +403,14 @@ message CommandTopicMigrated {
 message CommandCloseProducer {
   required uint64 producer_id = 1;
   required uint64 request_id = 2;
+  optional string assignedBrokerServiceUrl = 3;
+  optional string assignedBrokerServiceUrlTls = 4;
 }
 message CommandCloseConsumer {
   required uint64 consumer_id = 1;
   required uint64 request_id = 2;
+  optional string assignedBrokerServiceUrl = 3;
+  optional string assignedBrokerServiceUrlTls = 4;
 }
 message CommandRedeliverUnacknowledgedMessages {
   required uint64 consumer_id = 1;
@@ -625,7 +633,7 @@ message CommandEndTxnOnSubscriptionResponse {
   optional string message = 5;
 }
 message BaseCommand {
-  enum BaseCommandType {
+  enum Type {
     CONNECT = 2;
     CONNECTED = 3;
     SUBSCRIBE = 4;
@@ -685,7 +693,7 @@ message BaseCommand {
     WATCH_TOPIC_LIST_CLOSE = 67;
     TOPIC_MIGRATED = 68;
   }
-  required BaseCommandType type = 1;
+  required Type type = 1;
   optional CommandConnect connect = 2;
   optional CommandConnected connected = 3;
   optional CommandSubscribe subscribe = 4;

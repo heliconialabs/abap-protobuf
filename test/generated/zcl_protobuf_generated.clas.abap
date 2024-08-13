@@ -1,14 +1,6 @@
 CLASS zcl_protobuf_generated DEFINITION PUBLIC.
 * https://github.com/apache/pulsar/blob/master/pulsar-common/src/main/proto/PulsarApi.proto
   PUBLIC SECTION.
-* Message "KeyValue",
-    METHODS ser_KeyValue
-      IMPORTING is_message TYPE zif_protobuf_generated=>KeyValue
-      RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_KeyValue
-      IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>KeyValue.
-
 * Message "Schema",
     METHODS ser_Schema
       IMPORTING is_message TYPE zif_protobuf_generated=>Schema
@@ -24,6 +16,14 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
     METHODS des_MessageIdData
       IMPORTING iv_hex TYPE xstring
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>MessageIdData.
+
+* Message "KeyValue",
+    METHODS ser_KeyValue
+      IMPORTING is_message TYPE zif_protobuf_generated=>KeyValue
+      RETURNING VALUE(rv_hex) TYPE xstring.
+    METHODS des_KeyValue
+      IMPORTING iv_hex TYPE xstring
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>KeyValue.
 
 * Message "KeyLongValue",
     METHODS ser_KeyLongValue
@@ -73,14 +73,6 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       IMPORTING iv_hex TYPE xstring
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>BrokerEntryMetadata.
 
-* Message "FeatureFlags",
-    METHODS ser_FeatureFlags
-      IMPORTING is_message TYPE zif_protobuf_generated=>FeatureFlags
-      RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_FeatureFlags
-      IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>FeatureFlags.
-
 * Message "CommandConnect",
     METHODS ser_CommandConnect
       IMPORTING is_message TYPE zif_protobuf_generated=>CommandConnect
@@ -89,6 +81,14 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
       IMPORTING iv_hex TYPE xstring
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandConnect.
 
+* Message "FeatureFlags",
+    METHODS ser_FeatureFlags
+      IMPORTING is_message TYPE zif_protobuf_generated=>FeatureFlags
+      RETURNING VALUE(rv_hex) TYPE xstring.
+    METHODS des_FeatureFlags
+      IMPORTING iv_hex TYPE xstring
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>FeatureFlags.
+
 * Message "CommandConnected",
     METHODS ser_CommandConnected
       IMPORTING is_message TYPE zif_protobuf_generated=>CommandConnected
@@ -96,14 +96,6 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
     METHODS des_CommandConnected
       IMPORTING iv_hex TYPE xstring
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandConnected.
-
-* Message "AuthData",
-    METHODS ser_AuthData
-      IMPORTING is_message TYPE zif_protobuf_generated=>AuthData
-      RETURNING VALUE(rv_hex) TYPE xstring.
-    METHODS des_AuthData
-      IMPORTING iv_hex TYPE xstring
-      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>AuthData.
 
 * Message "CommandAuthResponse",
     METHODS ser_CommandAuthResponse
@@ -120,6 +112,14 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
     METHODS des_CommandAuthChallenge
       IMPORTING iv_hex TYPE xstring
       RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>CommandAuthChallenge.
+
+* Message "AuthData",
+    METHODS ser_AuthData
+      IMPORTING is_message TYPE zif_protobuf_generated=>AuthData
+      RETURNING VALUE(rv_hex) TYPE xstring.
+    METHODS des_AuthData
+      IMPORTING iv_hex TYPE xstring
+      RETURNING VALUE(rs_message) TYPE zif_protobuf_generated=>AuthData.
 
 * Message "KeySharedMeta",
     METHODS ser_KeySharedMeta
@@ -580,40 +580,6 @@ CLASS zcl_protobuf_generated DEFINITION PUBLIC.
 ENDCLASS.
 
 CLASS zcl_protobuf_generated IMPLEMENTATION.
-  METHOD ser_KeyValue.
-    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-    CREATE OBJECT lo_stream.
-" required string key = 1;
-    lo_stream->encode_field_and_type2(
-      iv_field_number = 1
-      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
-    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-key ) ).
-" required string value = 2;
-    lo_stream->encode_field_and_type2(
-      iv_field_number = 2
-      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
-    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-value ) ).
-    rv_hex = lo_stream->get( ).
-  ENDMETHOD.
-
-  METHOD des_KeyValue.
-    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
-    WHILE xstrlen( lo_stream->get( ) ) > 0.
-      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
-      CASE ls_field_and_type-field_number.
-        WHEN 1.
-" required string key = 1;
-          rs_message-key = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
-        WHEN 2.
-" required string value = 2;
-          rs_message-value = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
-        WHEN OTHERS.
-          ASSERT 1 = 'unknown field'.
-      ENDCASE.
-    ENDWHILE.
-  ENDMETHOD.
-
   METHOD ser_Schema.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
@@ -707,6 +673,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_int32( is_message-batch_size ).
     ENDIF.
+" optional MessageIdData first_chunk_message_id = 7;
+    IF is_message-first_chunk_message_id IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 7
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( ser_MessageIdData( is_message-first_chunk_message_id ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -734,6 +707,43 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 6.
 " optional int32 batch_size = 6;
           rs_message-batch_size = lo_stream->decode_int32( ).
+        WHEN 7.
+" optional MessageIdData first_chunk_message_id = 7;
+          rs_message-first_chunk_message_id = des_MessageIdData( lo_stream->decode_delimited( ) ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
+  ENDMETHOD.
+
+  METHOD ser_KeyValue.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
+" required string key = 1;
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 1
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-key ) ).
+" required string value = 2;
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 2
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-value ) ).
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
+
+  METHOD des_KeyValue.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
+" required string key = 1;
+          rs_message-key = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
+" required string value = 2;
+          rs_message-value = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -1298,64 +1308,6 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     ENDWHILE.
   ENDMETHOD.
 
-  METHOD ser_FeatureFlags.
-    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-    CREATE OBJECT lo_stream.
-" optional bool supports_auth_refresh = 1 [default = false];
-    IF is_message-supports_auth_refresh IS NOT INITIAL.
-    lo_stream->encode_field_and_type2(
-      iv_field_number = 1
-      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
-    lo_stream->encode_bool( is_message-supports_auth_refresh ).
-    ENDIF.
-" optional bool supports_broker_entry_metadata = 2 [default = false];
-    IF is_message-supports_broker_entrKEEJJg IS NOT INITIAL.
-    lo_stream->encode_field_and_type2(
-      iv_field_number = 2
-      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
-    lo_stream->encode_bool( is_message-supports_broker_entrKEEJJg ).
-    ENDIF.
-" optional bool supports_partial_producer = 3 [default = false];
-    IF is_message-supports_partial_producer IS NOT INITIAL.
-    lo_stream->encode_field_and_type2(
-      iv_field_number = 3
-      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
-    lo_stream->encode_bool( is_message-supports_partial_producer ).
-    ENDIF.
-" optional bool supports_topic_watchers = 4 [default = false];
-    IF is_message-supports_topic_watchers IS NOT INITIAL.
-    lo_stream->encode_field_and_type2(
-      iv_field_number = 4
-      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
-    lo_stream->encode_bool( is_message-supports_topic_watchers ).
-    ENDIF.
-    rv_hex = lo_stream->get( ).
-  ENDMETHOD.
-
-  METHOD des_FeatureFlags.
-    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
-    WHILE xstrlen( lo_stream->get( ) ) > 0.
-      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
-      CASE ls_field_and_type-field_number.
-        WHEN 1.
-" optional bool supports_auth_refresh = 1 [default = false];
-          rs_message-supports_auth_refresh = lo_stream->decode_bool( ).
-        WHEN 2.
-" optional bool supports_broker_entry_metadata = 2 [default = false];
-          rs_message-supports_broker_entrKEEJJg = lo_stream->decode_bool( ).
-        WHEN 3.
-" optional bool supports_partial_producer = 3 [default = false];
-          rs_message-supports_partial_producer = lo_stream->decode_bool( ).
-        WHEN 4.
-" optional bool supports_topic_watchers = 4 [default = false];
-          rs_message-supports_topic_watchers = lo_stream->decode_bool( ).
-        WHEN OTHERS.
-          ASSERT 1 = 'unknown field'.
-      ENDCASE.
-    ENDWHILE.
-  ENDMETHOD.
-
   METHOD ser_CommandConnect.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
@@ -1482,6 +1434,74 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
     ENDWHILE.
   ENDMETHOD.
 
+  METHOD ser_FeatureFlags.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
+" optional bool supports_auth_refresh = 1 [default = false];
+    IF is_message-supports_auth_refresh IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 1
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-supports_auth_refresh ).
+    ENDIF.
+" optional bool supports_broker_entry_metadata = 2 [default = false];
+    IF is_message-supports_broker_entrKEEJJg IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 2
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-supports_broker_entrKEEJJg ).
+    ENDIF.
+" optional bool supports_partial_producer = 3 [default = false];
+    IF is_message-supports_partial_producer IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-supports_partial_producer ).
+    ENDIF.
+" optional bool supports_topic_watchers = 4 [default = false];
+    IF is_message-supports_topic_watchers IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-supports_topic_watchers ).
+    ENDIF.
+" optional bool supports_get_partitioned_metadata_without_auto_creation = 5 [default = false];
+    IF is_message-supports_get_partitilfxcIG IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 5
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-supports_get_partitilfxcIG ).
+    ENDIF.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
+
+  METHOD des_FeatureFlags.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
+" optional bool supports_auth_refresh = 1 [default = false];
+          rs_message-supports_auth_refresh = lo_stream->decode_bool( ).
+        WHEN 2.
+" optional bool supports_broker_entry_metadata = 2 [default = false];
+          rs_message-supports_broker_entrKEEJJg = lo_stream->decode_bool( ).
+        WHEN 3.
+" optional bool supports_partial_producer = 3 [default = false];
+          rs_message-supports_partial_producer = lo_stream->decode_bool( ).
+        WHEN 4.
+" optional bool supports_topic_watchers = 4 [default = false];
+          rs_message-supports_topic_watchers = lo_stream->decode_bool( ).
+        WHEN 5.
+" optional bool supports_get_partitioned_metadata_without_auto_creation = 5 [default = false];
+          rs_message-supports_get_partitilfxcIG = lo_stream->decode_bool( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
+  ENDMETHOD.
+
   METHOD ser_CommandConnected.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
@@ -1532,44 +1552,6 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 4.
 " optional FeatureFlags feature_flags = 4;
           rs_message-feature_flags = des_FeatureFlags( lo_stream->decode_delimited( ) ).
-        WHEN OTHERS.
-          ASSERT 1 = 'unknown field'.
-      ENDCASE.
-    ENDWHILE.
-  ENDMETHOD.
-
-  METHOD ser_AuthData.
-    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-    CREATE OBJECT lo_stream.
-" optional string auth_method_name = 1;
-    IF is_message-auth_method_name IS NOT INITIAL.
-    lo_stream->encode_field_and_type2(
-      iv_field_number = 1
-      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
-    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-auth_method_name ) ).
-    ENDIF.
-" optional bytes auth_data = 2;
-    IF is_message-auth_data IS NOT INITIAL.
-    lo_stream->encode_field_and_type2(
-      iv_field_number = 2
-      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
-    lo_stream->encode_delimited( is_message-auth_data ).
-    ENDIF.
-    rv_hex = lo_stream->get( ).
-  ENDMETHOD.
-
-  METHOD des_AuthData.
-    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
-    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
-    WHILE xstrlen( lo_stream->get( ) ) > 0.
-      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
-      CASE ls_field_and_type-field_number.
-        WHEN 1.
-" optional string auth_method_name = 1;
-          rs_message-auth_method_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
-        WHEN 2.
-" optional bytes auth_data = 2;
-          rs_message-auth_data = lo_stream->decode_delimited( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -1666,6 +1648,44 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 3.
 " optional int32 protocol_version = 3 [default = 0];
           rs_message-protocol_version = lo_stream->decode_int32( ).
+        WHEN OTHERS.
+          ASSERT 1 = 'unknown field'.
+      ENDCASE.
+    ENDWHILE.
+  ENDMETHOD.
+
+  METHOD ser_AuthData.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream.
+" optional string auth_method_name = 1;
+    IF is_message-auth_method_name IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 1
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-auth_method_name ) ).
+    ENDIF.
+" optional bytes auth_data = 2;
+    IF is_message-auth_data IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 2
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( is_message-auth_data ).
+    ENDIF.
+    rv_hex = lo_stream->get( ).
+  ENDMETHOD.
+
+  METHOD des_AuthData.
+    DATA lo_stream TYPE REF TO zcl_protobuf_stream.
+    CREATE OBJECT lo_stream EXPORTING iv_hex = iv_hex.
+    WHILE xstrlen( lo_stream->get( ) ) > 0.
+      DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
+      CASE ls_field_and_type-field_number.
+        WHEN 1.
+" optional string auth_method_name = 1;
+          rs_message-auth_method_name = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 2.
+" optional bytes auth_data = 2;
+          rs_message-auth_data = lo_stream->decode_delimited( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -1950,6 +1970,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-original_auth_method ) ).
     ENDIF.
+" optional bool metadata_auto_creation_enabled = 6 [default = true];
+    IF is_message-metadata_auto_creatia18gu3 IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 6
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-metadata_auto_creatia18gu3 ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1974,6 +2001,9 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 5.
 " optional string original_auth_method = 5;
           rs_message-original_auth_method = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 6.
+" optional bool metadata_auto_creation_enabled = 6 [default = true];
+          rs_message-metadata_auto_creatia18gu3 = lo_stream->decode_bool( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -1995,7 +2025,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_uint64( is_message-request_id ).
-" optional CLookupType response = 3;
+" optional LookupType response = 3;
     IF is_message-response IS NOT INITIAL.
     lo_stream->encode_field_and_type2(
       iv_field_number = 3
@@ -2032,7 +2062,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
 " required uint64 request_id = 2;
           rs_message-request_id = lo_stream->decode_uint64( ).
         WHEN 3.
-" optional CLookupType response = 3;
+" optional LookupType response = 3;
           rs_message-response = lo_stream->decode_varint( ).
         WHEN 4.
 " optional ServerError error = 4;
@@ -2893,6 +2923,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_uint64( is_message-request_id ).
+" optional bool force = 3 [default = false];
+    IF is_message-force IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-force ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2908,6 +2945,9 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 2.
 " required uint64 request_id = 2;
           rs_message-request_id = lo_stream->decode_uint64( ).
+        WHEN 3.
+" optional bool force = 3 [default = false];
+          rs_message-force = lo_stream->decode_bool( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -3061,6 +3101,20 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_uint64( is_message-request_id ).
+" optional string assignedBrokerServiceUrl = 3;
+    IF is_message-assignedBrokerServiceUrl IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-assignedBrokerServiceUrl ) ).
+    ENDIF.
+" optional string assignedBrokerServiceUrlTls = 4;
+    IF is_message-assignedBrokerServiccyO30W IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-assignedBrokerServiccyO30W ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3076,6 +3130,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 2.
 " required uint64 request_id = 2;
           rs_message-request_id = lo_stream->decode_uint64( ).
+        WHEN 3.
+" optional string assignedBrokerServiceUrl = 3;
+          rs_message-assignedBrokerServiceUrl = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 4.
+" optional string assignedBrokerServiceUrlTls = 4;
+          rs_message-assignedBrokerServiccyO30W = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -3095,6 +3155,20 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_uint64( is_message-request_id ).
+" optional string assignedBrokerServiceUrl = 3;
+    IF is_message-assignedBrokerServiceUrl IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-assignedBrokerServiceUrl ) ).
+    ENDIF.
+" optional string assignedBrokerServiceUrlTls = 4;
+    IF is_message-assignedBrokerServiccyO30W IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-assignedBrokerServiccyO30W ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3110,6 +3184,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 2.
 " required uint64 request_id = 2;
           rs_message-request_id = lo_stream->decode_uint64( ).
+        WHEN 3.
+" optional string assignedBrokerServiceUrl = 3;
+          rs_message-assignedBrokerServiceUrl = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 4.
+" optional string assignedBrokerServiceUrlTls = 4;
+          rs_message-assignedBrokerServiccyO30W = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -5055,7 +5135,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
   METHOD ser_BaseCommand.
     DATA lo_stream TYPE REF TO zcl_protobuf_stream.
     CREATE OBJECT lo_stream.
-" required BaseCommandType type = 1;
+" required Type type = 1;
     lo_stream->encode_field_and_type2(
       iv_field_number = 1
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
@@ -5476,7 +5556,7 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       DATA(ls_field_and_type) = lo_stream->decode_field_and_type( ).
       CASE ls_field_and_type-field_number.
         WHEN 1.
-" required BaseCommandType type = 1;
+" required Type type = 1;
           rs_message-type = lo_stream->decode_varint( ).
         WHEN 2.
 " optional CommandConnect connect = 2;

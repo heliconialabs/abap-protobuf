@@ -22,11 +22,6 @@
  option java_package = "org.apache.pulsar.common.api.proto";
  option optimize_for = LITE_RUNTIME;
 
- message KeyValue {
-  required string key = 1;
-  required string value = 2;
-}
-
  message Schema {
      enum Type {
          None = 0;
@@ -69,7 +64,12 @@
      optional int32 batch_size = 6;
 
      // For the chunk message id, we need to specify the first chunk message id.
-//     optional MessageIdData first_chunk_message_id = 7;
+     optional MessageIdData first_chunk_message_id = 7;
+ }
+
+ message KeyValue {
+     required string key = 1;
+     required string value = 2;
  }
 
  message KeyLongValue {
@@ -267,13 +267,6 @@
      v21 = 21; // Carry the AUTO_CONSUME schema to the Broker after this version
  }
 
- message FeatureFlags {
-  optional bool supports_auth_refresh = 1 [default = false];
-  optional bool supports_broker_entry_metadata = 2 [default = false];
-  optional bool supports_partial_producer = 3 [default = false];
-  optional bool supports_topic_watchers = 4 [default = false];
-}
-
  message CommandConnect {
      required string client_version = 1; // The version of the client. Proxy should forward client's client_version.
      optional AuthMethod auth_method = 2; // Deprecated. Use "auth_method_name" instead.
@@ -302,18 +295,21 @@
      optional string proxy_version = 11; // Version of the proxy. Should only be forwarded by a proxy.
  }
 
+ // Please also add a new enum for the class "PulsarClientException.FailedFeatureCheck" when adding a new feature flag.
+ message FeatureFlags {
+   optional bool supports_auth_refresh = 1 [default = false];
+   optional bool supports_broker_entry_metadata = 2 [default = false];
+   optional bool supports_partial_producer = 3 [default = false];
+   optional bool supports_topic_watchers = 4 [default = false];
+   optional bool supports_get_partitioned_metadata_without_auto_creation = 5 [default = false];
+ }
+
  message CommandConnected {
      required string server_version = 1;
      optional int32 protocol_version = 2 [default = 0];
      optional int32 max_message_size = 3;
      optional FeatureFlags feature_flags = 4;
  }
-
- // To support mutual authentication type, such as Sasl, reuse this command to mutual auth.
- message AuthData {
-  optional string auth_method_name = 1;
-  optional bytes auth_data = 2;
-}
 
  message CommandAuthResponse {
      optional string client_version = 1; // The version of the client. Proxy should forward client's client_version.
@@ -325,6 +321,12 @@
      optional string server_version = 1;
      optional AuthData challenge = 2;
      optional int32 protocol_version = 3 [default = 0];
+ }
+
+ // To support mutual authentication type, such as Sasl, reuse this command to mutual auth.
+ message AuthData {
+     optional string auth_method_name = 1;
+     optional bytes auth_data = 2;
  }
 
  enum KeySharedMode {
@@ -413,16 +415,17 @@
      // to the proxy.
      optional string original_auth_data = 4;
      optional string original_auth_method = 5;
+     optional bool metadata_auto_creation_enabled = 6 [default = true];
  }
 
  message CommandPartitionedTopicMetadataResponse {
-     enum CLookupType {
+     enum LookupType {
          Success  = 0;
          Failed   = 1;
      }
      optional uint32 partitions            = 1;  // Optional in case of error
      required uint64 request_id            = 2;
-     optional CLookupType response          = 3;
+     optional LookupType response          = 3;
      optional ServerError error            = 4;
      optional string message               = 5;
  }
@@ -607,6 +610,7 @@
  message CommandUnsubscribe {
      required uint64 consumer_id = 1;
      required uint64 request_id  = 2;
+     optional bool force         = 3 [default = false];
  }
 
  // Reset an existing consumer to a particular message id
@@ -641,11 +645,15 @@
  message CommandCloseProducer {
      required uint64 producer_id = 1;
      required uint64 request_id = 2;
+     optional string assignedBrokerServiceUrl = 3;
+     optional string assignedBrokerServiceUrlTls = 4;
  }
 
  message CommandCloseConsumer {
      required uint64 consumer_id = 1;
      required uint64 request_id = 2;
+     optional string assignedBrokerServiceUrl = 3;
+     optional string assignedBrokerServiceUrlTls = 4;
  }
 
  message CommandRedeliverUnacknowledgedMessages {
@@ -954,7 +962,7 @@
  }
 
  message BaseCommand {
-     enum BaseCommandType {
+     enum Type {
          CONNECT     = 2;
          CONNECTED   = 3;
          SUBSCRIBE   = 4;
@@ -1047,7 +1055,7 @@
      }
 
 
-     required BaseCommandType type = 1;
+     required Type type = 1;
 
      optional CommandConnect connect          = 2;
      optional CommandConnected connected      = 3;
