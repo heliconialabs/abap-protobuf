@@ -8,6 +8,11 @@ INTERFACE zif_protobuf_generated PUBLIC.
   TYPES bytes  TYPE xstring.
   TYPES double TYPE f.
   TYPES float  TYPE f.
+* Message "KeyValue",
+  TYPES: BEGIN OF KeyValue,
+           key TYPE string, " key
+           value TYPE string, " value
+         END OF KeyValue.
 * Enum "Type",
   TYPES Type TYPE i.
   CONSTANTS: BEGIN OF const_Type,
@@ -49,13 +54,7 @@ INTERFACE zif_protobuf_generated PUBLIC.
            batch_index TYPE int32, " batch_index
            ack_set TYPE STANDARD TABLE OF int64 WITH EMPTY KEY, " ack_set
            batch_size TYPE int32, " batch_size
-           first_chunk_message_id TYPE MessageIdData, " first_chunk_message_id
          END OF MessageIdData.
-* Message "KeyValue",
-  TYPES: BEGIN OF KeyValue,
-           key TYPE string, " key
-           value TYPE string, " value
-         END OF KeyValue.
 * Message "KeyLongValue",
   TYPES: BEGIN OF KeyLongValue,
            key TYPE string, " key
@@ -201,6 +200,14 @@ INTERFACE zif_protobuf_generated PUBLIC.
                v20 TYPE ProtocolVersion VALUE 20,
                v21 TYPE ProtocolVersion VALUE 21,
              END OF const_ProtocolVersion.
+* Message "FeatureFlags",
+  TYPES: BEGIN OF FeatureFlags,
+           supports_auth_refresh TYPE bool, " supports_auth_refresh
+           supports_broker_entrKEEJJg TYPE bool, " supports_broker_entry_metadata
+           supports_partial_producer TYPE bool, " supports_partial_producer
+           supports_topic_watchers TYPE bool, " supports_topic_watchers
+           supports_get_partitilfxcIG TYPE bool, " supports_get_partitioned_metadata_without_auto_creation
+         END OF FeatureFlags.
 * Message "CommandConnect",
   TYPES: BEGIN OF CommandConnect,
            client_version TYPE string, " client_version
@@ -215,14 +222,6 @@ INTERFACE zif_protobuf_generated PUBLIC.
            feature_flags TYPE FeatureFlags, " feature_flags
            proxy_version TYPE string, " proxy_version
          END OF CommandConnect.
-* Message "FeatureFlags",
-  TYPES: BEGIN OF FeatureFlags,
-           supports_auth_refresh TYPE bool, " supports_auth_refresh
-           supports_broker_entrKEEJJg TYPE bool, " supports_broker_entry_metadata
-           supports_partial_producer TYPE bool, " supports_partial_producer
-           supports_topic_watchers TYPE bool, " supports_topic_watchers
-           supports_get_partitilfxcIG TYPE bool, " supports_get_partitioned_metadata_without_auto_creation
-         END OF FeatureFlags.
 * Message "CommandConnected",
   TYPES: BEGIN OF CommandConnected,
            server_version TYPE string, " server_version
@@ -230,6 +229,11 @@ INTERFACE zif_protobuf_generated PUBLIC.
            max_message_size TYPE int32, " max_message_size
            feature_flags TYPE FeatureFlags, " feature_flags
          END OF CommandConnected.
+* Message "AuthData",
+  TYPES: BEGIN OF AuthData,
+           auth_method_name TYPE string, " auth_method_name
+           auth_data TYPE bytes, " auth_data
+         END OF AuthData.
 * Message "CommandAuthResponse",
   TYPES: BEGIN OF CommandAuthResponse,
            client_version TYPE string, " client_version
@@ -242,11 +246,6 @@ INTERFACE zif_protobuf_generated PUBLIC.
            challenge TYPE AuthData, " challenge
            protocol_version TYPE int32, " protocol_version
          END OF CommandAuthChallenge.
-* Message "AuthData",
-  TYPES: BEGIN OF AuthData,
-           auth_method_name TYPE string, " auth_method_name
-           auth_data TYPE bytes, " auth_data
-         END OF AuthData.
 * Enum "KeySharedMode",
   TYPES KeySharedMode TYPE i.
   CONSTANTS: BEGIN OF const_KeySharedMode,
@@ -304,17 +303,17 @@ INTERFACE zif_protobuf_generated PUBLIC.
            original_auth_method TYPE string, " original_auth_method
            metadata_auto_creatia18gu3 TYPE bool, " metadata_auto_creation_enabled
          END OF CommandPartitionedTomVmlsw.
-* Enum "LookupType",
-  TYPES LookupType TYPE i.
-  CONSTANTS: BEGIN OF const_LookupType,
-               Success TYPE LookupType VALUE 0,
-               Failed TYPE LookupType VALUE 1,
-             END OF const_LookupType.
+* Enum "CLookupType",
+  TYPES CLookupType TYPE i.
+  CONSTANTS: BEGIN OF const_CLookupType,
+               Success TYPE CLookupType VALUE 0,
+               Failed TYPE CLookupType VALUE 1,
+             END OF const_CLookupType.
 * Message "CommandPartitionedTopicMetadataResponse",
   TYPES: BEGIN OF CommandPartitionedToJik1cm,
            partitions TYPE uint32, " partitions
            request_id TYPE uint64, " request_id
-           response TYPE LookupType, " response
+           response TYPE CLookupType, " response
            error TYPE ServerError, " error
            message TYPE string, " message
          END OF CommandPartitionedToJik1cm.
@@ -746,71 +745,71 @@ INTERFACE zif_protobuf_generated PUBLIC.
            error TYPE ServerError, " error
            message TYPE string, " message
          END OF CommandEndTxnOnSubscVUpsoc.
-* Enum "Type",
-  TYPES Type TYPE i.
-  CONSTANTS: BEGIN OF const_Type,
-               CONNECT TYPE Type VALUE 2,
-               CONNECTED TYPE Type VALUE 3,
-               SUBSCRIBE TYPE Type VALUE 4,
-               PRODUCER TYPE Type VALUE 5,
-               SEND TYPE Type VALUE 6,
-               SEND_RECEIPT TYPE Type VALUE 7,
-               SEND_ERROR TYPE Type VALUE 8,
-               MESSAGE TYPE Type VALUE 9,
-               ACK TYPE Type VALUE 10,
-               FLOW TYPE Type VALUE 11,
-               UNSUBSCRIBE TYPE Type VALUE 12,
-               SUCCESS TYPE Type VALUE 13,
-               ERROR TYPE Type VALUE 14,
-               CLOSE_PRODUCER TYPE Type VALUE 15,
-               CLOSE_CONSUMER TYPE Type VALUE 16,
-               PRODUCER_SUCCESS TYPE Type VALUE 17,
-               PING TYPE Type VALUE 18,
-               PONG TYPE Type VALUE 19,
-               REDELIVER_UNACKNOWLEXIsuac TYPE Type VALUE 20,
-               PARTITIONED_METADATA TYPE Type VALUE 21,
-               PARTITIONED_METADATAI7hj1k TYPE Type VALUE 22,
-               LOOKUP TYPE Type VALUE 23,
-               LOOKUP_RESPONSE TYPE Type VALUE 24,
-               CONSUMER_STATS TYPE Type VALUE 25,
-               CONSUMER_STATS_RESPONSE TYPE Type VALUE 26,
-               REACHED_END_OF_TOPIC TYPE Type VALUE 27,
-               SEEK TYPE Type VALUE 28,
-               GET_LAST_MESSAGE_ID TYPE Type VALUE 29,
-               GET_LAST_MESSAGE_ID_2RWwYq TYPE Type VALUE 30,
-               ACTIVE_CONSUMER_CHANGE TYPE Type VALUE 31,
-               GET_TOPICS_OF_NAMESPACE TYPE Type VALUE 32,
-               GET_TOPICS_OF_NAMESPUmPtju TYPE Type VALUE 33,
-               GET_SCHEMA TYPE Type VALUE 34,
-               GET_SCHEMA_RESPONSE TYPE Type VALUE 35,
-               AUTH_CHALLENGE TYPE Type VALUE 36,
-               AUTH_RESPONSE TYPE Type VALUE 37,
-               ACK_RESPONSE TYPE Type VALUE 38,
-               GET_OR_CREATE_SCHEMA TYPE Type VALUE 39,
-               GET_OR_CREATE_SCHEMAuAa8Vm TYPE Type VALUE 40,
-               NEW_TXN TYPE Type VALUE 50,
-               NEW_TXN_RESPONSE TYPE Type VALUE 51,
-               ADD_PARTITION_TO_TXN TYPE Type VALUE 52,
-               ADD_PARTITION_TO_TXNKPQXlL TYPE Type VALUE 53,
-               ADD_SUBSCRIPTION_TO_TXN TYPE Type VALUE 54,
-               ADD_SUBSCRIPTION_TO_HS9W6H TYPE Type VALUE 55,
-               END_TXN TYPE Type VALUE 56,
-               END_TXN_RESPONSE TYPE Type VALUE 57,
-               END_TXN_ON_PARTITION TYPE Type VALUE 58,
-               END_TXN_ON_PARTITIONIanBn9 TYPE Type VALUE 59,
-               END_TXN_ON_SUBSCRIPTION TYPE Type VALUE 60,
-               END_TXN_ON_SUBSCRIPTPwdUks TYPE Type VALUE 61,
-               TC_CLIENT_CONNECT_REQUEST TYPE Type VALUE 62,
-               TC_CLIENT_CONNECT_RESPONSE TYPE Type VALUE 63,
-               WATCH_TOPIC_LIST TYPE Type VALUE 64,
-               WATCH_TOPIC_LIST_SUCCESS TYPE Type VALUE 65,
-               WATCH_TOPIC_UPDATE TYPE Type VALUE 66,
-               WATCH_TOPIC_LIST_CLOSE TYPE Type VALUE 67,
-               TOPIC_MIGRATED TYPE Type VALUE 68,
-             END OF const_Type.
+* Enum "BaseCommandType",
+  TYPES BaseCommandType TYPE i.
+  CONSTANTS: BEGIN OF const_BaseCommandType,
+               CONNECT TYPE BaseCommandType VALUE 2,
+               CONNECTED TYPE BaseCommandType VALUE 3,
+               SUBSCRIBE TYPE BaseCommandType VALUE 4,
+               PRODUCER TYPE BaseCommandType VALUE 5,
+               SEND TYPE BaseCommandType VALUE 6,
+               SEND_RECEIPT TYPE BaseCommandType VALUE 7,
+               SEND_ERROR TYPE BaseCommandType VALUE 8,
+               MESSAGE TYPE BaseCommandType VALUE 9,
+               ACK TYPE BaseCommandType VALUE 10,
+               FLOW TYPE BaseCommandType VALUE 11,
+               UNSUBSCRIBE TYPE BaseCommandType VALUE 12,
+               SUCCESS TYPE BaseCommandType VALUE 13,
+               ERROR TYPE BaseCommandType VALUE 14,
+               CLOSE_PRODUCER TYPE BaseCommandType VALUE 15,
+               CLOSE_CONSUMER TYPE BaseCommandType VALUE 16,
+               PRODUCER_SUCCESS TYPE BaseCommandType VALUE 17,
+               PING TYPE BaseCommandType VALUE 18,
+               PONG TYPE BaseCommandType VALUE 19,
+               REDELIVER_UNACKNOWLEXIsuac TYPE BaseCommandType VALUE 20,
+               PARTITIONED_METADATA TYPE BaseCommandType VALUE 21,
+               PARTITIONED_METADATAI7hj1k TYPE BaseCommandType VALUE 22,
+               LOOKUP TYPE BaseCommandType VALUE 23,
+               LOOKUP_RESPONSE TYPE BaseCommandType VALUE 24,
+               CONSUMER_STATS TYPE BaseCommandType VALUE 25,
+               CONSUMER_STATS_RESPONSE TYPE BaseCommandType VALUE 26,
+               REACHED_END_OF_TOPIC TYPE BaseCommandType VALUE 27,
+               SEEK TYPE BaseCommandType VALUE 28,
+               GET_LAST_MESSAGE_ID TYPE BaseCommandType VALUE 29,
+               GET_LAST_MESSAGE_ID_2RWwYq TYPE BaseCommandType VALUE 30,
+               ACTIVE_CONSUMER_CHANGE TYPE BaseCommandType VALUE 31,
+               GET_TOPICS_OF_NAMESPACE TYPE BaseCommandType VALUE 32,
+               GET_TOPICS_OF_NAMESPUmPtju TYPE BaseCommandType VALUE 33,
+               GET_SCHEMA TYPE BaseCommandType VALUE 34,
+               GET_SCHEMA_RESPONSE TYPE BaseCommandType VALUE 35,
+               AUTH_CHALLENGE TYPE BaseCommandType VALUE 36,
+               AUTH_RESPONSE TYPE BaseCommandType VALUE 37,
+               ACK_RESPONSE TYPE BaseCommandType VALUE 38,
+               GET_OR_CREATE_SCHEMA TYPE BaseCommandType VALUE 39,
+               GET_OR_CREATE_SCHEMAuAa8Vm TYPE BaseCommandType VALUE 40,
+               NEW_TXN TYPE BaseCommandType VALUE 50,
+               NEW_TXN_RESPONSE TYPE BaseCommandType VALUE 51,
+               ADD_PARTITION_TO_TXN TYPE BaseCommandType VALUE 52,
+               ADD_PARTITION_TO_TXNKPQXlL TYPE BaseCommandType VALUE 53,
+               ADD_SUBSCRIPTION_TO_TXN TYPE BaseCommandType VALUE 54,
+               ADD_SUBSCRIPTION_TO_HS9W6H TYPE BaseCommandType VALUE 55,
+               END_TXN TYPE BaseCommandType VALUE 56,
+               END_TXN_RESPONSE TYPE BaseCommandType VALUE 57,
+               END_TXN_ON_PARTITION TYPE BaseCommandType VALUE 58,
+               END_TXN_ON_PARTITIONIanBn9 TYPE BaseCommandType VALUE 59,
+               END_TXN_ON_SUBSCRIPTION TYPE BaseCommandType VALUE 60,
+               END_TXN_ON_SUBSCRIPTPwdUks TYPE BaseCommandType VALUE 61,
+               TC_CLIENT_CONNECT_REQUEST TYPE BaseCommandType VALUE 62,
+               TC_CLIENT_CONNECT_RESPONSE TYPE BaseCommandType VALUE 63,
+               WATCH_TOPIC_LIST TYPE BaseCommandType VALUE 64,
+               WATCH_TOPIC_LIST_SUCCESS TYPE BaseCommandType VALUE 65,
+               WATCH_TOPIC_UPDATE TYPE BaseCommandType VALUE 66,
+               WATCH_TOPIC_LIST_CLOSE TYPE BaseCommandType VALUE 67,
+               TOPIC_MIGRATED TYPE BaseCommandType VALUE 68,
+             END OF const_BaseCommandType.
 * Message "BaseCommand",
   TYPES: BEGIN OF BaseCommand,
-           type TYPE Type, " type
+           type TYPE BaseCommandType, " type
            connect TYPE CommandConnect, " connect
            connected TYPE CommandConnected, " connected
            subscribe TYPE CommandSubscribe, " subscribe
