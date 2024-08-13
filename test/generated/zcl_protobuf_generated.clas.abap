@@ -1329,6 +1329,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_bool( is_message-supports_topic_watchers ).
     ENDIF.
+" optional bool supports_get_partitioned_metadata_without_auto_creation = 5 [default = false];
+    IF is_message-supports_get_partitilfxcIG IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 5
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-supports_get_partitilfxcIG ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1350,6 +1357,9 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 4.
 " optional bool supports_topic_watchers = 4 [default = false];
           rs_message-supports_topic_watchers = lo_stream->decode_bool( ).
+        WHEN 5.
+" optional bool supports_get_partitioned_metadata_without_auto_creation = 5 [default = false];
+          rs_message-supports_get_partitilfxcIG = lo_stream->decode_bool( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -1950,6 +1960,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
     lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-original_auth_method ) ).
     ENDIF.
+" optional bool metadata_auto_creation_enabled = 6 [default = true];
+    IF is_message-metadata_auto_creatia18gu3 IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 6
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-metadata_auto_creatia18gu3 ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -1974,6 +1991,9 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 5.
 " optional string original_auth_method = 5;
           rs_message-original_auth_method = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 6.
+" optional bool metadata_auto_creation_enabled = 6 [default = true];
+          rs_message-metadata_auto_creatia18gu3 = lo_stream->decode_bool( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -2893,6 +2913,13 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_uint64( is_message-request_id ).
+" optional bool force = 3 [default = false];
+    IF is_message-force IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
+    lo_stream->encode_bool( is_message-force ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -2908,6 +2935,9 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 2.
 " required uint64 request_id = 2;
           rs_message-request_id = lo_stream->decode_uint64( ).
+        WHEN 3.
+" optional bool force = 3 [default = false];
+          rs_message-force = lo_stream->decode_bool( ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -3061,6 +3091,20 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_uint64( is_message-request_id ).
+" optional string assignedBrokerServiceUrl = 3;
+    IF is_message-assignedBrokerServiceUrl IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-assignedBrokerServiceUrl ) ).
+    ENDIF.
+" optional string assignedBrokerServiceUrlTls = 4;
+    IF is_message-assignedBrokerServiccyO30W IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-assignedBrokerServiccyO30W ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3076,6 +3120,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 2.
 " required uint64 request_id = 2;
           rs_message-request_id = lo_stream->decode_uint64( ).
+        WHEN 3.
+" optional string assignedBrokerServiceUrl = 3;
+          rs_message-assignedBrokerServiceUrl = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 4.
+" optional string assignedBrokerServiceUrlTls = 4;
+          rs_message-assignedBrokerServiccyO30W = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.
@@ -3095,6 +3145,20 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
       iv_field_number = 2
       iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).
     lo_stream->encode_uint64( is_message-request_id ).
+" optional string assignedBrokerServiceUrl = 3;
+    IF is_message-assignedBrokerServiceUrl IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 3
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-assignedBrokerServiceUrl ) ).
+    ENDIF.
+" optional string assignedBrokerServiceUrlTls = 4;
+    IF is_message-assignedBrokerServiccyO30W IS NOT INITIAL.
+    lo_stream->encode_field_and_type2(
+      iv_field_number = 4
+      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).
+    lo_stream->encode_delimited( cl_abap_codepage=>convert_to( is_message-assignedBrokerServiccyO30W ) ).
+    ENDIF.
     rv_hex = lo_stream->get( ).
   ENDMETHOD.
 
@@ -3110,6 +3174,12 @@ CLASS zcl_protobuf_generated IMPLEMENTATION.
         WHEN 2.
 " required uint64 request_id = 2;
           rs_message-request_id = lo_stream->decode_uint64( ).
+        WHEN 3.
+" optional string assignedBrokerServiceUrl = 3;
+          rs_message-assignedBrokerServiceUrl = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
+        WHEN 4.
+" optional string assignedBrokerServiceUrlTls = 4;
+          rs_message-assignedBrokerServiccyO30W = cl_abap_codepage=>convert_from( lo_stream->decode_delimited( ) ).
         WHEN OTHERS.
           ASSERT 1 = 'unknown field'.
       ENDCASE.

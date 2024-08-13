@@ -206,6 +206,7 @@ INTERFACE zif_protobuf_generated PUBLIC.
            supports_broker_entrKEEJJg TYPE bool, " supports_broker_entry_metadata
            supports_partial_producer TYPE bool, " supports_partial_producer
            supports_topic_watchers TYPE bool, " supports_topic_watchers
+           supports_get_partitilfxcIG TYPE bool, " supports_get_partitioned_metadata_without_auto_creation
          END OF FeatureFlags.
 * Message "CommandConnect",
   TYPES: BEGIN OF CommandConnect,
@@ -300,6 +301,7 @@ INTERFACE zif_protobuf_generated PUBLIC.
            original_principal TYPE string, " original_principal
            original_auth_data TYPE string, " original_auth_data
            original_auth_method TYPE string, " original_auth_method
+           metadata_auto_creatia18gu3 TYPE bool, " metadata_auto_creation_enabled
          END OF CommandPartitionedTomVmlsw.
 * Enum "CLookupType",
   TYPES CLookupType TYPE i.
@@ -442,6 +444,7 @@ INTERFACE zif_protobuf_generated PUBLIC.
   TYPES: BEGIN OF CommandUnsubscribe,
            consumer_id TYPE uint64, " consumer_id
            request_id TYPE uint64, " request_id
+           force TYPE bool, " force
          END OF CommandUnsubscribe.
 * Message "CommandSeek",
   TYPES: BEGIN OF CommandSeek,
@@ -471,11 +474,15 @@ INTERFACE zif_protobuf_generated PUBLIC.
   TYPES: BEGIN OF CommandCloseProducer,
            producer_id TYPE uint64, " producer_id
            request_id TYPE uint64, " request_id
+           assignedBrokerServiceUrl TYPE string, " assignedBrokerServiceUrl
+           assignedBrokerServiccyO30W TYPE string, " assignedBrokerServiceUrlTls
          END OF CommandCloseProducer.
 * Message "CommandCloseConsumer",
   TYPES: BEGIN OF CommandCloseConsumer,
            consumer_id TYPE uint64, " consumer_id
            request_id TYPE uint64, " request_id
+           assignedBrokerServiceUrl TYPE string, " assignedBrokerServiceUrl
+           assignedBrokerServiccyO30W TYPE string, " assignedBrokerServiceUrlTls
          END OF CommandCloseConsumer.
 * Message "CommandRedeliverUnacknowledgedMessages",
   TYPES: BEGIN OF CommandRedeliverUnacONw3qa,
