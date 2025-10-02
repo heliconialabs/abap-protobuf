@@ -78,9 +78,9 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
               gv_impl = gv_impl && |    IF { lv_name } IS NOT INITIAL.\n|.
           ENDCASE.
 
+          gv_impl = gv_impl && |    lo_stream->encode_field_and_type2(\n|.
+          gv_impl = gv_impl && |      iv_field_number = { lo_field->mv_field_number }\n|.
           IF zcl_protobuf_generate=>is_builtin( lo_field->mv_type ) = abap_true.
-            gv_impl = gv_impl && |    lo_stream->encode_field_and_type2(\n|.
-            gv_impl = gv_impl && |      iv_field_number = { lo_field->mv_field_number }\n|.
             gv_impl = gv_impl && |      iv_wire_type    = { zcl_protobuf_generate=>map_builtin( lo_field->mv_type ) } ).\n|.
             CASE lo_field->mv_type.
               WHEN 'bool'.
@@ -105,13 +105,9 @@ CLASS zcl_protobuf_generate_clas IMPLEMENTATION.
                 gv_impl = gv_impl && |" todo, encoding\n|.
             ENDCASE.
           ELSEIF io_message->is_enum( lo_field->mv_type ) OR go_file->is_enum( lo_field->mv_type ).
-            gv_impl = gv_impl && |    lo_stream->encode_field_and_type2(\n|.
-            gv_impl = gv_impl && |      iv_field_number = { lo_field->mv_field_number }\n|.
             gv_impl = gv_impl && |      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-varint ).\n|.
             gv_impl = gv_impl && |    lo_stream->encode_varint( { lv_name } ).\n|.
           ELSE.
-            gv_impl = gv_impl && |    lo_stream->encode_field_and_type2(\n|.
-            gv_impl = gv_impl && |      iv_field_number = { lo_field->mv_field_number }\n|.
             gv_impl = gv_impl && |      iv_wire_type    = zcl_protobuf_stream=>gc_wire_type-length_delimited ).\n|.
             gv_impl = gv_impl && |    lo_stream->encode_delimited( ser_{ zcl_protobuf_generate=>abap_name( lo_field->mv_type ) }( { lv_name } ) ).\n|.
           ENDIF.
