@@ -462,7 +462,10 @@ CLASS zcl_protobuf_stream IMPLEMENTATION.
       ENDWHILE.
 
       " WRITE / lv_bits.
-      TRANSLATE lv_bits USING '0110'.
+      lv_bits = translate(
+        val  = lv_bits
+        from = '01'
+        to   = '10' ).
 * extra bits to fill the last byte
       CONCATENATE '000000' lv_bits INTO lv_bits.
       " WRITE / lv_bits.
