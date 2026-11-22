@@ -2,7 +2,6 @@ CLASS zcl_protobuf_stream DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
-
   PUBLIC SECTION.
 
     TYPES ty_wire_type TYPE i .
